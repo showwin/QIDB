@@ -1,0 +1,181 @@
+<%= form_tag definitions_path do %>
+
+
+<div class="col-xs-4">
+  <div class="form-group">
+    <h4>プロジェクト名</h4>
+    <%= select_tag('project', options_for_select([
+      ["QIP", "QIP"], ["済生会", "済生会"], ["日本医師会", "日本医師会"], ["全国自治体病院", "全国自治体病院"]
+      ], session['project']), :class => "form-control  btn-sm") %>
+      <br>
+  </div>
+
+  <div class="form-group">
+    <h4>年度</h4>
+    <%= select_tag('year', options_for_select([
+      ["2008", "2008"], ["2009", "2009"], ["2010", "2010"], ["2011", "2011"], ["2012", "2012"], ["2013", "2013"], ["2014", "2014"]
+      ], session['project']), :class => "form-control  btn-sm") %>
+    <br>
+  </div>
+
+  <div class="form-group">
+    <h4>指標番号</h4>
+    <%= text_field_tag 'number', params['year'], :class => 'form-control', :placeholder => '(e.g.) 0548' %>
+    <br>
+  </div>
+
+  <div class="form-group">
+    <h4>更新日</h4>
+    <%= date_select('updated_date', params['updated_date'], :use_month_numbers => true, :start_year => 2008, :end_year => 2014) %><br>
+    <br>
+  </div>
+
+  <div class="form-group">
+    <h4>指標群</h4>
+    <%= text_field_tag 'number', params['year'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
+    <br>
+  </div>
+
+</div>
+<div class="col-xs-12">
+
+  <div class="form-group">
+    <h4>名称</h4>
+    <%= text_field_tag 'name', params['year'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
+    <br>
+  </div>
+
+  <div class="form-group">
+    <h4>意義</h4>
+    <%= text_field_tag 'meaning', params['year'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
+    <br>
+  </div>
+
+</div>
+<div class="col-xs-4">
+
+  <div class="form-group">
+    <div id="dataset-form">
+      <h4>必要なデータセット</h4>
+      <%= select_tag('dataset1', options_for_select([
+        ["DPC様式1", "DPC様式1"], ["E/Fファイル", "E/Fファイル"], ["Fファイル", "Fファイル"], ["EFファイル", "EFファイル"]
+        ], session['project']), :class => "form-control  btn-sm") %>
+    </div>
+    <button type="button" class="btn btn-success btn-circle" onClick="addDatasetForm()">＋</i></button>
+    <br>
+  </div>
+
+
+</div>
+<div class="col-xs-12">
+  <h4>定義の要約</h4>
+
+  <div class="form-group">
+    <h5>分子</h5>
+    <%= text_field_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+    <h5>分母</h5>
+    <%= text_field_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+    <br>
+  </div>
+
+  <h4>指標の定義/算出方法</h4>
+  <h4>分母の定義</h4>
+  
+  <div class="form-group">
+    <div id="denom-def1">
+      <h5>1</h5>
+      <h5>説明</h5>
+      <%= text_field_tag 'denom_exp1', params['denom_exp1'], :class => 'form-control', :placeholder =>
+      '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
+      <div class="row">
+        <div class="col-md-3 ">
+          <h5>Key</h5>
+          <%= text_field_tag 'denom_data_key1', params['denom_data_key1'], :class => 'form-control', :placeholder => '(option) レセ電コード' %>
+        </div>
+        <div class="col-md-9 form-group">
+          <h5>Value</h5>
+          <%= text_field_tag 'denom_data_value1', params['denom_data_value1'], :class => 'form-control', :placeholder => '(option) ["180027610", "180032410", … , "180024710"]' %>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-info btn-circle" onClick="addDefDataForm(1)">＋</i></button> (Key, Valueの追加)
+  </div>
+
+  <button type="button" class="btn btn-success btn-circle" onClick="addDatasetForm()">＋</i></button> (定義の追加)
+
+
+
+  <%= label_tag "data" %><br>
+
+  <%= label_tag "分子の定義" %><br>
+
+  <%= label_tag "1" %><br>
+
+  <div class="form-group">
+    <%= label_tag "説明" %><br>
+    <%= text_field_tag :year %>
+  </div>
+
+  <%= label_tag "data" %><br>
+</div>
+<div class="col-xs-9">
+  <div class="form-group">
+    <%= label_tag "リスクの調整因子の定義" %><br>
+    <label class="radio-inline">
+      <%= radio_button 'factor_definition', params['factor_definition'], 'yes', {:checked => true} %>あり
+    </label>
+    <label class="radio-inline">
+      <%= radio_button 'factor_definition', params['factor_definition'], 'no', {} %>なし
+    </label>
+  </div>
+  <div class="form-group">
+    <%= label_tag "詳細" %><br>
+    <%= text_field_tag 'meaning', params['year'], :class => 'form-control', :placeholder => '(e.g.) ありの場合のみここを表示' %>
+  </div>
+
+  <%= label_tag "指標の算出方法" %><br>
+
+  <div class="form-group">
+    <%= label_tag "説明" %><br>
+    <%= text_field_tag 'method_explanation', params['method_explanation'], :class => 'form-control', :placeholder => '(e.g.) 分子÷分母' %>
+  </div>
+  <div class="form-group">
+    <%= label_tag "単位" %><br>
+    <%= text_field_tag 'method_unit', params['method_unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag "結果提示時の並び順" %><br>
+    <label class="radio-inline">
+      <%= radio_button 'order', params['order'], 'misc', {:checked => true} %>昇順
+    </label>
+    <label class="radio-inline">
+      <%= radio_button 'order', params['order'], 'dsck', {} %>降順
+    </label>
+  </div>
+</div>
+<div class="col-xs-9">
+  <div class="form-group">
+    <%= label_tag "測定上の限界/解釈上の注意" %><br>
+    <%= text_field_tag 'warning', params['warning'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
+  </div>
+  <div class="form-group">
+    <%= label_tag "参考値" %><br>
+    <%= text_field_tag 'standard_value', params['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag "参考資料" %><br>
+    <%= text_field_tag :year %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag "定義見直しのタイミング" %><br>
+    <%= text_field_tag 'review_span', params['review_span'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+  </div>
+
+  <div class="form-group">
+    <%= submit_tag "作成", :class => "btn btn-default" %>
+  </div>
+</div>
+<% end %>

@@ -1,124 +1,70 @@
 var datasetCounter = 1;
-var defDataCounter = [0,1];
+var denomDefCounter = 1;
+var numerDefCounter = 1;
+var referenceCounter = 1;
+
+$('#test_ckb').change(function(){
+	if ($(this).is(':checked')) {
+		$('#result').append('<p>hey</p>');
+	} else {
+		$('#result').append('<p>jude</p>');
+	}
+});
+
 function addDatasetForm(){
-	// カウンタを回す
 	datasetCounter++;
+	var id = datasetCounter;
 
-	var datasetForm = document.getElementById("dataset-form");
-	var input = document.createElement("selmct");
-	input.setAttribute('class', 'form-control btn-sm');
-	input.id = "dataset"+datasetCounter;
-	input.name = "dataset"+datasetCounter;;
+	var select = $('<select class="form-control btn-sm" id="dataset'+id+'" name="dataset'+id+'">');
+	$('<option value="DPC様式1">DPC様式1</option>').appendTo(select);
+	$('<option value="E/Fファイル">E/Fファイル</option>').appendTo(select);
+	$('<option value="Fファイル">Fファイル</option>').appendTo(select);
+	$('<option value="EFファイル">EFファイル</option></select>').appendTo(select);
 
-	var elm = document.createElement("option");
-	elm.value = "DPC様式1";
-	var str = document.createTextNode("DPC様式1");
-	elm.appendChild(str);
-	input.appendChild(elm);
-
-	var elm = document.createElement("option");
-	elm.value = "E/Fファイル";
-	var str = document.createTextNode("E/Fファイル");
-	elm.appendChild(str);
-	input.appendChild(elm);
-
-	var elm = document.createElement("option");
-	elm.value = "Fファイル";
-	var str = document.createTextNode("Fファイル");
-	elm.appendChild(str);
-	input.appendChild(elm);
-
-	var elm = document.createElement("option");
-	elm.value = "EFファイル";
-	var str = document.createTextNode("EFファイル");
-	elm.appendChild(str);
-	input.appendChild(elm);
-
-	datasetForm.appendChild(input);
-}
-
-function addDenomDefDataForm(formNumber){
-	defDataCounter[formNumber]++;
-
-	var defForm = $('#denom-def'+formNumber)
-	var id = defDataCounter[formNumber]
-	$('<div class="row" id="denom-def'+formNumber+'-'+id+'">').appendTo(defForm)
-	var div = $('#denom-def'+formNumber+'-'+id)
-	var html = '<div class="col-md-3 form-group" >'
-	html += '<h5>Key</h5>'
-	html += '<input class="form-control" id="denom_data_key'+formNumber+'-'+id+'" name="denom_data_key'+formNumber+'-'+id+'" placeholder="(option) レセ電コード" type="text">'
-	$(html).appendTo(div)
-
-	var html = '<div class="col-md-9 form-group" >'
-	html += '<h5>Value</h5>'
-	html += '<input class="form-control" id="denom_data_value'+formNumber+'-'+id+'" name="denom_data_value'+formNumber+'-'+id+'" placeholder="(option) [&quot;180027610&quot;, &quot;180032410&quot;, … , &quot;180024710&quot;]" type="text">'
-	$(html).appendTo(div)
+	$(select).appendTo($("#dataset-form"));
 }
 
 function addDenomDefForm(){
-	id = defDataCounter.length
-	defDataCounter[id] = 1
+	denomDefCounter++;
+	id = denomDefCounter;
 
-	$('<div id="denom-def'+id+'">').appendTo($('#denom-def'))
-	var defForm = $('#denom-def'+id)
-	defForm.append("<h5>"+id+"</h5>");
+	$('<div id="denom-def'+id+'">').appendTo($('#denom-def'));
+	var defForm = $('#denom-def'+id);
+	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
 	defForm.append('<input class="form-control" id="denom_exp'+id+'" name="denom_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text">');
-
-	$('<div class="row" id="denom-def'+id+'-1">').appendTo(defForm)
-	var div = $('#denom-def'+id+'-1')
-	var html = '<div class="col-md-3 form-group" >'
-	html += '<h5>Key</h5>'
-	html += '<input class="form-control" id="denom_data_key'+id+'-1" name="denom_data_key'+id+'-1" placeholder="(option) レセ電コード" type="text">'
-	$(html).appendTo(div)
-
-	var html = '<div class="col-md-9 form-group" >'
-	html += '<h5>Value</h5>'
-	html += '<input class="form-control" id="denom_data_value'+id+'-1" name="denom_data_value'+id+'-1" placeholder="(option) [&quot;180027610&quot;, &quot;180032410&quot;, … , &quot;180024710&quot;]" type="text">'
-	$(html).appendTo(div)
-
-	$('<button type="button" class="btn btn-sm btn-info btn-circle" onClick="addDenomDefDataForm('+id+')">＋</i></button><nobr> (Key, Valueの追加)</nobr><br><br>').appendTo($('#denom-def'))
-}
-
-function addNumerDefDataForm(formNumber){
-	defDataCounter[formNumber]++;
-
-	var defForm = $('#numer-def'+formNumber)
-	var id = defDataCounter[formNumber]
-	$('<div class="row" id="numer-def'+formNumber+'-'+id+'">').appendTo(defForm)
-	var div = $('#numer-def'+formNumber+'-'+id)
-	var html = '<div class="col-md-3 form-group" >'
-	html += '<h5>Key</h5>'
-	html += '<input class="form-control" id="numer_data_key'+formNumber+'-'+id+'" name="numer_data_key'+formNumber+'-'+id+'" placeholder="(option) レセ電コード" type="text">'
-	$(html).appendTo(div)
-
-	var html = '<div class="col-md-9 form-group" >'
-	html += '<h5>Value</h5>'
-	html += '<input class="form-control" id="numer_data_value'+formNumber+'-'+id+'" name="numer_data_value'+formNumber+'-'+id+'" placeholder="(option) [&quot;180027610&quot;, &quot;180032410&quot;, … , &quot;180024710&quot;]" type="text">'
-	$(html).appendTo(div)
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="denom_file'+id+'" name="denom_file'+id+'" type="file">');
+	defForm.append('<br>');
 }
 
 function addNumerDefForm(){
-	id = defDataCounter.length
-	defDataCounter[id] = 1
+	numerDefCounter++;
+	id = numerDefCounter;
 
-	$('<div id="numer-def'+id+'">').appendTo($('#numer-def'))
-	var defForm = $('#numer-def'+id)
-	defForm.append("<h5>"+id+"</h5>");
+	$('<div id="numer-def'+id+'">').appendTo($('#numer-def'));
+	var defForm = $('#numer-def'+id);
+	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
 	defForm.append('<input class="form-control" id="numer_exp'+id+'" name="numer_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text">');
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="numer_file'+id+'" name="numer_file'+id+'" type="file">');
+	defForm.append('<br>');
+}
 
-	$('<div class="row" id="numer-def'+id+'-1">').appendTo(defForm)
-	var div = $('#numer-def'+id+'-1')
-	var html = '<div class="col-md-3 form-group" >'
-	html += '<h5>Key</h5>'
-	html += '<input class="form-control" id="numer_data_key'+id+'-1" name="numer_data_key'+id+'-1" placeholder="(option) レセ電コード" type="text">'
-	$(html).appendTo(div)
+function showDetail(){
+	var html = '<h5><b>詳細</b></h5>';
+	html += '<input class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text">'
+	$(html).appendTo('#factor_definition_detail');
+}
 
-	var html = '<div class="col-md-9 form-group" >'
-	html += '<h5>Value</h5>'
-	html += '<input class="form-control" id="numer_data_value'+id+'-1" name="numer_data_value'+id+'-1" placeholder="(option) [&quot;180027610&quot;, &quot;180032410&quot;, … , &quot;180024710&quot;]" type="text">'
-	$(html).appendTo(div)
+function hideDetail(){
+	$('#factor_definition_detail').empty();
+}
 
-	$('<button type="button" class="btn btn-sm btn-info btn-circle" onClick="addnumerDefDataForm('+id+')">＋</i></button><nobr> (Key, Valueの追加)</nobr><br><br>').appendTo($('#numer-def'))
+function addReferenceForm(){
+	referenceCounter++;
+	id = referenceCounter;
+
+	$('<input class="form-control" id="reference'+id+'" name="reference'+id+'" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><br>').appendTo('#references')
 }

@@ -14,7 +14,6 @@ class DefinitionsController < ApplicationController
 
   # GET /definitions/new
   def new
-    @definition = Definition.new
   end
 
   # GET /definitions/1/edit
@@ -24,8 +23,8 @@ class DefinitionsController < ApplicationController
   # POST /definitions
   # POST /definitions.json
   def create
-    @definition = Definition.new(definition_params)
-    @definition["プロジェクト名"] = params[:project]
+    @definition = Definition.new
+    @definition.set_params(params)
 
     respond_to do |format|
       if @definition.save

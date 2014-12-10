@@ -28,6 +28,10 @@ gem 'spring',        group: :development
 gem 'io-console'
 gem 'mongoid', '4.0.0.beta1'
 
+### for JavaScript runtime ###
+gem 'therubyracer', :platforms => :ruby
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -1,4 +1,48 @@
-<p>レコードを登録しました</p>
-<br>
-<%= link_to 'Edit', edit_definition_path(@definition) %> |
-<%= link_to 'Back', definitions_path %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_tag search_path, {method: "get"} do %>
+      <h3><b>検索キーワード</b></h3>
+      <div class="input-group">
+        <%= text_field_tag 'query', params['query'], :class => 'form-control input', :id => "btn-input", :placeholder => '大動脈バルーンパンピング法　人工心肺' %>
+        <span class="input-group-btn">
+          <%= submit_tag "　検　索　", :class => "btn btn-info btn", :id => "btn-chat" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div><br>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <label>整理番号</label>
+        <%= @definition['指標番号'].to_s %>
+      </div>
+      <div class="panel-body">
+        <label>プロジェクト名</label>: <%= @definition['プロジェクト名'] %></p>
+        <label>年度</label>: <%= @definition['年度'] %></p>
+        <label>更新日</label>: <%= @definition['更新日'] %></p>
+        <label>指標群</label>: <%= @definition['指標群'] %></p>
+        <label>名称</label>: <%= @definition['名称'] %></p>
+        <label>意義</label>: <%= @definition['意義'] %></p>
+        <label>必要データセット</label>: <%= @definition['必要なデータセット'] %></p>
+        <label>定義の要約</label>:</p>
+        <label>分子</label>: <%= @definition['定義の要約']['分子'] %></p>
+        <label>分母</label>: <%= @definition['定義の要約']['分母'] %></p>
+        <label>指標の定義算出方法</label>:
+        <label>分母の定義1</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['1'] %></p>
+        <label>分母の定義2</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['2'] %></p>
+        <label>分子の定義1</label>: <%= @definition['指標の定義/算出方法']['分子の定義']['1'] %></p>
+        <label>リスク調整因子の定義</label>: <%= @definition['リスクの調整因子の定義'] %></p>
+        <label>指標の算出方法(説明)</label>: <%= @definition['指標の算出方法']['説明'] %></p>
+        <label>指標の算出方法(単位)</label>: <%= @definition['指標の算出方法']['分母'] %></p>
+        <label>測定上の限界・解釈上の注意</label>: <%= @definition['測定上の限界/解釈上の注意'] %></p>
+        <label>参考値</label>: <%= @definition['参考値'] %></p>
+        <label>参考資料</label>: <%= @definition['参考資料'] %></p>
+        <label>定義見直しのタイミング</label>: <%= @definition['定義見直しのタイミング'] %></p>
+        <label>更新日</label>: <%= @definition['更新日'] %></p>
+      </div>
+    </div>
+  </div>
+</div>

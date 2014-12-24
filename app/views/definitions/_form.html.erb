@@ -72,9 +72,9 @@
 
   <div class="form-group">
     <h5>分子</h5>
-    <%= text_field_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+    <%= text_area_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
     <h5>分母</h5>
-    <%= text_field_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+    <%= text_area_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
     <br>
   </div>
 
@@ -86,7 +86,7 @@
       <div id="denom-def1">
         <h5><b>定義1</b></h5>
         <h5>説明</h5>
-        <%= text_field_tag 'denom_exp1', params['denom_exp1'], :class => 'form-control', :placeholder =>
+        <%= text_area_tag 'denom_exp1', params['denom_exp1'], :class => 'form-control', :placeholder =>
         '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
         <h5>CSVデータ(option)</h5>
         <input id="denom_file1" name="denom_file1" type="file">
@@ -104,7 +104,7 @@
       <div id="numer-def1">
         <h5><b>定義1</b></h5>
         <h5>説明</h5>
-        <%= text_field_tag 'numer_exp1', params['numer_exp1'], :class => 'form-control', :placeholder =>
+        <%= text_area_tag 'numer_exp1', params['numer_exp1'], :class => 'form-control', :placeholder =>
         '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
         <h5>CSVデータ(option)</h5>
         <input id="numer_file1" name="numer_file1" type="file">
@@ -147,10 +147,10 @@
   <h4><b>結果提示時の並び順</b></h5>
   <div class="form-group">
     <label class="radio-inline">
-      <%= radio_button 'order', params['order'], 'misc', {:checked => true} %>昇順
+      <%= radio_button 'order', params['order'], 'asc', {:checked => true} %>昇順
     </label>
     <label class="radio-inline">
-      <%= radio_button 'order', params['order'], 'dsck', {} %>降順
+      <%= radio_button 'order', params['order'], 'desc', {} %>降順
     </label>
     <br>
   </div>
@@ -160,16 +160,16 @@
 
   <h4><b>測定上の限界/解釈上の注意</b></h4>
   <div class="form-group">
-    <%= text_field_tag 'warning', params['warning'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
+    <%= text_area_tag 'warning', params['warning'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
     <br>
   </div>
 
 </div>
-<div class="col-xs-4">
+<div class="col-xs-9">
 
   <h4><b>参考値</b></h4>
   <div class="form-group">
-    <%= text_field_tag 'standard_value', params['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+    <%= text_area_tag 'standard_value', params['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
     <br>
   </div>
 
@@ -179,7 +179,7 @@
   <h4><b>参考資料</b></h4>
   <div class="form-group">
     <div id="references">
-      <input class="form-control" id="reference1" name="reference1" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><br>
+      <textarea class="form-control" id="reference1" name="reference1" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>
 
     </div>
     <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm()">＋</i></button><nobr> 追加<nobr>

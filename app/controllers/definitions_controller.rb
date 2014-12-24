@@ -26,6 +26,9 @@ class DefinitionsController < ApplicationController
     @definition = Definition.new
     @definition.set_params(params)
 
+    #すでにその指標番号が存在するなら削除する
+    @definition.remove_duplicate
+
     if @definition.save
       redirect_to @definition
     else

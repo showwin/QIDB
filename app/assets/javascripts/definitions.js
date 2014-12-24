@@ -32,7 +32,7 @@ function addDenomDefForm(){
 	var defForm = $('#denom-def'+id);
 	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
-	defForm.append('<input class="form-control" id="denom_exp'+id+'" name="denom_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text">');
+	defForm.append('<textarea class="form-control" id="denom_exp'+id+'" name="denom_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text"></textarea>');
 	defForm.append('<h5>CSVデータ(option)</h5>');
 	defForm.append('<input id="denom_file'+id+'" name="denom_file'+id+'" type="file">');
 	defForm.append('<br>');
@@ -46,7 +46,7 @@ function addNumerDefForm(){
 	var defForm = $('#numer-def'+id);
 	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
-	defForm.append('<input class="form-control" id="numer_exp'+id+'" name="numer_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text">');
+	defForm.append('<textarea class="form-control" id="numer_exp'+id+'" name="numer_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text"></textarea>');
 	defForm.append('<h5>CSVデータ(option)</h5>');
 	defForm.append('<input id="numer_file'+id+'" name="numer_file'+id+'" type="file">');
 	defForm.append('<br>');
@@ -66,5 +66,5 @@ function addReferenceForm(){
 	referenceCounter++;
 	id = referenceCounter;
 
-	$('<input class="form-control" id="reference'+id+'" name="reference'+id+'" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><br>').appendTo('#references')
+	$('<textarea class="form-control" id="reference'+id+'" name="reference'+id+'" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>').appendTo('#references')
 }

@@ -4,6 +4,14 @@ class Definition
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
 
+  def exist?
+    Definition.where(指標番号: self['指標番号']).empty?
+  end
+
+  def remove_duplicate
+    Definition.where(指標番号: self['指標番号']).destroy if self.exist?
+  end
+
   def set_params(params)
     self['プロジェクト名'] = params['project']
     self['年度'] = params['year']

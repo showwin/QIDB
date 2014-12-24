@@ -34,6 +34,7 @@ class Definition
     self['参考値'] = params['standard_value']
     self['参考資料'] = get_references(params)
     self['定義見直しのタイミング'] = params['review_span']
+    self['created_at'] = Time.now
   end
 
   def get_datasets(params)

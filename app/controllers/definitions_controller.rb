@@ -26,14 +26,10 @@ class DefinitionsController < ApplicationController
     @definition = Definition.new
     @definition.set_params(params)
 
-    respond_to do |format|
-      if @definition.save
-        format.html { redirect_to @definition, notice: 'Definition was successfully created.' }
-        format.json { render :show, status: :created, location: @definition }
-      else
-        format.html { render :new }
-        format.json { render json: @definition.errors, status: :unprocessable_entity }
-      end
+    if @definition.save
+      redirect_to @definition
+    else
+      render :new
     end
   end
 

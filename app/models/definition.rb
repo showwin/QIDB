@@ -103,14 +103,60 @@ class Definition
     data
   end
 
+  def self.read_csv(file)
+    raise "Unknown file type: #{file.original_filename}" if !(File.extname(file.original_filename) == '.csv')
+    csv = CSV.read(file.path)
+    columns = []
+    csv[0].each do |key|
+      columns << key
+    end
+
+    flag = true
+    1.upto(csv.length-1).each do |row_num|
+      @definition = Definition.new
+      params = {}
+
+      csv[row_num].each_with_index do |value, index|
+
+        case columns[index]
+        when "指標番号"
+          params['number'] = value
+        when "指標群"
+          params['group'] = value
+        when "定義書表題"
+          params['name'] = value
+        when "分母"
+          params['denom'] = value
+        when "分子"
+          params['numer'] = value
+        end
+      end
+
+      @definition.init_params(params)
+      @definition.set_params(params)
+      
+      @definition.remove_duplicate
+      if !(@definition.save && @definition.create_search_index(params))
+        flag = false
+      end
+
+    end
+    return flag
+  end
+
+  def init_params(params)
+
+    params['factor_definition'] = []
+    params['factor_definition'][0] = false
+    params['order'] = 'asc'
+
+  end
+
   def create_search_index(params)
     id = params['number']
     letters = params['project'].to_s + \
               params['year'].to_s + \
               params['number'].to_s + \
-              params['updated_date']["(1i)"].to_s + \
-              params['updated_date']["(2i)"].to_s + \
-              params['updated_date']["(3i)"].to_s + \
               params['group'].to_s + \
               params['name'].to_s + \
               params['meaning'].to_s + \
@@ -128,4 +174,6 @@ class Definition
               Time.now.to_s
     StringData.create_record(id, letters)
   end
+
+
 end

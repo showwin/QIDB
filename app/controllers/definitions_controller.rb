@@ -1,10 +1,6 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show]
 
-  def index
-    @definitions = Definition.all
-  end
-
   def show
   end
 

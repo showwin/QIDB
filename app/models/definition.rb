@@ -16,9 +16,7 @@ class Definition
     self['プロジェクト名'] = params['project']
     self['年度'] = params['year']
     self['指標番号'] = params['number']
-    self['更新日'] = params['updated_date']["(1i)"] \
-                  + params['updated_date']["(2i)"] \
-                  + params['updated_date']["(3i)"]
+    self['更新日'] = Date.today
     self['指標群'] = params['group']
     self['名称'] = params['name']
     self['意義'] = params['meaning']

@@ -1,0 +1,13 @@
+<%= form_tag import_path, multipart: true do %>
+
+<h5>CSVデータ(option)</h5>
+<input id="csv_file" name="csv_file" type="file">
+
+
+<div class="col-xs-4">
+  <div class="form-group">
+    <%= submit_tag "　登　録　", :class => "btn btn-lg btn-success" %>
+  </div>
+</divv>
+
+<% end %>

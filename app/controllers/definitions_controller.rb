@@ -26,6 +26,19 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  def upload
+
+  end
+
+  def import
+    if Definition.read_csv(params[:csv_file])
+      render :success
+    else
+      render :new
+    end
+
+  end
+
   private
     def set_definition
       @definition = Definition.where(指標番号: params[:id]).first

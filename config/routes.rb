@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :definitions
 
   get 'search' => 'home#search', as: :search
+  get 'download_csv' => 'home#output_csv', as: :download_csv
 
   scope module: :api, path: 'api', defaults: { format: 'json' } do
     namespace :v1 do

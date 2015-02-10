@@ -16,9 +16,6 @@ class Definition
     self['プロジェクト名'] = params['project']
     self['年度'] = params['year']
     self['指標番号'] = params['number']
-    self['更新日'] = params['updated_date']["(1i)"] \
-                  + params['updated_date']["(2i)"] \
-                  + params['updated_date']["(3i)"]
     self['指標群'] = params['group']
     self['名称'] = params['name']
     self['意義'] = params['meaning']
@@ -110,9 +107,6 @@ class Definition
     letters = params['project'].to_s + \
               params['year'].to_s + \
               params['number'].to_s + \
-              params['updated_date']["(1i)"].to_s + \
-              params['updated_date']["(2i)"].to_s + \
-              params['updated_date']["(3i)"].to_s + \
               params['group'].to_s + \
               params['name'].to_s + \
               params['meaning'].to_s + \

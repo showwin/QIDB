@@ -41,8 +41,30 @@
         <label>参考値</label>: <%= @definition['参考値'] %></p>
         <label>参考資料</label>: <%= @definition['参考資料'] %></p>
         <label>定義見直しのタイミング</label>: <%= @definition['定義見直しのタイミング'] %></p>
-        <label>更新日</label>: <%= @definition['更新日'] %></p>
-      </div>
+
+
+
+        <div class="panel-group" id="accordion">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <label data-toggle="collapse" data-parent="#accordion" href="#collapseOne">変更履歴</label>
+              </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <% @logs.each do |log| %>
+                  <label>変更者</label>: <%= log['変更者'] %>
+                  <br>
+                  <label>変更メッセージ</label>: <%= log['変更メッセージ'] %>
+                  <br>
+                  <br>
+                <% end %>
+              </div>
+            </div>
+          </div>
+　      </div>
+
     </div>
   </div>
 </div>

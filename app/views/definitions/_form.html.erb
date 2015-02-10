@@ -187,7 +187,10 @@
   </div>
 
 </div>
+
+
 <div class="col-xs-4">
+
 
   <h4><b>定義見直しのタイミング</b></h4>
   <div class="form-group">
@@ -195,8 +198,27 @@
     <br>
   </div>
 
+
+  <h4><b>変更者</b></h4>
+  <div class="form-group">
+    <%= text_field_tag 'editor', params['editor'], :class => 'form-control', :placeholder => '名前' %>
+    <br>
+  </div>
+
+</div>
+
+<div class="col-xs-9">
+  <h4><b>変更メッセージ</b></h4>
+  <div class="form-group">
+    <%= text_field_tag 'edit_message', params['edit_message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
+    <br>
+  </div>
+</div>
+
+<div class="col-xs-4">
   <div class="form-group">
     <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
   </div>
-</div>
+</divv>
+
 <% end %>

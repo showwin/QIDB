@@ -6,6 +6,7 @@ class DefinitionsController < ApplicationController
   end
 
   def new
+    @years = ['2008', '2010', '2012', '2014']
   end
 
   def create
@@ -37,7 +38,11 @@ class DefinitionsController < ApplicationController
     @definition.remove_duplicate
 
     # 検索用のレコード作成 と 定義の作成
-    if @definition.create_search_index(params) && @definition.save
+    if @definition.create_search_index(params) && @definition.save && @log.save
+      render :success
+    else
+      render :new
+    end
   end
 
   def upload

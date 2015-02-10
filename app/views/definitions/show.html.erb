@@ -31,9 +31,11 @@
         <label>分子</label>: <%= @definition['定義の要約']['分子'] %></p>
         <label>分母</label>: <%= @definition['定義の要約']['分母'] %></p>
         <label>指標の定義算出方法</label>:
+        <br>
         <label>分母の定義1</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['1'] %></p>
         <label>分母の定義2</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['2'] %></p>
         <label>分子の定義1</label>: <%= @definition['指標の定義/算出方法']['分子の定義']['1'] %></p>
+        <label>薬剤一覧の出力</label>: <%= @definition['薬剤出力一覧'] %></p>
         <label>リスク調整因子の定義</label>: <%= @definition['リスクの調整因子の定義'] %></p>
         <label>指標の算出方法(説明)</label>: <%= @definition['指標の算出方法']['説明'] %></p>
         <label>指標の算出方法(単位)</label>: <%= @definition['指標の算出方法']['分母'] %></p>
@@ -41,8 +43,6 @@
         <label>参考値</label>: <%= @definition['参考値'] %></p>
         <label>参考資料</label>: <%= @definition['参考資料'] %></p>
         <label>定義見直しのタイミング</label>: <%= @definition['定義見直しのタイミング'] %></p>
-
-
 
         <div class="panel-group" id="accordion">
           <div class="panel panel-default">

@@ -14,7 +14,7 @@ class Definition
 
   def set_params(params)
     self['プロジェクト名'] = params['project']
-    self['年度'] = params['year']
+    self['年度'] = get_years(params)
     self['指標番号'] = params['number']
     self['更新日'] = Date.today
     self['指標群'] = params['group']
@@ -23,13 +23,8 @@ class Definition
     self["必要なデータセット"] = get_datasets(params)
     self['定義の要約'] = { '分子' => params['numer'], '分母' => params['denom'] }
     self['指標の定義/算出方法'] = get_definitions(params)
-
-    if params['drug_output'][0] = "yes"
-      self['薬剤出力一覧'] = true
-    else
-      self['薬剤出力一覧'] = false
-    end      
-    if params['factor_definition'][0] == "yes"
+    self['薬剤一覧の出力'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
+    if params['factor_definition'].to_a[0][1] == "yes"
       self['リスクの調整因子の定義'] = true
       self['定義の詳細'] = params['definition_detail']
     else
@@ -41,16 +36,28 @@ class Definition
     self['参考値'] = params['standard_value']
     self['参考資料'] = get_references(params)
     self['定義見直しのタイミング'] = params['review_span']
+    self['指標タイプ'] = params['indicator']
     self['created_at'] = Time.now
   end
 
+  def get_years(params)
+    result = []
+    opts = ['2008', '2010', '2012', '2014']
+    opts.each do |opt|
+      if params['year_'+opt] == "true"
+        result << opt
+      end
+    end
+    result
+  end
+
   def get_datasets(params)
-    id = 1
     set = []
-    while params['dataset'+id.to_s].present? do
-      data = params['dataset'+id.to_s]
-      set << data if !set.include?(data)
-      id += 1
+    0.upto(3) do |i|
+      set << params['dataset_'+i.to_s] if params['dataset_'+i.to_s].present?
+    end
+    0.upto(4) do |i|
+      set << params['dataset_others_'+i.to_s] if params['dataset_others_'+i.to_s].present?
     end
     set
   end

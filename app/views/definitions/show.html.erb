@@ -51,12 +51,12 @@
                 <label data-toggle="collapse" data-parent="#accordion" href="#collapseOne">変更履歴</label>
               </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
+            <div id="collapseOne" class="panel-collapse collapse">
               <div class="panel-body">
                 <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['変更者'] %>
-                  <br>
-                  <label>変更メッセージ</label>: <%= log['変更メッセージ'] %>
+                  <label>日付</label>:<%= log['変更日時'] %><br>
+                  <label>変更者</label>: <%= log['変更者'] %><br>
+                  <label>内容</label>: <%= log['変更メッセージ'] %>
                   <br>
                   <br>
                 <% end %>

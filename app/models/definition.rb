@@ -23,13 +23,8 @@ class Definition
     self["必要なデータセット"] = get_datasets(params)
     self['定義の要約'] = { '分子' => params['numer'], '分母' => params['denom'] }
     self['指標の定義/算出方法'] = get_definitions(params)
-
-    if params['drug_output'][0] = "yes"
-      self['薬剤出力一覧'] = true
-    else
-      self['薬剤出力一覧'] = false
-    end      
-    if params['factor_definition'][0] == "yes"
+    self['薬剤一覧の出力'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
+    if params['factor_definition'].to_a[0][1] == "yes"
       self['リスクの調整因子の定義'] = true
       self['定義の詳細'] = params['definition_detail']
     else

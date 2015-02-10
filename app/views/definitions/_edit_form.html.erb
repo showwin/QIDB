@@ -34,6 +34,7 @@
   </div>
 
 </div>
+
 <div class="col-xs-11">
 
   <div class="form-group">
@@ -123,14 +124,46 @@
 <div class="col-xs-9">
 
   <div class="form-group">
+    <h4><b>薬剤一覧の出力</b></h4>
+    <% if @definition['薬剤一覧の出力'] %>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'yes', {:checked => true} %>あり
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'no', {} %>なし
+      </label>
+    <% else %>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'yes', {} %>あり
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'no', {:checked => true} %>なし
+      </label>
+    <% end %>
+  </div>
+
+  <div class="form-group">
     <h4><b>リスクの調整因子の定義</b></h5>
-    <label class="radio-inline">
-      <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'yes', {:onChange => 'showDetail()'} %>あり
-    </label>
-    <label class="radio-inline">
-      <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
-    </label>
-    <div id="factor_definition_detail"></div>
+    <% if @definition['リスクの調整因子の定義'] %>
+      <label class="radio-inline">
+        <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'no', {:onChange => 'hideDetail()'} %>なし
+      </label>
+      <div id="factor_definition_detail">
+        <h5><b>詳細</b></h5>
+        <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= @definition['定義の詳細'] %></textarea>
+      </div>
+    <% else %>
+      <label class="radio-inline">
+        <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'yes', {:onChange => 'showDetail()'} %>あり
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
+      </label>
+      <div id="factor_definition_detail"></div>
+    <% end %>
     <br>
   </div>
 
@@ -150,12 +183,21 @@
 
   <h4><b>結果提示時の並び順</b></h5>
   <div class="form-group">
-    <label class="radio-inline">
-      <%= radio_button 'order', @definition['結果提示時の並び順'], 'asc', {:checked => true} %>昇順
-    </label>
-    <label class="radio-inline">
-      <%= radio_button 'order', @definition['結果提示時の並び順'], 'desc', {} %>降順
-    </label>
+    <% if @definition['結果提示時の並び順'] == 'asc' %>
+      <label class="radio-inline">
+        <%= radio_button 'order', @definition['結果提示時の並び順'], 'asc', {:checked => true} %>昇順
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'order', @definition['結果提示時の並び順'], 'desc', {} %>降順
+      </label>
+    <% else %>
+      <label class="radio-inline">
+        <%= radio_button 'order', @definition['結果提示時の並び順'], 'asc', {} %>昇順
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'order', @definition['結果提示時の並び順'], 'desc', {:checked => true} %>降順
+      </label>
+    <% end %>
     <br>
   </div>
 
@@ -212,7 +254,7 @@
     <h4><b>変更履歴</b></h4>
   <% end %>
   <% @edit_logs.each do |log| %>
-    <%= log['変更者'] %>: <%= log['変更メッセージ'] %><br>
+    <%= log['変更日時'] %>　<%= log['変更者'] %>: <%= log['変更メッセージ'] %><br>
   <% end %>
 
   <h4><b>変更者</b></h4>

@@ -23,6 +23,7 @@ class DefinitionsController < ApplicationController
     if @definition.create_search_index(params) && @definition.save && !@log['変更者'].blank? && !@log['変更メッセージ'].blank? && @log.save
       render :success
     else
+      set_form_params
       render :new
     end
   end
@@ -42,7 +43,8 @@ class DefinitionsController < ApplicationController
     if @definition.create_search_index(params) && @definition.save && @log.save
       render :success
     else
-      render :new
+      set_form_params
+      render :edit
     end
   end
 

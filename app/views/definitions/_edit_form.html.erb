@@ -11,9 +11,13 @@
 
   <div class="form-group">
     <h4><b>年度</b></h4>
-    <%= select_tag('year', options_for_select([
-      ["2008", "2008"], ["2009", "2009"], ["2010", "2010"], ["2011", "2011"], ["2012", "2012"], ["2013", "2013"], ["2014", "2014"]
-      ], @definition['年度']), :class => "form-control  btn-sm") %>
+    <% @years.each do |y| %>
+      <% if @definition['年度'].include?(y) %>
+        <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
+      <% else %>
+        <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
+      <% end %>
+    <% end %>
     <br>
   </div>
 
@@ -50,11 +54,18 @@
   <div class="form-group">
     <div id="dataset-form">
       <h4><b>必要なデータセット</b></h4>
-      <%= select_tag('dataset1', options_for_select([
-        ["DPC様式1", "DPC様式1"], ["E/Fファイル", "E/Fファイル"], ["Fファイル", "Fファイル"], ["EFファイル", "EFファイル"]
-        ], session['dataset1']), :class => "form-control btn-sm") %>
+      <% @dataset.each_with_index do |d, index| %>
+        <% if @definition['必要なデータセット'].include?(d) %>
+          <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
+        <% else %>
+          <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
+        <% end %>
+      <% end %>
+      <% (@definition['必要なデータセット'] - @dataset).each_with_index do |other, index| %>
+        <%= text_field_tag "dataset_others_#{index}", other, :class => 'form-control', :placeholder => 'その他のデータセット名' %>
+      <% end %>
     </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm()">＋</i></button><nobr> 追加</nobr>
+    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition['必要なデータセット'] - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
     <br>
   </div>
 
@@ -188,8 +199,42 @@
     <br>
   </div>
 
+  <h4><b>指標タイプ</b></h4>
+  <div class="form-group">
+    <%= select_tag('indicator', options_for_select([
+      ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
+      ], @definition['指標タイプ']), :class => "form-control  btn-sm") %>
+      <br>
+      <br>
+  </div>
+
+  <% if !@edit_logs.blank? %>
+    <h4><b>変更履歴</b></h4>
+  <% end %>
+  <% @edit_logs.each do |log| %>
+    <%= log['変更者'] %>: <%= log['変更メッセージ'] %><br>
+  <% end %>
+
+  <h4><b>変更者</b></h4>
+  <div class="form-group">
+    <%= text_field_tag 'editor', params['editor'], :class => 'form-control', :placeholder => '名前' %>
+    <br>
+  </div>
+
+</div>
+
+<div class="col-xs-9">
+  <h4><b>変更メッセージ</b></h4>
+  <div class="form-group">
+    <%= text_field_tag 'edit_message', params['edit_message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
+    <br>
+  </div>
+</div>
+
+<div class="col-xs-4">
   <div class="form-group">
     <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
   </div>
 </div>
+
 <% end %>

@@ -12,9 +12,9 @@
 
   <div class="form-group">
     <h4><b>年度</b></h4>
-    <%= select_tag('year', options_for_select([
-      ["2008", "2008"], ["2009", "2009"], ["2010", "2010"], ["2011", "2011"], ["2012", "2012"], ["2013", "2013"], ["2014", "2014"]
-      ], session['year']), :class => "form-control  btn-sm") %>
+    <% @years.each do |y| %>
+      <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
+    <% end %>
     <br>
   </div>
 
@@ -57,9 +57,9 @@
   <div class="form-group">
     <div id="dataset-form">
       <h4><b>必要なデータセット</b></h4>
-      <%= select_tag('dataset1', options_for_select([
-        ["DPC様式1", "DPC様式1"], ["E/Fファイル", "E/Fファイル"], ["Fファイル", "Fファイル"], ["EFファイル", "EFファイル"]
-        ], session['dataset1']), :class => "form-control btn-sm") %>
+      <% @dataset.each_with_index do |d, index| %>
+        <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
+      <% end %>
     </div>
     <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm()">＋</i></button><nobr> 追加</nobr>
     <br>
@@ -198,6 +198,14 @@
     <br>
   </div>
 
+  <h4><b>指標タイプ</b></h4>
+  <div class="form-group">
+    <%= select_tag('indicator', options_for_select([
+      ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
+      ], session['indicator']), :class => "form-control  btn-sm") %>
+      <br>
+    <br>
+  </div>
 
   <h4><b>変更者</b></h4>
   <div class="form-group">
@@ -219,6 +227,6 @@
   <div class="form-group">
     <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
   </div>
-</divv>
+</div>
 
 <% end %>

@@ -14,7 +14,7 @@ class Definition
 
   def set_params(params)
     self['プロジェクト名'] = params['project']
-    self['年度'] = params['year']
+    self['年度'] = get_years(params)
     self['指標番号'] = params['number']
     self['更新日'] = Date.today
     self['指標群'] = params['group']
@@ -35,16 +35,28 @@ class Definition
     self['参考値'] = params['standard_value']
     self['参考資料'] = get_references(params)
     self['定義見直しのタイミング'] = params['review_span']
+    self['指標タイプ'] = params['indicator']
     self['created_at'] = Time.now
   end
 
+  def get_years(params)
+    result = []
+    opts = ['2008', '2010', '2012', '2014']
+    opts.each do |opt|
+      if params['year_'+opt] == "true"
+        result << opt
+      end
+    end
+    result
+  end
+
   def get_datasets(params)
-    id = 1
     set = []
-    while params['dataset'+id.to_s].present? do
-      data = params['dataset'+id.to_s]
-      set << data if !set.include?(data)
-      id += 1
+    0.upto(3) do |i|
+      set << params['dataset_'+i.to_s] if params['dataset_'+i.to_s].present?
+    end
+    0.upto(4) do |i|
+      set << params['dataset_others_'+i.to_s] if params['dataset_others_'+i.to_s].present?
     end
     set
   end

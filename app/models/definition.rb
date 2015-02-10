@@ -22,7 +22,6 @@ class Definition
     self['意義'] = params['meaning']
     self["必要なデータセット"] = get_datasets(params)
     self['定義の要約'] = { '分子' => params['numer'], '分母' => params['denom'] }
-
     self['指標の定義/算出方法'] = get_definitions(params)
     if params['factor_definition'][0] == "yes"
       self['リスクの調整因子の定義'] = true
@@ -134,7 +133,7 @@ class Definition
 
       @definition.init_params(params)
       @definition.set_params(params)
-      
+
       @definition.remove_duplicate
       if !(@definition.save && @definition.create_search_index(params))
         flag = false
@@ -145,11 +144,9 @@ class Definition
   end
 
   def init_params(params)
-
     params['factor_definition'] = []
     params['factor_definition'][0] = false
     params['order'] = 'asc'
-
   end
 
   def create_search_index(params)

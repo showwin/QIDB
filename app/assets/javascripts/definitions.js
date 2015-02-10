@@ -54,7 +54,7 @@ function addNumerDefForm(){
 
 function showDetail(){
 	var html = '<h5><b>詳細</b></h5>';
-	html += '<input class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text">'
+	html += '<textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text">'
 	$(html).appendTo('#factor_definition_detail');
 }
 

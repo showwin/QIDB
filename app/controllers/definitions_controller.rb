@@ -20,7 +20,7 @@ class DefinitionsController < ApplicationController
     @definition.remove_duplicate
 
     # 検索用のレコード作成 と 定義の作成
-    if @definition.create_search_index(params) && @definition.save && @log.save
+    if @definition.create_search_index(params) && @definition.save && !@log['変更者'].blank? && !@log['変更メッセージ'].blank? && @log.save
       render :success
     else
       render :new

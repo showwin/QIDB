@@ -150,11 +150,9 @@ class Definition
   end
 
   def init_params(params)
-
     params['factor_definition'] = []
     params['factor_definition'][0] = false
     params['order'] = 'asc'
-
   end
 
   def create_search_index(params)

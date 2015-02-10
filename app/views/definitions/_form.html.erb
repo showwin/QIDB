@@ -24,11 +24,6 @@
     <br>
   </div>
 
-  <div class="form-group">
-    <h4><b>更新日</b></h4>
-    <%= date_select('updated_date', params['updated_date'], :use_month_numbers => true, :start_year => 2008, :end_year => 2014) %><br>
-    <br>
-  </div>
 
   <div class="form-group">
     <h4><b>指標群</b></h4>
@@ -116,6 +111,23 @@
   </div>
 
 </div>
+
+<div class="col-xs-9">
+
+  <div class="form-group">
+    <h4><b>薬剤一覧の出力</b></h5>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', params['drug_output'], 'yes', {:checked => true} %>あり
+      </label>
+      <label class="radio-inline">
+        <%= radio_button 'drug_output', params['drug_output'], 'no', {} %>なし
+      </label>
+      <div id="factor_definition_detail"></div>
+      <br>
+  </div>
+
+</div>
+
 <div class="col-xs-9">
 
   <div class="form-group">

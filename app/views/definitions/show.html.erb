@@ -26,13 +26,55 @@
         <label>指標群</label>: <%= @definition['指標群'] %></p>
         <label>名称</label>: <%= @definition['名称'] %></p>
         <label>意義</label>: <%= @definition['意義'] %></p>
-        <label>必要データセット</label>: <%= @definition['必要なデータセット'] %></p>
+        <label>必要データセット</label>:
+        <% @definition['必要なデータセット'].each do |var| %>
+          <%= var %>&nbsp;
+        <% end %></p>
         <label>定義の要約</label>:</p>
         <label>分子</label>: <%= @definition['定義の要約']['分子'] %></p>
         <label>分母</label>: <%= @definition['定義の要約']['分母'] %></p>
-        <label>指標の定義算出方法</label>:
-        <br>
-        <label>分母の定義1</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['1'] %></p>
+        <label>指標の定義算出方法</label>:</p>
+        <label>分母の定義1</label>:</p>
+        説明:<%= @definition['指標の定義/算出方法']['分母の定義']['1']['説明'] %></p>
+
+          <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">分母のデータ</div>
+                <div class="panel-body">
+                  <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <% @definition['指標の定義/算出方法']['分母の定義']['1']['data'].each do |i| %>
+                            <th><%= i.keys %></th>
+                          <% end %>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% @definition['指標の定義/算出方法']['分母の定義']['1']['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <td><%= id+1 %></td>
+                            <% @definition['指標の定義/算出方法']['分母の定義']['1']['data'].each do |i| %>
+                              <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- /.table-responsive -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+          </div>
+          <!-- /.col-lg-12 -->
+
+
+
+
         <label>分母の定義2</label>: <%= @definition['指標の定義/算出方法']['分母の定義']['2'] %></p>
         <label>分子の定義1</label>: <%= @definition['指標の定義/算出方法']['分子の定義']['1'] %></p>
         <label>薬剤一覧の出力</label>: <%= @definition['薬剤出力一覧'] %></p>
@@ -41,29 +83,45 @@
         <label>指標の算出方法(単位)</label>: <%= @definition['指標の算出方法']['分母'] %></p>
         <label>測定上の限界・解釈上の注意</label>: <%= @definition['測定上の限界/解釈上の注意'] %></p>
         <label>参考値</label>: <%= @definition['参考値'] %></p>
-        <label>参考資料</label>: <%= @definition['参考資料'] %></p>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <label data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed">
+                参考資料
+              </label>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+            <div class="panel-body">
+              <% @definition['参考資料'].each do |var| %>
+              <%= var %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
         <label>定義見直しのタイミング</label>: <%= @definition['定義見直しのタイミング'] %></p>
 
-        <div class="panel-group" id="accordion">
+        
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
-                <label data-toggle="collapse" data-parent="#accordion" href="#collapseOne">変更履歴</label>
+                <label data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" class="collapsed">
+                  変更履歴
+                </label>
               </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in">
+            <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
               <div class="panel-body">
                 <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['変更者'] %>
-                  <br>
-                  <label>変更メッセージ</label>: <%= log['変更メッセージ'] %>
-                  <br>
-                  <br>
+                  <label>変更者</label>: <%= log['変更者'] %></p>
+                  <label>変更メッセージ</label>: <%= log['変更メッセージ'] %></p>
                 <% end %>
               </div>
             </div>
           </div>
-　      </div>
+　
 
     </div>
   </div>

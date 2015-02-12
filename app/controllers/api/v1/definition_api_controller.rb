@@ -8,12 +8,12 @@ module Api
           @defs = Definition.all
         # idが指定されている場合
         elsif params[:id].present?
-          @defs = Definition.where(指標番号: params[:id]).first
+          @defs = Definition.where(指標番号: params[:id])
         end
         if @defs.nil?
           render_not_found
         else
-          render :json => @defs
+          render 'index.json.jbuilder'
         end
       end
 

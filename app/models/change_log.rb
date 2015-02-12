@@ -9,4 +9,12 @@ class ChangeLog
     self['変更日時'] = Date.today.to_s
   end
 
+  def self.make_json(id)
+    logs = ChangeLog.where(指標番号: id)
+    result = []
+    logs.each do |log|
+      result << log
+    end
+    result
+  end
 end

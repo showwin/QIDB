@@ -1,5 +1,12 @@
 <%= form_tag definitions_path, multipart: true do %>
 
+<% if @messages.present? %>
+  <p class="text-danger">
+    <%= @messages['指標番号'] %><br>
+    <%= @messages['変更者'] %><br>
+    <%= @messages['変更メッセージ'] %>
+  </p>
+<% end %>
 
 <div class="col-xs-4">
   <div class="form-group">
@@ -23,7 +30,7 @@
   </div>
 
   <div class="form-group">
-    <h4><b>指標番号</b></h4>
+    <h4><b>指標番号</b></h4><p class="text-danger">
     <%= text_field_tag 'number', params['number'], :class => 'form-control', :placeholder => '(e.g.) 0548' %>
     <br>
   </div>
@@ -292,7 +299,7 @@
 </div>
 
 <div class="col-xs-9">
-  <h4><b>変更メッセージ</b></h4>
+  <h4><b>変更メッセージ</b></h4><p class="text-danger">
   <div class="form-group">
     <%= text_field_tag 'edit_message', params['edit_message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
     <br>

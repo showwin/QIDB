@@ -21,7 +21,7 @@ class HomeController < ApplicationController
       content << record['定義の要約'][1]['分母'] if record['定義の要約'][1]
       content << record['定義の要約'][0]['分子'] if record['定義の要約'][0]
       content << record['リスクの調整因子の定義']
-      #content << record['薬剤出力一覧']
+      content << record['薬剤出力一覧']
       content << record['結果提示時の並び順']
       #content << record['指標タイプ']
       @contents << content

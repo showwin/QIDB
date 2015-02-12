@@ -1,12 +1,12 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show, :edit, :update]
+  before_action :set_form_params, only: [:new, :edit]
 
   def show
     @logs = ChangeLog.where(指標番号: params[:id]).to_a
   end
 
   def new
-    @years = ['2008', '2010', '2012', '2014']
   end
 
   def create
@@ -20,9 +20,13 @@ class DefinitionsController < ApplicationController
     @definition.remove_duplicate
 
     # 検索用のレコード作成 と 定義の作成
+
     if @log['変更者'].blank? || @log['変更メッセージ'].blank? || !@log.save
-      render :failure
+      set_form_params
+      @message = '変更者と変更メッセージを記入して下さい'
+      render :new
     elsif !(@definition.create_search_index(params) && @definition.save)
+      set_form_params
       render :new
     else
       render :success
@@ -30,6 +34,7 @@ class DefinitionsController < ApplicationController
   end
 
   def edit
+    @edit_logs = ChangeLog.where(指標番号: params[:id]).to_a
   end
 
   def update
@@ -43,7 +48,8 @@ class DefinitionsController < ApplicationController
     if @definition.create_search_index(params) && @definition.save && @log.save
       render :success
     else
-      render :new
+      set_form_params
+      render :edit
     end
   end
 
@@ -62,4 +68,10 @@ class DefinitionsController < ApplicationController
     def set_definition
       @definition = Definition.where(指標番号: params[:id]).first
     end
+
+    def set_form_params
+      @years = ['2008', '2010', '2012', '2014']
+      @dataset = ['DPC様式1', 'Fファイル', 'EFファイル', 'Dファイル']
+    end
+
 end

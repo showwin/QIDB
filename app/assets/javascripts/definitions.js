@@ -1,4 +1,4 @@
-var datasetCounter = 1;
+var datasetCounter = 0;
 var denomDefCounter = 1;
 var numerDefCounter = 1;
 var referenceCounter = 1;
@@ -11,17 +11,17 @@ $('#test_ckb').change(function(){
 	}
 });
 
-function addDatasetForm(){
-	datasetCounter++;
+function addDatasetForm(init){
+	if (init > datasetCounter) {
+		datasetCounter = init
+	}
 	var id = datasetCounter;
-
-	var select = $('<select class="form-control btn-sm" id="dataset'+id+'" name="dataset'+id+'">');
-	$('<option value="DPC様式1">DPC様式1</option>').appendTo(select);
-	$('<option value="E/Fファイル">E/Fファイル</option>').appendTo(select);
-	$('<option value="Fファイル">Fファイル</option>').appendTo(select);
-	$('<option value="EFファイル">EFファイル</option></select>').appendTo(select);
-
+	if (id >= 5) {
+		return
+	}
+	var select = $('<input class="form-control" id="dataset_others_'+id+'" name="dataset_others_'+id+'" placeholder="その他のデータセット名" type="text">');
 	$(select).appendTo($("#dataset-form"));
+	datasetCounter++;
 }
 
 function addDenomDefForm(){

@@ -48,7 +48,7 @@ class DefinitionsController < ApplicationController
       render :success
     else
       set_form_params
-      render :edit
+      render :new
     end
   end
 

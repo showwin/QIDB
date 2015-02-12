@@ -1,6 +1,6 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show, :edit, :update]
-  before_action :set_form_params, only: [:new, :edit]
+  before_action :set_form_params, only: [:show, :new, :edit]
 
   def show
     @logs = ChangeLog.where(_id: params[:id]).to_a
@@ -14,9 +14,9 @@ class DefinitionsController < ApplicationController
     @definition.set_params(params)
 
     @log = ChangeLog.new
-    @log.set_params(params)
+    @log.set_params(params, @definition._id.to_s)
 
-    # すでにその指標番号が存在するなら削除する
+    # すでにその指標番号が存在するなら論理削除する
     @definition.remove_duplicate
 
     # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
@@ -79,11 +79,11 @@ class DefinitionsController < ApplicationController
       #if @definition['指標番号'].blank?
       #  @messages['指標番号'] = '指標番号を記入して下さい'
       #end
-      if @log['変更者'].blank?
-        @messages['変更者'] = '変更者を記入して下さい'
+      if @log['editor'].blank?
+        @error['editor'] = '変更者を記入して下さい'
       end
-      if @log['変更メッセージ'].blank?
-        @messages['変更メッセージ'] = '変更メッセージを記入して下さい'
+      if @log['message'].blank?
+        @error['message'] = '変更メッセージを記入して下さい'
       end
     end
 

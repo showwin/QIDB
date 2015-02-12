@@ -13,7 +13,7 @@ $('#test_ckb').change(function(){
 
 function addDatasetForm(init){
 	if (init > datasetCounter) {
-		datasetCounter = init
+		datasetCounter = init;
 	}
 	var id = datasetCounter;
 	if (id >= 5) {
@@ -24,7 +24,10 @@ function addDatasetForm(init){
 	datasetCounter++;
 }
 
-function addDenomDefForm(){
+function addDenomDefForm(init){
+	if (init > denomDefCounter) {
+		denomDefCounter = init;
+	}
 	denomDefCounter++;
 	id = denomDefCounter;
 
@@ -38,7 +41,10 @@ function addDenomDefForm(){
 	defForm.append('<br>');
 }
 
-function addNumerDefForm(){
+function addNumerDefForm(init){
+	if (init > numerDefCounter) {
+		numerDefCounter = init;
+	}
 	numerDefCounter++;
 	id = numerDefCounter;
 
@@ -62,9 +68,12 @@ function hideDetail(){
 	$('#factor_definition_detail').empty();
 }
 
-function addReferenceForm(){
-	referenceCounter++;
+function addReferenceForm(init){
+	if (init > referenceCounter) {
+		referenceCounter = init;
+	}
 	id = referenceCounter;
 
 	$('<textarea class="form-control" id="reference'+id+'" name="reference'+id+'" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>').appendTo('#references')
+	referenceCounter++;
 }

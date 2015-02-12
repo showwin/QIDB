@@ -31,7 +31,7 @@ class Definition
       self['リスクの調整因子の定義'] = false
     end
     self['指標の算出方法'] = { '説明' => params['method_explanation'], '単位' => params['method_unit'] }
-    self['結果提示時の並び順'] = params['order'][0]
+    self['結果提示時の並び順'] = params['order'].to_a[0][1]
     self['測定上の限界/解釈上の注意'] = params['warning']
     self['参考値'] = params['standard_value']
     self['参考資料'] = get_references(params)

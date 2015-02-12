@@ -24,7 +24,7 @@ class DefinitionsController < ApplicationController
     confirm
 
     # 検索用のレコード作成 と 定義の作成
-    if (@definition.create_search_index(params) && @definition.save) && @messages.blank?
+    if @messages.blank? && (@definition.create_search_index(params) && @definition.save) 
       render :success
     else
       set_form_params

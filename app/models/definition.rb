@@ -13,9 +13,8 @@ class Definition
   end
 
   def set_params(params)
-    self['プロジェクト名'] = params['project']
+    self['指標番号'] = get_numbers(params)
     self['年度'] = get_years(params)
-    self['指標番号'] = params['number']
     self['更新日'] = Date.today
     self['指標群'] = params['group']
     self['名称'] = params['name']
@@ -38,6 +37,17 @@ class Definition
     self['定義見直しのタイミング'] = params['review_span']
     self['指標タイプ'] = params['indicator']
     self['created_at'] = Time.now
+  end
+
+  def get_numbers(params)
+    result = []
+    @projects = ['qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf']
+    @projects.each do |prjt|
+      if params['project_'+prjt+'_number'].present?
+        result << {'プロジェクト名' => prjt, '番号' => params['project_'+prjt+'_number']}
+      end
+    end
+    result
   end
 
   def get_years(params)

@@ -11,30 +11,17 @@
 <div class="col-xs-4">
   <div class="form-group">
     <h4><b>プロジェクト名</b></h4>
-    <%= select_tag('project', options_for_select([
-      ["QIP", "QIP"], ["済生会", "済生会"], ["日本医師会", "日本医師会"], ["全国自治体病院", "全国自治体病院"]
-      ], params['project']), :class => "form-control  btn-sm") %>
-      <br>
-  </div>
-
-  <div class="form-group">
-    <h4><b>年度</b></h4>
-    <% @years.each do |y| %>
-      <% if params["year_#{y}"] == 'true' %>
-        <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
+    <% @projects.each do |p| %>
+      <% if params["project_#{p[1]}"] == 'true' %>
+        <%= check_box_tag "project_#{p[1]}", true, true, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
+        <label id="project_<%= p[1] %>_number"><input class="form-control input-sm" id="number" name="project_<%= p[1] %>_number" value='<%= params["project_#{p[1]}_number"] %>' placeholder="指標番号　(e.g.) 0548" type="text"></label><br>
       <% else %>
-        <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
+        <%= check_box_tag "project_#{p[1]}", true, false, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
+        <label id="project_<%= p[1] %>_number"></label><br>
       <% end %>
     <% end %>
     <br>
   </div>
-
-  <div class="form-group">
-    <h4><b>指標番号</b></h4><p class="text-danger">
-    <%= text_field_tag 'number', params['number'], :class => 'form-control', :placeholder => '(e.g.) 0548' %>
-    <br>
-  </div>
-
 
   <div class="form-group">
     <h4><b>指標群</b></h4>

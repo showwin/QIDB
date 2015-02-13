@@ -11,6 +11,14 @@ $('#test_ckb').change(function(){
 	}
 });
 
+function showNumberForm(project){
+	if ($('#'+project).is(':checked')) {
+		$('#'+project+'_number').append('<input class="form-control input-sm" id="number" name="'+project+'_number" placeholder="指標番号　(e.g.) 0548" type="text">');
+	} else {
+		$('#'+project+'_number').html('');
+	}
+}
+
 function addDatasetForm(init){
 	if (init > datasetCounter) {
 		datasetCounter = init;

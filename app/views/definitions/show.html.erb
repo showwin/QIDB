@@ -17,26 +17,29 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <label>整理番号</label>
-        <%= @definition['指標番号'].to_s %>
+        <%= 1.to_s %>
       </div>
       <div class="panel-body">
-        <label>プロジェクト名</label>: <%= @definition['プロジェクト名'] %></p>
-        <label>年度</label>: <%= @definition['年度'] %></p>
-        <label>更新日</label>: <%= @definition['更新日'] %></p>
-        <label>指標群</label>: <%= @definition['指標群'] %></p>
-        <label>名称</label>: <%= @definition['名称'] %></p>
-        <label>意義</label>: <%= @definition['意義'] %></p>
+        <label>指標番号</label>
+        <% @projects.each do |prjt| %>
+          <%= prjt %>: <%= @definition['numbers']['prjt'] %></p>
+        <% end %>
+        <label>年度</label>: <%= @definition['years'] %></p>
+        <label>更新日</label>: <%= @definition['created_at'] %></p>
+        <label>指標群</label>: <%= @definition['group'] %></p>
+        <label>名称</label>: <%= @definition['name'] %></p>
+        <label>意義</label>: <%= @definition['meaning'] %></p>
         <label>必要データセット</label>:
-        <% @definition['必要なデータセット'].each do |var| %>
+        <% @definition['dataset'].each do |var| %>
           <%= var %>&nbsp;
         <% end %></p>
         <label>定義の要約</label>:</p>
-        <label>分子</label>: <%= @definition['定義の要約']['分子'] %></p>
-        <label>分母</label>: <%= @definition['定義の要約']['分母'] %></p>
+        <label>分母</label>: <%= @definition['def_summary']['denom'] %></p>
+        <label>分子</label>: <%= @definition['def_summary']['numer'] %></p>
         <label>指標の定義算出方法</label>:</p>
-        <% @definition['指標の定義/算出方法']['分母の定義'].each do |key,value| %>
+        <% @definition['definitions']['def_denom'].each do |key,value| %>
           <label>分母の定義<%= key %></label>:</p>
-          説明:<%= value['説明'] %></p>
+          説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
@@ -73,9 +76,9 @@
           <% end %>
         <% end %>
 
-        <% @definition['指標の定義/算出方法']['分子の定義'].each do |key,value| %>
+        <% @definition['definitions']['def_numer'].each do |key,value| %>
           <label>分母の定義<%= key %></label>:</p>
-          説明:<%= value['説明'] %></p>
+          説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
@@ -85,8 +88,8 @@
                     <table class="table table-striped table-bordered table-hover">
                       <thead>
                         <tr>
-                          <% value['data'].each do |i| %>
-                          <th><%= i.keys %></th>
+                          <% value['data'].each do |column| %>
+                            <th><%= column.keys %></th>
                           <% end %>
                         </tr>
                       </thead>
@@ -112,9 +115,9 @@
           <% end %>
         <% end %>
 
-        <label>薬剤一覧の出力</label>: <%= @definition['薬剤出力一覧'] %></p>
+        <label>薬剤一覧の出力</label>: <%= @definition['drag_output'] %></p>
 
-        <% @definition['リスクの調整因子の定義'].each do |key,value| %>
+        <% @definition['factor_definition'].each do |key,value| %>
           <label>リスク調整因子の定義<%= key %></label>:</p>
           説明:<%= value['説明'] %></p>
           <% if value['data'].present? %>
@@ -153,10 +156,10 @@
           <% end %>
         <% end %>
 
-        <label>指標の算出方法(説明)</label>: <%= @definition['指標の算出方法']['説明'] %></p>
-        <label>指標の算出方法(単位)</label>: <%= @definition['指標の算出方法']['分母'] %></p>
-        <label>測定上の限界・解釈上の注意</label>: <%= @definition['測定上の限界/解釈上の注意'] %></p>
-        <label>参考値</label>: <%= @definition['参考値'] %></p>
+        <label>指標の算出方法(説明)</label>: <%= @definition['method']['explanation'] %></p>
+        <label>指標の算出方法(単位)</label>: <%= @definition['method']['unit'] %></p>
+        <label>測定上の限界・解釈上の注意</label>: <%= @definition['notice'] %></p>
+        <label>参考値</label>: <%= @definition['standard_value'] %></p>
 
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -168,14 +171,14 @@
           </div>
           <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
             <div class="panel-body">
-              <% @definition['参考資料'].each do |var| %>
+              <% @definition['references'].each do |var| %>
               <%= var %></p>
               <% end %>
             </div>
           </div>
         </div>
 
-        <label>定義見直しのタイミング</label>: <%= @definition['定義見直しのタイミング'] %></p>
+        <label>定義見直しのタイミング</label>: <%= @definition['review_span'] %></p>
 
 
           <div class="panel panel-default">
@@ -190,8 +193,8 @@
             <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
               <div class="panel-body">
                 <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['変更者'] %></p>
-                  <label>変更メッセージ</label>: <%= log['変更メッセージ'] %></p>
+                  <label>変更者</label>: <%= log['editor'] %></p>
+                  <label>変更メッセージ</label>: <%= log['message'] %></p>
                 <% end %>
               </div>
             </div>

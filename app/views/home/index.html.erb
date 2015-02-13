@@ -18,7 +18,7 @@
   <dl>
   <% if !@results.nil? %>
     <% @results.each do |r| %>
-      <dt><a href= <%= "/definitions/#{r['指標番号']}" %>>  指標群: <%= r['指標群'] %>　整理番号: <%= r['指標番号']%></a></dt>
+      <dt><a href= <%= "/definitions/#{r._id.to_s}" %>>  指標群: <%= r['指標群'] %>　整理番号: <%= r['指標番号']%></a></dt>
       <dd>名称: <%= r['名称'] %></dd>
       <dd>意義: <%= r['意義'] %></dd>
       <hr>

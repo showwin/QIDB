@@ -1,301 +1,327 @@
-<%= form_tag definitions_path, multipart: true do %>
+<%= form_tag definitions_path, multipart: true, remote: true do %>
 
-<% if @error.present? %>
-  <p class="text-danger">
-    <%= @error['editor'] %><br>
-    <%= @error['message'] %>
-  </p>
-<% end %>
+  <div id="error"></div>
 
-<div class="col-xs-4">
-  <div class="form-group">
-    <h4><b>プロジェクト名</b></h4>
-    <% @projects.each do |p| %>
-      <% if params["project_#{p[1]}"] == 'true' %>
-        <%= check_box_tag "project_#{p[1]}", true, true, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
-        <label id="project_<%= p[1] %>_number"><input class="form-control input-sm" id="number" name="project_<%= p[1] %>_number" value='<%= params["project_#{p[1]}_number"] %>' placeholder="指標番号　(e.g.) 0548" type="text"></label><br>
-      <% else %>
-        <%= check_box_tag "project_#{p[1]}", true, false, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
-        <label id="project_<%= p[1] %>_number"></label><br>
-      <% end %>
-    <% end %>
-    <br>
-  </div>
+  <div class="col-xs-4">
 
-  <div class="form-group">
-    <h4><b>指標群</b></h4>
-    <%= text_field_tag 'group', params['group'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-11">
-
-  <div class="form-group">
-    <h4><b>名称</b></h4>
-    <%= text_field_tag 'name', params['name'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
-    <br>
-  </div>
-
-  <div class="form-group">
-    <h4><b>意義</b></h4>
-    <%= text_field_tag 'meaning', params['meaning'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-4">
-
-  <div class="form-group">
-    <div id="dataset-form">
-      <h4><b>必要なデータセット</b></h4>
-      <% @dataset.each_with_index do |d, index| %>
-        <% if params["dataset_#{index}"] %>
-          <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
+    <div class="form-group">
+      <h4><b>プロジェクト名</b></h4>
+      <% @projects.each do |p| %>
+        <% if params["project_#{p[1]}"] == 'true' %>
+          <%= check_box_tag "project_#{p[1]}", true, true, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
+          <label id="project_<%= p[1] %>_number"><input class="form-control input-sm" id="number" name="project_<%= p[1] %>_number" value='<%= params["project_#{p[1]}_number"] %>' placeholder="指標番号　(e.g.) 0548" type="text"></label><br>
         <% else %>
-          <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
+          <%= check_box_tag "project_#{p[1]}", true, false, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
+          <label id="project_<%= p[1] %>_number"></label><br>
         <% end %>
       <% end %>
-      <% i_data = 0 %>
-      <% while params["dataset_others_#{i_data}"] do %>
-        <%= text_field_tag "dataset_others_#{i_data}", params["dataset_others_#{i_data}"], :class => 'form-control', :placeholder => 'その他のデータセット名' %>
-        <% i_data += 1 %>
-      <% end %>
+      <br>
     </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= i_data %>)">＋</i></button><nobr> 追加</nobr>
-    <br>
+
+    <div class="form-group">
+      <h4><b>年度</b></h4>
+      <% @years.each do |y| %>
+        <% if params["year_#{y}"] == 'true' %>
+          <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
+        <% else %>
+          <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
+        <% end %>
+      <% end %>
+      <br>
+    </div>
+
+    <div class="form-group">
+      <h4><b>指標群</b></h4>
+      <%= text_field_tag 'group', params['group'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
+      <br>
+    </div>
+
   </div>
+  <div class="col-xs-11">
 
-</div>
-<div class="col-xs-11">
+    <div class="form-group">
+      <h4><b>名称</b></h4>
+      <%= text_field_tag 'name', params['name'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
+      <br>
+    </div>
 
-  <h4><b>定義の要約</b></h4>
+    <div class="form-group">
+      <h4><b>意義</b></h4>
+      <%= text_field_tag 'meaning', params['meaning'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
+      <br>
+    </div>
 
-  <div class="form-group">
-    <h5>分子</h5>
-    <%= text_area_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
-    <h5>分母</h5>
-    <%= text_area_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
-    <br>
   </div>
+  <div class="col-xs-4">
 
-  <h4><b>指標の定義/算出方法</b></h4>
-  <h4><b>分母の定義</b></h4>
+    <div class="form-group">
+      <div id="dataset-form">
+        <h4><b>必要なデータセット</b></h4>
+        <% @dataset.each_with_index do |d, index| %>
+          <% if params["dataset_#{index}"] %>
+            <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
+          <% else %>
+            <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
+          <% end %>
+        <% end %>
+        <% i_data = 0 %>
+        <% while params["dataset_others_#{i_data}"] do %>
+          <%= text_field_tag "dataset_others_#{i_data}", params["dataset_others_#{i_data}"], :class => 'form-control', :placeholder => 'その他のデータセット名' %>
+          <% i_data += 1 %>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= i_data %>)">＋</i></button><nobr> 追加</nobr>
+      <br>
+    </div>
 
-  <div class="form-group">
-    <div id="denom-def">
-      <% i_denom = 1%>
-      <% while params["denom_exp#{i_denom}"] do %>
-        <div id="denom-def<%= i_denom %>">
-          <h5><b>定義<%= i_denom %></b></h5>
+  </div>
+  <div class="col-xs-11">
+
+    <h4><b>定義の要約</b></h4>
+
+    <div class="form-group">
+      <h5>分子</h5>
+      <%= text_area_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+      <h5>分母</h5>
+      <%= text_area_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+      <br>
+    </div>
+
+    <h4><b>指標の定義/算出方法</b></h4>
+    <h4><b>分母の定義</b></h4>
+
+    <div class="form-group">
+      <div id="denom-def">
+        <% i_denom = 1%>
+        <% while params["denom_exp#{i_denom}"] do %>
+          <div id="denom-def<%= i_denom %>">
+            <h5><b>定義<%= i_denom %></b></h5>
+            <h5>説明</h5>
+            <%= text_area_tag "denom_exp#{i_denom}", params["denom_exp#{i_denom}"], :class => 'form-control', :placeholder =>
+            '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
+            <h5>CSVデータ(option)</h5>
+            <input id="denom_file<%= i_denom %>" name="denom_file<%= i_denom %>" type="file">
+            <br>
+          </div>
+          <% i_denom += 1 %>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= i_denom-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <br><br>
+    </div>
+
+    <h4><b>分子の定義</b></h4>
+
+    <div class="form-group">
+      <div id="numer-def">
+        <% i_numer = 1%>
+        <% while params["numer_exp#{i_numer}"] do %>
+        <div id="numer-def<%= i_numer %>">
+          <h5><b>定義<%= i_numer %></b></h5>
           <h5>説明</h5>
-          <%= text_area_tag "denom_exp#{i_denom}", params["denom_exp#{i_denom}"], :class => 'form-control', :placeholder =>
+          <%= text_area_tag "numer_exp#{i_numer}", params["numer_exp#{i_numer}"], :class => 'form-control', :placeholder =>
           '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
           <h5>CSVデータ(option)</h5>
-          <input id="denom_file<%= i_denom %>" name="denom_file<%= i_denom %>" type="file">
+          <input id="numer_file<%= i_numer %>" name="numer_file<%= i_numer %>" type="file">
           <br>
         </div>
-        <% i_denom += 1 %>
-      <% end %>
-    </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= i_denom-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
-    <br><br>
-  </div>
-
-  <h4><b>分子の定義</b></h4>
-
-  <div class="form-group">
-    <div id="numer-def">
-      <% i_numer = 1%>
-      <% while params["numer_exp#{i_numer}"] do %>
-      <div id="numer-def<%= i_numer %>">
-        <h5><b>定義<%= i_numer %></b></h5>
-        <h5>説明</h5>
-        <%= text_area_tag "numer_exp#{i_numer}", params["numer_exp#{i_numer}"], :class => 'form-control', :placeholder =>
-        '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-        <h5>CSVデータ(option)</h5>
-        <input id="numer_file<%= i_numer %>" name="numer_file<%= i_numer %>" type="file">
-        <br>
+        <% i_numer += 1 %>
+        <% end %>
       </div>
-      <% i_numer += 1 %>
-      <% end %>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= i_numer-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <br><br>
     </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= i_numer-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
-    <br><br>
+
   </div>
+  <div class="col-xs-9">
 
-</div>
+    <div class="form-group">
+      <h4><b>薬剤一覧の出力</b></h5>
 
-<div class="col-xs-9">
+        <% if params['drug_output'] && params['drug_output'].to_a[0][1] == 'yes' %>
+          <label class="radio-inline">
+            <%= radio_button 'drug_output', '', 'yes', {:checked => true} %>あり
+          </label>
+          <label class="radio-inline">
+            <%= radio_button 'drug_output', '', 'no', {} %>なし
+          </label>
+        <% else %>
+          <label class="radio-inline">
+            <%= radio_button 'drug_output', '', 'yes', {} %>あり
+          </label>
+          <label class="radio-inline">
+            <%= radio_button 'drug_output', '', 'no', {:checked => true} %>なし
+          </label>
+        <% end %>
 
-  <div class="form-group">
-    <h4><b>薬剤一覧の出力</b></h5>
+        <br>
+    </div>
 
-      <% if params['drug_output'] && params['drug_output'].to_a[0][1] == 'yes' %>
+  </div>
+  <div class="col-xs-9">
+
+    <div class="form-group">
+      <h4><b>リスクの調整因子の定義</b></h4>
+
+      <% if params['factor_definition'] && params['factor_definition'].to_a[0][1] == 'yes' %>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', params['drug_output'], 'yes', {:checked => true} %>あり
+          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
         </label>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', params['drug_output'], 'no', {} %>なし
+          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()'} %>なし
+        </label>
+        <div id="factor_definition_detail">
+          <h5><b>詳細</b></h5>
+          <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= params['definition_detail'] %></textarea>
+        </div>
+      <% else %>
+        <label class="radio-inline">
+          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()'} %>あり
+        </label>
+        <label class="radio-inline">
+          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
+        </label>
+        <div id="factor_definition_detail"></div>
+      <% end %>
+
+      <br>
+    </div>
+
+  </div>
+  <div class="col-xs-4">
+
+    <h4><b>指標の算出方法</b></h4>
+    <div class="form-group">
+      <h5><b>説明</b></h5>
+      <%= text_field_tag 'method_explanation', params['method_explanation'], :class => 'form-control', :placeholder => '(e.g.) 分子÷分母' %>
+    </div>
+    <div class="form-group">
+      <h5><b>単位</b></h5>
+      <%= text_field_tag 'method_unit', params['method_unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
+      <br>
+    </div>
+
+    <h4><b>結果提示時の並び順</b></h5>
+    <div class="form-group">
+      <% if params['order'] && params['order'].to_a[0][1] == 'asc' %>
+        <label class="radio-inline">
+          <%= radio_button 'order', '', 'asc', {:checked => true} %>昇順
+        </label>
+        <label class="radio-inline">
+          <%= radio_button 'order', '', 'desc', {} %>降順
         </label>
       <% else %>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', params['drug_output'], 'yes', {} %>あり
+          <%= radio_button 'order', '', 'asc', {} %>昇順
         </label>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', params['drug_output'], 'no', {:checked => true} %>なし
+          <%= radio_button 'order', '', 'desc', {:checked => true} %>降順
         </label>
       <% end %>
-
       <br>
-  </div>
-
-</div>
-
-<div class="col-xs-9">
-
-  <div class="form-group">
-    <h4><b>リスクの調整因子の定義</b></h4>
-
-    <% if params['factor_definition'] && params['factor_definition'].to_a[0][1] == 'yes' %>
-      <label class="radio-inline">
-        <%= radio_button 'factor_definition', params['factor_definition'], 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
-      </label>
-      <label class="radio-inline">
-        <%= radio_button 'factor_definition', params['factor_definition'], 'no', {:onChange => 'hideDetail()'} %>なし
-      </label>
-      <div id="factor_definition_detail">
-        <h5><b>詳細</b></h5>
-        <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= params['definition_detail'] %></textarea>
-      </div>
-    <% else %>
-      <label class="radio-inline">
-        <%= radio_button 'factor_definition', params['factor_definition'], 'yes', {:onChange => 'showDetail()'} %>あり
-      </label>
-      <label class="radio-inline">
-        <%= radio_button 'factor_definition', params['factor_definition'], 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
-      </label>
-      <div id="factor_definition_detail"></div>
-    <% end %>
-
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-4">
-
-  <h4><b>指標の算出方法</b></h4>
-  <div class="form-group">
-    <h5><b>説明</b></h5>
-    <%= text_field_tag 'method_explanation', params['method_explanation'], :class => 'form-control', :placeholder => '(e.g.) 分子÷分母' %>
-  </div>
-  <div class="form-group">
-    <h5><b>単位</b></h5>
-    <%= text_field_tag 'method_unit', params['method_unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
-    <br>
-  </div>
-
-  <h4><b>結果提示時の並び順</b></h5>
-  <div class="form-group">
-    <% if params['order'] && params['order'].to_a[0][1] == 'asc' %>
-      <label class="radio-inline">
-        <%= radio_button 'order', params['order'], 'asc', {:checked => true} %>昇順
-      </label>
-      <label class="radio-inline">
-        <%= radio_button 'order', params['order'], 'desc', {} %>降順
-      </label>
-    <% else %>
-      <label class="radio-inline">
-        <%= radio_button 'order', params['order'], 'asc', {} %>昇順
-      </label>
-      <label class="radio-inline">
-        <%= radio_button 'order', params['order'], 'desc', {:checked => true} %>降順
-      </label>
-    <% end %>
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-9">
-
-  <h4><b>測定上の限界/解釈上の注意</b></h4>
-  <div class="form-group">
-    <%= text_area_tag 'warning', params['warning'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-9">
-
-  <h4><b>参考値</b></h4>
-  <div class="form-group">
-    <%= text_area_tag 'standard_value', params['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
-    <br>
-  </div>
-
-</div>
-<div class="col-xs-11">
-
-  <h4><b>参考資料</b></h4>
-  <div class="form-group">
-    <div id="references">
-      <% i_ref = 1 %>
-      <% while params["reference#{i_ref}"] do %>
-        <textarea class="form-control" id="reference<%= i_ref %>" name="reference<%= i_ref %>" type="text"
-          placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><%= params["reference#{i_ref}"] %></textarea><br>
-        <% i_ref += 1 %>
-      <% end %>
-      <% if i_ref == 1 %>
-        <textarea class="form-control" id="reference<%= i_ref %>" name="reference<%= i_ref %>" type="text"
-          placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>
-        <% i_ref += 1 %>
-      <% end %>
     </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm(<%= i_ref %>)">＋</i></button><nobr> 追加<nobr>
-    <br>
+
   </div>
+  <div class="col-xs-9">
 
-</div>
-
-
-<div class="col-xs-4">
-
-
-  <h4><b>定義見直しのタイミング</b></h4>
-  <div class="form-group">
-    <%= text_field_tag 'review_span', params['review_span'], :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
-    <br>
-  </div>
-
-  <h4><b>指標タイプ</b></h4>
-  <div class="form-group">
-    <%= select_tag('indicator', options_for_select([
-      ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
-      ], params['indicator']), :class => "form-control  btn-sm") %>
+    <h4><b>測定上の限界/解釈上の注意</b></h4>
+    <div class="form-group">
+      <%= text_area_tag 'annotation', params['annotation'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
       <br>
-    <br>
+    </div>
+
   </div>
+  <div class="col-xs-9">
 
-  <h4><b>変更者</b></h4>
-  <div class="form-group">
-    <%= text_field_tag 'editor', params['editor'], :class => 'form-control', :placeholder => '名前' %>
-    <br>
+    <h4><b>参考値</b></h4>
+    <div class="form-group">
+      <%= text_area_tag 'standard_value', params['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+      <br>
+    </div>
+
   </div>
+  <div class="col-xs-11">
 
-</div>
+    <h4><b>参考資料</b></h4>
+    <div class="form-group">
+      <div id="references">
+        <% i_ref = 1 %>
+        <% while params["reference#{i_ref}"] do %>
+          <textarea class="form-control" id="reference<%= i_ref %>" name="reference<%= i_ref %>" type="text"
+            placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><%= params["reference#{i_ref}"] %></textarea><br>
+          <% i_ref += 1 %>
+        <% end %>
+        <% if i_ref == 1 %>
+          <textarea class="form-control" id="reference<%= i_ref %>" name="reference<%= i_ref %>" type="text"
+            placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>
+          <% i_ref += 1 %>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm(<%= i_ref %>)">＋</i></button><nobr> 追加<nobr>
+      <br>
+    </div>
 
-<div class="col-xs-9">
-  <h4><b>変更メッセージ</b></h4><p class="text-danger">
-  <div class="form-group">
-    <%= text_field_tag 'message', params['message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
-    <br>
   </div>
-</div>
+  <div class="col-xs-4">
 
-<div class="col-xs-4">
-  <div class="form-group">
-    <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
+    <h4><b>定義見直しのタイミング</b></h4>
+    <div class="form-group">
+      <%= text_field_tag 'review_span', params['review_span'], :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
+      <br>
+    </div>
+
+    <h4><b>指標タイプ</b></h4>
+    <div class="form-group">
+      <%= select_tag('indicator', options_for_select([
+        ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
+        ], params['indicator']), :class => "form-control  btn-sm") %>
+        <br>
+      <br>
+    </div>
+
+    <h4><b>変更者</b></h4>
+    <div class="form-group">
+      <%= text_field_tag 'editor', params['editor'], :class => 'form-control', :placeholder => '名前' %>
+      <br>
+    </div>
+
   </div>
-</div>
+  <div class="col-xs-9">
 
+    <h4><b>変更メッセージ</b></h4>
+    <div class="form-group">
+      <%= text_field_tag 'message', params['message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
+      <br>
+    </div>
+
+  </div>
+  <div class="col-xs-4">
+
+    <div class="form-group">
+      <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
+    </div>
+
+  </div>
 <% end %>
+
+
+<div class="modal fade" id="confirmDupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">指標番号が重複しています</h4>
+        </div>
+        <div class="modal-body">
+          <div class="field">
+            <p>この定義書の登録により、以下の定義書が上書きされます。<p>
+            <div id="dup_numbers"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+          <a href="" id="confirmButton" class="btn btn-primary">登録</a>
+        </div>
+    </div>
+  </div>
+</div>

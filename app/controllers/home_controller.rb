@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   end
 
   def search
-    @results = StringData.search(params['query']).to_a
+    @results = Definition.search(params['query'])
     render :index
   end
 

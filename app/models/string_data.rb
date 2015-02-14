@@ -4,13 +4,13 @@ class StringData
 
   def self.create_record(id, sdata)
     data = StringData.new
-    data['指標番号'] = id
+    data['def_id'] = id
     data['data'] = sdata
     data.save
   end
 
   def self.search(params)
-    results = StringData.any_of({ :data => /#{params}/ }).to_a
+    results = StringData.where('soft_delete' => false).any_of({ :data => /#{params}/ }).to_a
     ids = []
     results.each do |r|
       ids << r['指標番号']

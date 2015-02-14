@@ -1,6 +1,6 @@
 var datasetCounter = 0;
-var denomDefCounter = 1;
-var numerDefCounter = 1;
+var denomDefCounter = 0;
+var numerDefCounter = 0;
 var referenceCounter = 1;
 
 $('#test_ckb').change(function(){

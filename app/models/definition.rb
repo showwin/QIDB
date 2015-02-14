@@ -39,6 +39,7 @@ class Definition
   end
 
   def set_params(params)
+    self['log_id'] = create_log_id(params)
     self['numbers'] = get_numbers(params)
     self['years'] = get_years(params)
     self['group'] = params['group']
@@ -46,7 +47,7 @@ class Definition
     self['meaning'] = params['meaning']
     self['dataset'] = get_datasets(params)
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
-    self['definitions'] = get_definitions(params)
+    self['definitions'] = get_definitions(params, self.log_id)
     self['drug_output'] = params['drug_output'][0] == "yes" ? true : false
     if params['factor_definition'][0] == "yes"
       self['factor_definition'] = true
@@ -110,13 +111,13 @@ class Definition
     set
   end
 
-  def get_definitions(params)
+  def get_definitions(params, log_id)
     #分母 denom
     id = 1
     denom_set = {}
     while params['denom_exp'+id.to_s].present? do
       exp = params['denom_exp'+id.to_s]
-      data = get_def_data(params['denom_file'+id.to_s])
+      data = get_def_data(id, 'denom', params, log_id)
       denom_set.store("#{id}", {'explanation' => exp, 'data' => data})
       id += 1
     end
@@ -127,7 +128,7 @@ class Definition
     numer_set = {}
     while params['numer_exp'+id.to_s].present? do
       exp = params['numer_exp'+id.to_s]
-      data = get_def_data(params['numer_file'+id.to_s])
+      data = get_def_data(id, 'numer', params, log_id)
       numer_set.store("#{id}", {'explanation' => exp, 'data' => data})
       id += 1
     end
@@ -136,7 +137,15 @@ class Definition
     set = {'def_denom' => denom_set, 'def_numer' => numer_set}
   end
 
-  def get_def_data(file)
+  def get_def_data(id, type, params, log_id)
+    if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
+      Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data']
+    else
+      get_csv_data(params[type+'_file'+id.to_s])
+    end
+  end
+
+  def get_csv_data(file)
     return [] if !file
     raise "Unknown file type: #{file.original_filename}" if !(File.extname(file.original_filename) == '.csv')
     csv = CSV.read(file.path)
@@ -162,7 +171,7 @@ class Definition
     get_datasets(params).join.to_s + \
     params['numer'].to_s + \
     params['denom'].to_s + \
-    get_definitions(params).values.join.to_s + \
+    get_definitions(params, self.log_id).values.join.to_s + \
     params['definition_detail'].to_s + \
     params['method_explanation'].to_s + \
     params['method_unit'].to_s + \

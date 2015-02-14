@@ -49,6 +49,16 @@ function addDenomDefForm(init){
 	defForm.append('<br>');
 }
 
+function hideDenomCSVForm(id){
+	$('#denom_file'+id).hide();
+	$('#denom_file'+id+'_exp').hide();
+}
+
+function showDenomCSVForm(id){
+	$('#denom_file'+id).show();
+	$('#denom_file'+id+'_exp').show();
+}
+
 function addNumerDefForm(init){
 	if (init > numerDefCounter) {
 		numerDefCounter = init;
@@ -64,6 +74,16 @@ function addNumerDefForm(init){
 	defForm.append('<h5>CSVデータ(option)</h5>');
 	defForm.append('<input id="numer_file'+id+'" name="numer_file'+id+'" type="file">');
 	defForm.append('<br>');
+}
+
+function hideNumerCSVForm(id){
+	$('#numer_file'+id).hide();
+	$('#numer_file'+id+'_exp').hide();
+}
+
+function showNumerCSVForm(id){
+	$('#numer_file'+id).show();
+	$('#numer_file'+id+'_exp').show();
 }
 
 function showDetail(){

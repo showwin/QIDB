@@ -17,3 +17,4 @@
 //= require bootstrap.min
 //= require sb-admin
 //= require definitions
+//= require jquery.remotipart

@@ -4,11 +4,16 @@ module Api
 
       def index
         # すべての定義書を返す場合
-        if params[:id] == "all"
-          @defs = Definition.all
-        # idが指定されている場合
-        elsif params[:id].present?
-          @defs = Definition.where(指標番号: params[:id])
+        if params[:project].blank? && params[:id] == "all"
+          @defs = Definition.where(soft_delete: false)
+        # 特定の機関の全ての定義書を返す場合
+        elsif params[:project].present? && params[:id] == "all"
+          @defs = Definition.where(soft_delete: false)
+                            .ne("numbers.#{params[:project]}" => nil)
+        # 機関と指標番号が指定されている場合
+        elsif params[:project].present? && params[:id].present?
+          @defs = Definition.where(soft_delete: false)
+                            .where("numbers.#{params[:project]}" => params[:id])
         end
         if @defs.nil?
           render_not_found

@@ -18,8 +18,8 @@ class ChangeLog
     self.save
   end
 
-  def self.make_json(id)
-    logs = ChangeLog.where(指標番号: id)
+  def self.make_json(log_id)
+    logs = ChangeLog.where(log_id: log_id)
     result = []
     logs.each do |log|
       result << log

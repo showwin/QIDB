@@ -32,6 +32,9 @@ gem 'rails-api'
 ### for JavaScript runtime ###
 gem 'therubyracer', :platforms => :ruby
 
+### for Ajax file upload
+gem 'remotipart', '~> 1.0'
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

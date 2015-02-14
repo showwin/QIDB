@@ -1,4 +1,4 @@
-<%= form_tag definitions_path, multipart: true, remote: true do %>
+<%= form_tag(definitions_path, multipart: true, remote: true) do %>
 
   <div id="error"></div>
 
@@ -97,7 +97,39 @@
             <%= text_area_tag "denom_exp#{key}", d_denom['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
-            <input id="denom_file<%= key %>" name="denom_file<%= key %>" type="file">
+            <% if d_denom['data'].present? %>
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <% d_denom['data'].each do |column| %>
+                      <th><%= column.keys[0] %></th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% max_row_num = [5, d_denom['data'][0].values[0].length].min %>
+                  <% max_row_num.times do |ith_row| %>
+                    <tr>
+                      <% d_denom['data'].each do |column| %>
+                        <td><%= column.values[0][ith_row] %></td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+            <% if d_denom['data'].present? %>
+              <label class="radio-inline">
+                <%= radio_button "denom_csv_form#{key}", '', 'yes', {:onChange => "hideDenomCSVForm(#{key})", :checked => true} %>そのまま使う
+              </label>
+              <label class="radio-inline">
+                <%= radio_button "denom_csv_form#{key}", '', 'no', :onChange => "showDenomCSVForm(#{key})" %>データを変更する
+              </label>
+              <input id="denom_file<%= key %>" style="display: none" name="denom_file<%= key %>" type="file">
+              <p id="denom_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+            <% else %>
+              <input id="denom_file<%= key %>" name="denom_file<%= key %>" type="file">
+            <% end %>
             <br>
           </div>
         <% end %>
@@ -116,10 +148,42 @@
             <%= text_area_tag "numer_exp#{key}", d_numer['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
-            <input id="numer_file<%= key %>" name="numer_file<%= key %>" type="file">
+            <% if d_numer['data'].present? %>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_numer['data'].each do |column| %>
+                  <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_numer['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                <tr>
+                  <% d_numer['data'].each do |column| %>
+                  <td><%= column.values[0][ith_row] %></td>
+                  <% end %>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% end %>
+            <% if d_numer['data'].present? %>
+              <label class="radio-inline">
+                <%= radio_button "numer_csv_form#{key}", '', 'yes', {:onChange => "hideNumerCSVForm(#{key})", :checked => true} %>そのまま使う
+              </label>
+              <label class="radio-inline">
+                <%= radio_button "numer_csv_form#{key}", '', 'no', :onChange => "showNumerCSVForm(#{key})" %>データを変更する
+              </label>
+              <input id="numer_file<%= key %>" style="display: none" name="numer_file<%= key %>" type="file">
+              <p id="numer_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+            <% else %>
+              <input id="numer_file<%= key %>" name="numer_file<%= key %>" type="file">
+            <% end %>
             <br>
           </div>
-        <% end %>
+          <% end %>
       </div>
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= @definition['definitions']['def_numer'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>

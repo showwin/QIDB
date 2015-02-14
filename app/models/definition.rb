@@ -6,18 +6,36 @@ class Definition
 
   @@projects = ['qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf']
 
-  def exist?
-    !Definition.where(指標番号: self['指標番号']).empty?
+  def find_duplicates
+    dups = []
+    @@projects.each do |prjt|
+      next if self['numbers'][prjt].blank?
+      bup = Definition.where('soft_delete' => false)
+                      .where("numbers.#{prjt}" => self['numbers'][prjt]).first
+      if bup.present?
+        dups << [prjt, dup.numbers[prjt]]
+      end
+    end
+    dups
   end
 
   def remove_duplicate
     @@projects.each do |prjt|
-      bup = Definition.where("numbers.#{prjt}" => self['numbers'][prjt]).first
-      if bup.present?
-        dup.soft_delete = true
-        raise if !dup.save
+      next if self['numbers'][prjt].blank?
+      dups = Definition.where('soft_delete' => false)
+                       .where("numbers.#{prjt}" => self['numbers'][prjt])
+      if dups.present?
+        dups.each do |dup|
+          dup.soft_delete = true
+          raise if !dup.save
+        end
       end
     end
+  end
+
+  def tmp_save
+    self['soft_delete'] = true
+    self.save
   end
 
   def set_params(params)
@@ -29,22 +47,24 @@ class Definition
     self['dataset'] = get_datasets(params)
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
     self['definitions'] = get_definitions(params)
-    self['drag_output'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
-    if params['factor_definition'].to_a[0][1] == "yes"
+    self['drug_output'] = params['drug_output'][0] == "yes" ? true : false
+    if params['factor_definition'][0] == "yes"
       self['factor_definition'] = true
       self['factor_definition_detail'] = params['definition_detail']
     else
       self['factor_definition'] = false
     end
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
-    self['order'] = params['order'].to_a[0][1]
-    self['notice'] = params['warning']
+    self['order'] = params['order'][0]
+    self['annotation'] = params['annotation']
     self['standard_value'] = params['standard_value']
     self['references'] = get_references(params)
     self['review_span'] = params['review_span']
     self['indicator'] = params['indicator']
     self['created_at'] = Time.now
+    self['search_index'] = create_search_index(params)
     self['soft_delete'] = false
+    self['log_id'] = create_log_id(params)
   end
 
   def get_numbers(params)
@@ -132,6 +152,32 @@ class Definition
     data
   end
 
+  def create_search_index(params)
+    index = params['project'].to_s + \
+    params['year'].to_s + \
+    params['number'].to_s + \
+    params['group'].to_s + \
+    params['name'].to_s + \
+    params['meaning'].to_s + \
+    get_datasets(params).join.to_s + \
+    params['numer'].to_s + \
+    params['denom'].to_s + \
+    get_definitions(params).values.join.to_s + \
+    params['definition_detail'].to_s + \
+    params['method_explanation'].to_s + \
+    params['method_unit'].to_s + \
+    params['warning'].to_s + \
+    params['standard_value'].to_s + \
+    get_references(params).to_s + \
+    params['review_span'].to_s + \
+    Time.now.to_s
+  end
+
+  def create_log_id(params)
+    params['log_id'].blank? ? Definition.all.size : params['log_id'].to_i
+  end
+
+
   def self.read_csv(file)
     raise "Unknown file type: #{file.original_filename}" if !(File.extname(file.original_filename) == '.csv')
     csv = CSV.read(file.path)
@@ -179,28 +225,8 @@ class Definition
     params['order'] = 'asc'
   end
 
-  def create_search_index(params)
-    id = params['number']
-    letters = params['project'].to_s + \
-              params['year'].to_s + \
-              params['number'].to_s + \
-              params['group'].to_s + \
-              params['name'].to_s + \
-              params['meaning'].to_s + \
-              get_datasets(params).join.to_s + \
-              params['numer'].to_s + \
-              params['denom'].to_s + \
-              get_definitions(params).values.join.to_s + \
-              params['definition_detail'].to_s + \
-              params['method_explanation'].to_s + \
-              params['method_unit'].to_s + \
-              params['warning'].to_s + \
-              params['standard_value'].to_s + \
-              get_references(params).to_s + \
-              params['review_span'].to_s + \
-              Time.now.to_s
-    StringData.create_record(id, letters)
+  def self.search(params)
+    results = Definition.where('soft_delete' => false).any_of({ :search_index => /#{params}/ }).to_a
   end
-
 
 end

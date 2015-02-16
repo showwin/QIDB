@@ -17,6 +17,7 @@ class DefinitionsController < ApplicationController
     @log.set_params(params, @definition._id, @definition.log_id)
 
     # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
+
     @error = []
     check_params
 

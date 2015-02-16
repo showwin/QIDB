@@ -1,6 +1,7 @@
 var datasetCounter = 0;
-var denomDefCounter = 0;
-var numerDefCounter = 0;
+var denomDefCounter = 1;
+var numerDefCounter = 1;
+var riskDefCounter = 1;
 var referenceCounter = 1;
 
 $('#test_ckb').change(function(){
@@ -76,6 +77,36 @@ function addNumerDefForm(init){
 	defForm.append('<br>');
 }
 
+function addRiskDefForm(init){
+	if (init > riskDefCounter) {
+		riskDefCounter = init;
+	}
+	riskDefCounter++;
+	id = riskDefCounter;
+
+	$('<div id="risk-def'+id+'">').appendTo($('#risk-def'));
+	var defForm = $('#risk-def'+id);
+	defForm.append('<h5><b>定義'+id+'</b></h5>');
+	defForm.append('<h5>説明</h5>');
+	defForm.append('<textarea class="form-control" id="risk_exp'+id+'" name="risk_exp'+id+'" type="text"></textarea>');
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="risk_file'+id+'" name="risk_file'+id+'" type="file">');
+	defForm.append('<br>');
+}
+
+function showDetail(init){
+	if (init > riskDefCounter) {
+		riskDefCounter = init;
+	}
+	riskDefCounter++;
+	id = riskDefCounter;
+	var html = '<h5><b>定義'+id+'</b></h5>';
+	html += '<textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text"></textarea>';
+	html += '<h5>CSVデータ(option)</h5>';
+	html += '<input id="risk_file'+id+'" name="risk_file'+id+'" type="file">';
+	html += '<br>';
+	html += '<button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefFrom(<%= i_risk-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>'
+
 function hideNumerCSVForm(id){
 	$('#numer_file'+id).hide();
 	$('#numer_file'+id+'_exp').hide();
@@ -86,11 +117,6 @@ function showNumerCSVForm(id){
 	$('#numer_file'+id+'_exp').show();
 }
 
-function showDetail(){
-	var html = '<h5><b>詳細</b></h5>';
-	html += '<textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text">'
-	$(html).appendTo('#factor_definition_detail');
-}
 
 function hideDetail(){
 	$('#factor_definition_detail').empty();

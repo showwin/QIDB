@@ -47,14 +47,9 @@ class Definition
     self['meaning'] = params['meaning']
     self['dataset'] = get_datasets(params)
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
-    self['definitions'] = get_definitions(params, self.log_id)
-    self['drug_output'] = params['drug_output'][0] == "yes" ? true : false
-    if params['factor_definition'][0] == "yes"
-      self['factor_definition'] = true
-      self['factor_definition_detail'] = params['definition_detail']
-    else
-      self['factor_definition'] = false
-    end
+    self['definitions'] = get_definitions(params)
+    self['drag_output'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
+    self['factor_definition'] = get_def_risk(params)
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
     self['order'] = params['order'][0]
     self['annotation'] = params['annotation']
@@ -62,7 +57,7 @@ class Definition
     self['references'] = get_references(params)
     self['review_span'] = params['review_span']
     self['indicator'] = params['indicator']
-    self['created_at'] = Time.now
+    self['created_at'] = Time.now.strftime('%Y-%m-%d')
     self['search_index'] = create_search_index(params)
     self['soft_delete'] = false
     self['log_id'] = create_log_id(params)
@@ -135,6 +130,18 @@ class Definition
     numer_set
 
     set = {'def_denom' => denom_set, 'def_numer' => numer_set}
+  end
+
+  def get_def_risk(params)
+    id = 1
+    risk_set = {}
+    while params['risk_exp'+id.to_s].present? do
+      exp = params['risk_exp'+id.to_s]
+      data = get_def_data(params['risk_file'+id.to_s])
+      risk_set.store("#{id}", {'explanation' => exp, 'data' => data})
+      id += 1
+    end
+    risk_set
   end
 
   def get_def_data(id, type, params, log_id)

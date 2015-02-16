@@ -218,7 +218,7 @@
         <div id="risk-def<%= key %>">
           <h5><b>定義<%= key %></b></h5>
           <h5>説明</h5>
-          <%= text_area_tag "risk_exp#{key}", d_risk["risk_exp#{key}"], :class => 'form-control' %>
+          <%= text_area_tag "risk_exp#{key}", d_risk['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_risk['data'].present? %>
           <table class="table table-bordered table-hover">

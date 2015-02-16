@@ -16,5 +16,6 @@
 //= require bootstrap.min
 //= require sb-admin
 //= require definitions
+//= require jquery.remotipart
 //= require plugins/dataTables/jquery.dataTables.min
 //= require plugins/dataTables/dataTables.bootstrap

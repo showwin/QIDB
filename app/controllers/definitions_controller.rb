@@ -20,11 +20,11 @@ class DefinitionsController < ApplicationController
     @definition.remove_duplicate
 
     # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
-    @messages = {}
+    @error = {}
     confirm
 
     # 検索用のレコード作成 と 定義の作成
-    if @messages.blank? && (@definition.create_search_index(params) && @definition.save)
+    if @error.blank? && (@definition.create_search_index(params) && @definition.save)
       render :success
     else
       set_form_params

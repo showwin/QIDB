@@ -30,12 +30,7 @@ class Definition
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
     self['definitions'] = get_definitions(params)
     self['drag_output'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
-    if params['factor_definition'].to_a[0][1] == "yes"
-      self['factor_definition'] = true
-      self['factor_definition_detail'] = params['definition_detail']
-    else
-      self['factor_definition'] = false
-    end
+    self['factor_definition'] = get_def_risk(params)
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
     self['order'] = params['order'].to_a[0][1]
     self['notice'] = params['warning']
@@ -43,7 +38,7 @@ class Definition
     self['references'] = get_references(params)
     self['review_span'] = params['review_span']
     self['indicator'] = params['indicator']
-    self['created_at'] = Time.now
+    self['created_at'] = Time.now.strftime('%Y-%m-%d')
     self['soft_delete'] = false
   end
 
@@ -114,6 +109,18 @@ class Definition
     numer_set
 
     set = {'def_denom' => denom_set, 'def_numer' => numer_set}
+  end
+
+  def get_def_risk(params)
+    id = 1
+    risk_set = {}
+    while params['risk_exp'+id.to_s].present? do
+      exp = params['risk_exp'+id.to_s]
+      data = get_def_data(params['risk_file'+id.to_s])
+      risk_set.store("#{id}", {'explanation' => exp, 'data' => data})
+      id += 1
+    end
+    risk_set
   end
 
   def get_def_data(file)

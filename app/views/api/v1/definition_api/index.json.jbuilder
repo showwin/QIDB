@@ -20,8 +20,7 @@ json.set! :definitions do
       d.numer definition['definitions']['def_numer']
     end
     json.drag_output definition['drug_output']
-    json.factor_definition definition['factor_definition']
-    json.factor_definition_detail definition['factor_definition_detail'].present? ? definition['factor_definition_detail'] : ''
+    json.def_risks definition['def_risks']
     json.method do |m|
       m.explanation definition['method']['explanation']
       m.unit definition['method']['unit']

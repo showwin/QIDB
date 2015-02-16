@@ -47,9 +47,9 @@ class Definition
     self['meaning'] = params['meaning']
     self['dataset'] = get_datasets(params)
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
-    self['definitions'] = get_definitions(params)
-    self['drag_output'] = params['drug_output'].to_a[0][1] == "yes" ? true : false
-    self['factor_definition'] = get_def_risk(params)
+    self['definitions'] = get_definitions(params, self.log_id)
+    self['drug_output'] = params['drug_output'].to_a[0] == "yes" ? true : false
+    self['def_risks'] = get_def_risk(params)
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
     self['order'] = params['order'][0]
     self['annotation'] = params['annotation']
@@ -60,7 +60,6 @@ class Definition
     self['created_at'] = Time.now.strftime('%Y-%m-%d')
     self['search_index'] = create_search_index(params)
     self['soft_delete'] = false
-    self['log_id'] = create_log_id(params)
   end
 
   def get_numbers(params)
@@ -137,7 +136,7 @@ class Definition
     risk_set = {}
     while params['risk_exp'+id.to_s].present? do
       exp = params['risk_exp'+id.to_s]
-      data = get_def_data(params['risk_file'+id.to_s])
+      data = get_def_data(id, 'risk', params, log_id)
       risk_set.store("#{id}", {'explanation' => exp, 'data' => data})
       id += 1
     end
@@ -146,7 +145,11 @@ class Definition
 
   def get_def_data(id, type, params, log_id)
     if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
-      Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data']
+      if type == 'denom' || type == 'numer'
+        Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data']
+      elsif type == 'risk'
+        Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['data']
+      end
     else
       get_csv_data(params[type+'_file'+id.to_s])
     end
@@ -169,24 +172,28 @@ class Definition
   end
 
   def create_search_index(params)
-    index = params['project'].to_s + \
-    params['year'].to_s + \
-    params['number'].to_s + \
-    params['group'].to_s + \
-    params['name'].to_s + \
-    params['meaning'].to_s + \
-    get_datasets(params).join.to_s + \
-    params['numer'].to_s + \
-    params['denom'].to_s + \
-    get_definitions(params, self.log_id).values.join.to_s + \
-    params['definition_detail'].to_s + \
-    params['method_explanation'].to_s + \
-    params['method_unit'].to_s + \
-    params['warning'].to_s + \
-    params['standard_value'].to_s + \
-    get_references(params).to_s + \
-    params['review_span'].to_s + \
-    Time.now.to_s
+    numbers = ""
+    @@projects.each do |prjt|
+      numbers += prjt+params['project_'+prjt+'_number'] if params['project_'+prjt+'_number']
+    end
+    index =
+      numbers + \
+      params['year'].to_s + \
+      params['group'].to_s + \
+      params['name'].to_s + \
+      params['meaning'].to_s + \
+      get_datasets(params).join.to_s + \
+      params['numer'].to_s + \
+      params['denom'].to_s + \
+      get_definitions(params, self.log_id).values.join.to_s + \
+      params['definition_detail'].to_s + \
+      params['method_explanation'].to_s + \
+      params['method_unit'].to_s + \
+      params['warning'].to_s + \
+      params['standard_value'].to_s + \
+      get_references(params).to_s + \
+      params['review_span'].to_s + \
+      Time.now.to_s
   end
 
   def create_log_id(params)
@@ -210,8 +217,26 @@ class Definition
       csv[row_num].each_with_index do |value, index|
 
         case columns[index]
-        when "指標番号"
-          params['number'] = value
+        when "qip"
+          params['project_qip_number'] = value
+        when "jha"
+          params['project_jha_number'] = value
+        when "jmha"
+          params['project_jmha_number'] = value
+        when "sai"
+          params['project_sai_number'] = value
+        when "min"
+          params['project_min_number'] = value
+        when "jma"
+          params['project_jma_number'] = value
+        when "ajha"
+          params['project_ajha_number'] = value
+        when "nho"
+          params['project_nho_number'] = value
+        when "rofuku"
+          params['project_rofuku_number'] = value
+        when "jamcf"
+          params['project_jamcf_number'] = value
         when "指標群"
           params['group'] = value
         when "定義書表題"
@@ -220,6 +245,8 @@ class Definition
           params['denom'] = value
         when "分子"
           params['numer'] = value
+        when "意義"
+          params['meaning'] = value
         end
       end
 
@@ -227,7 +254,7 @@ class Definition
       @definition.set_params(params)
 
       @definition.remove_duplicate
-      if !(@definition.save && @definition.create_search_index(params))
+      if !@definition.save
         flag = false
       end
 
@@ -236,13 +263,18 @@ class Definition
   end
 
   def init_params(params)
-    params['factor_definition'] = []
-    params['factor_definition'][0] = false
-    params['order'] = 'asc'
+    params['drug_output'] = []
+    params['drug_output'][0] = false
+    params['order'] = []
+    params['order'][0] = 'asc'
   end
 
-  def self.search(params)
-    results = Definition.where('soft_delete' => false).any_of({ :search_index => /#{params}/ }).to_a
+  def self.search(keywords)
+    results = Definition.where('soft_delete' => false)
+    keywords.each do |keyword|
+      results = results.and(search_index: /#{keyword}/)
+    end
+    results.to_a
   end
 
 end

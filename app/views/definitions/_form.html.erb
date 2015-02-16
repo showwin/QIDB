@@ -152,28 +152,26 @@
     </div>
 
   </div>
+  <div class="col-xs-9">
 
-<div class="col-xs-9">
-  <div class="form-group">
-    <h4><b>リスクの調整因子の定義</b></h4>
-    <div id="risk-def">
-      <% i_risk = 1 %>
-      <div id="risk-def<%= i_risk %>">
-        <h5><b>定義<%= i_risk %></b></h5>
-        <h5>説明</h5>
-        <%= text_area_tag "risk_exp#{i_risk}", params["risk_exp#{i_risk}"], :class => 'form-control' %>
-        <h5>CSVデータ(option)</h5>
-        <input id="risk_file<%= i_risk %>" name="risk_file<%= i_risk %>" type="file">
-        <br>
+    <div class="form-group">
+      <h4><b>リスクの調整因子の定義</b></h4>
+      <div id="risk-def">
+        <% i_risk = 1 %>
+        <div id="risk-def<%= i_risk %>">
+          <h5><b>定義<%= i_risk %></b></h5>
+          <h5>説明</h5>
+          <%= text_area_tag "risk_exp#{i_risk}", params["risk_exp#{i_risk}"], :class => 'form-control' %>
+          <h5>CSVデータ(option)</h5>
+          <input id="risk_file<%= i_risk %>" name="risk_file<%= i_risk %>" type="file">
+          <br>
+        </div>
       </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= i_risk %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <br><br>
     </div>
-    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= i_risk-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
-    <br><br>
+
   </div>
-</div>
-
-
-
   <div class="col-xs-4">
 
     <h4><b>指標の算出方法</b></h4>
@@ -186,7 +184,6 @@
       <%= text_field_tag 'method_unit', params['method_unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
       <br>
     </div>
-
 
     <h4><b>結果提示時の並び順</b></h5>
     <div class="form-group">

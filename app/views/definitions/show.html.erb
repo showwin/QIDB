@@ -25,8 +25,8 @@
   <div class="col-xs-12">
     <div class="panel panel-info">
       <div class="panel-heading">
-        <label>整理番号</label>
-        <%= 1.to_s %>
+        <label>名称</label>:
+        <%= @definition['name'] %>
       </div>
       <div class="panel-body">
         <label>指標番号</label>:
@@ -128,8 +128,8 @@
             <!-- /.col-lg-12 -->
           <% end %>
         <% end %>
-        <label>薬剤一覧の出力</label>: <%= @definition['drag_output'] %></p>
-        <% @definition['factor_definition'].each do |key,value| %>
+        <label>薬剤一覧の出力</label>: <%= @definition['drug_output'] %></p>
+        <% @definition['def_risks'].each do |key,value| %>
           <label>リスク調整因子の条件<%= key %></label>:</p>
           説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
@@ -169,7 +169,7 @@
         <% end %>
         <label>指標の算出方法(説明)</label>: <%= @definition['method']['explanation'] %></p>
         <label>指標の算出方法(単位)</label>: <%= @definition['method']['unit'] %></p>
-        <label>測定上の限界・解釈上の注意</label>: <%= @definition['notice'] %></p>
+        <label>測定上の限界・解釈上の注意</label>: <%= @definition['annotation'] %></p>
         <label>参考値</label>: <%= @definition['standard_value'] %></p>
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -202,7 +202,7 @@
             <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
               <div class="panel-body">
                 <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['editor'] %>
+                  <label>変更者</label>: <%= log['editor'] %>　
                   <label>変更メッセージ</label>: <%= log['message'] %></p>
                 <% end %>
               </div>

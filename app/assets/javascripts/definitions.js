@@ -1,7 +1,7 @@
 var datasetCounter = 0;
-var denomDefCounter = 1;
-var numerDefCounter = 1;
-var riskDefCounter = 1;
+var denomDefCounter = 0;
+var numerDefCounter = 0;
+var riskDefCounter = 0;
 var referenceCounter = 1;
 
 $('#test_ckb').change(function(){
@@ -106,6 +106,7 @@ function showDetail(init){
 	html += '<input id="risk_file'+id+'" name="risk_file'+id+'" type="file">';
 	html += '<br>';
 	html += '<button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefFrom(<%= i_risk-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>'
+}
 
 function hideNumerCSVForm(id){
 	$('#numer_file'+id).hide();
@@ -115,11 +116,6 @@ function hideNumerCSVForm(id){
 function showNumerCSVForm(id){
 	$('#numer_file'+id).show();
 	$('#numer_file'+id+'_exp').show();
-}
-
-
-function hideDetail(){
-	$('#factor_definition_detail').empty();
 }
 
 function addReferenceForm(init){

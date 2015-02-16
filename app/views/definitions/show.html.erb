@@ -17,32 +17,32 @@
     <div class="panel panel-info">
       <div class="panel-heading">
         <label>名称</label>:
-        <%= @definition['name'] %>
+        <%= @definition.name %>
       </div>
       <div class="panel-body">
         <label>指標番号</label>:
         <% @projects.each do |prjt| %>
-          <% next if @definition['numbers'][prjt[1]].blank? %>
-          <br><%= prjt[0] %>: <%= @definition['numbers'][prjt[1]] %>
+          <% next if @definition.numbers[prjt[1]].blank? %>
+          <br><%= prjt[0] %>: <%= @definition.numbers[prjt[1]] %>
         <% end %></p>
         <label>年度</label>:
         <% ys = @definition.years.inject{ |ys, year| ys += ', '+year} %>
           <%= ys %></p>
-        <label>更新日</label>: <%= @definition['created_at'] %></p>
-        <label>指標群</label>: <%= @definition['group'] %></p>
-        <label>名称</label>: <%= @definition['name'] %></p>
-        <label>意義</label>: <%= @definition['meaning'] %></p>
+        <label>更新日</label>: <%= @definition.created_at %></p>
+        <label>指標群</label>: <%= @definition.group %></p>
+        <label>名称</label>: <%= @definition.name %></p>
+        <label>意義</label>: <%= @definition.meaning %></p>
         <label>必要データセット</label>:
-        <% if @definition['dataset'].present? %>
-          <% @definition['dataset'].each do |var| %>
+        <% if @definition.dataset.present? %>
+          <% @definition.dataset.each do |var| %>
             <%= var %>&nbsp;
           <% end %></p>
         <% end %>
         <label>定義の要約</label>:</p>
-        <label>分母</label>: <%= @definition['def_summary']['denom'] %></p>
-        <label>分子</label>: <%= @definition['def_summary']['numer'] %></p>
+        <label>分母</label>: <%= @definition.def_summary['denom'] %></p>
+        <label>分子</label>: <%= @definition.def_summary['numer'] %></p>
         <label>指標の定義算出方法</label>:</p>
-        <% @definition['definitions']['def_denom'].each do |key,value| %>
+        <% @definition.definitions['def_denom'].each do |key,value| %>
           <label>分母の条件<%= key %></label>:</p>
           説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
@@ -87,7 +87,7 @@
           <% end %>
         <% end %>
 
-        <% @definition['definitions']['def_numer'].each do |key,value| %>
+        <% @definition.definitions['def_numer'].each do |key,value| %>
           <label>分子の条件<%= key %></label>:</p>
           説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
@@ -131,8 +131,8 @@
             <!-- /.col-lg-12 -->
           <% end %>
         <% end %>
-        <label>薬剤一覧の出力</label>: <%= @definition['drug_output'] %></p>
-        <% @definition['def_risks'].each do |key,value| %>
+        <label>薬剤一覧の出力</label>: <%= @definition.drug_output %></p>
+        <% @definition.def_risks.each do |key,value| %>
           <label>リスク調整因子の条件<%= key %></label>:</p>
           説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
@@ -178,8 +178,8 @@
         <% end %>
         <label>指標の算出方法(説明)</label>: <%= @definition['method']['explanation'] %></p>
         <label>指標の算出方法(単位)</label>: <%= @definition['method']['unit'] %></p>
-        <label>測定上の限界・解釈上の注意</label>: <%= @definition['annotation'] %></p>
-        <label>参考値</label>: <%= @definition['standard_value'] %></p>
+        <label>測定上の限界・解釈上の注意</label>: <%= @definition.annotation %></p>
+        <label>参考値</label>: <%= @definition.standard_value %></p>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
@@ -197,7 +197,7 @@
           </div>
         </div>
 
-        <label>定義見直しのタイミング</label>: <%= @definition['review_span'] %></p>
+        <label>定義見直しのタイミング</label>: <%= @definition.review_span %></p>
 
         <div class="panel panel-default">
           <div class="panel-heading">

@@ -203,8 +203,26 @@ class Definition
       csv[row_num].each_with_index do |value, index|
 
         case columns[index]
-        when "指標番号"
-          params['number'] = value
+        when "qip"
+          params['project_qip_number'] = value
+        when "jha"
+          params['project_jha_number'] = value
+        when "jmha"
+          params['project_jmha_number'] = value
+        when "sai"
+          params['project_sai_number'] = value
+        when "min"
+          params['project_min_number'] = value
+        when "jma"
+          params['project_jma_number'] = value
+        when "ajha"
+          params['project_ajha_number'] = value
+        when "nho"
+          params['project_nho_number'] = value
+        when "rofuku"
+          params['project_rofuku_number'] = value
+        when "jamcf"
+          params['project_jamcf_number'] = value
         when "指標群"
           params['group'] = value
         when "定義書表題"
@@ -213,6 +231,8 @@ class Definition
           params['denom'] = value
         when "分子"
           params['numer'] = value
+        when "意義"
+          params['meaning'] = value
         end
       end
 
@@ -231,6 +251,8 @@ class Definition
   def init_params(params)
     params['factor_definition'] = []
     params['factor_definition'][0] = false
+    params['drug_output'] = []
+    params['drug_output'][0] = false
     params['order'] = 'asc'
   end
 

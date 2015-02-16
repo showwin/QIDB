@@ -1,18 +1,29 @@
-<%= form_tag definitions_path, multipart: true do %>
+<%= form_tag(definitions_path, multipart: true, remote: true) do %>
+
+  <div id="error"></div>
 
   <div class="col-xs-4">
+
     <div class="form-group">
-      <h4><b>プロジェクト名</b></h4>
-      <%= select_tag('project', options_for_select([
-        ["QIP", "QIP"], ["済生会", "済生会"], ["日本医師会", "日本医師会"], ["全国自治体病院", "全国自治体病院"]
-        ], @definition['プロジェクト名']), :class => "form-control  btn-sm") %>
+      <% @projects.each do |prjt| %>
+        <% if @definition['numbers'][prjt[1]].present? %>
+          <%= check_box_tag "project_#{prjt[1]}", true, true, :onChange => "showNumberForm('project_#{prjt[1]}')" %> <%= prjt[0] %>
+          <label id="project_<%= prjt[1] %>_number">
+            <input class="form-control input-sm" id="number" name="project_<%= prjt[1] %>_number"
+             value="<%= @definition['numbers'][prjt[1]] %>" placeholder="指標番号　(e.g.) 0548" type="text">
+          </label><br>
+        <% else %>
+          <%= check_box_tag "project_#{prjt[1]}", true, false, :onChange => "showNumberForm('project_#{prjt[1]}')" %> <%= prjt[0] %>
+          <label id="project_<%= prjt[1] %>_number"></label><br>
+        <% end %>
+      <% end %>
       <br>
     </div>
 
     <div class="form-group">
       <h4><b>年度</b></h4>
       <% @years.each do |y| %>
-        <% if @definition['年度'].include?(y) %>
+        <% if @definition['years'].include?(y) %>
           <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
         <% else %>
           <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
@@ -22,30 +33,23 @@
     </div>
 
     <div class="form-group">
-      <h4><b>指標番号</b></h4>
-      <%= text_field_tag 'number', @definition['指標番号'], :class => 'form-control', :placeholder => '(e.g.) 0548' %>
-      <br>
-    </div>
-
-    <div class="form-group">
       <h4><b>指標群</b></h4>
-      <%= text_field_tag 'group', @definition['指標群'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
+      <%= text_field_tag 'group', @definition['group'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
       <br>
     </div>
 
   </div>
-
   <div class="col-xs-11">
 
     <div class="form-group">
       <h4><b>名称</b></h4>
-      <%= text_field_tag 'name', @definition['名称'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
+      <%= text_field_tag 'name', @definition['name'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
       <br>
     </div>
 
     <div class="form-group">
       <h4><b>意義</b></h4>
-      <%= text_field_tag 'meaning', @definition['意義'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
+      <%= text_field_tag 'meaning', @definition['meaning'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
       <br>
     </div>
 
@@ -56,17 +60,17 @@
       <div id="dataset-form">
         <h4><b>必要なデータセット</b></h4>
         <% @dataset.each_with_index do |d, index| %>
-          <% if @definition['必要なデータセット'].include?(d) %>
+          <% if @definition['dataset'].include?(d) %>
             <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
           <% else %>
             <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
           <% end %>
         <% end %>
-        <% (@definition['必要なデータセット'] - @dataset).each_with_index do |other, index| %>
+        <% (@definition['dataset'] - @dataset).each_with_index do |other, index| %>
           <%= text_field_tag "dataset_others_#{index}", other, :class => 'form-control', :placeholder => 'その他のデータセット名' %>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition['必要なデータセット'] - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition['dataset'] - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
       <br>
     </div>
 
@@ -76,9 +80,9 @@
     <h4><b>定義の要約</b></h4>
     <div class="form-group">
       <h5>分子</h5>
-      <%= text_area_tag 'numer', @definition['定義の要約']['分子'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+      <%= text_area_tag 'numer', @definition['def_summary']['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
       <h5>分母</h5>
-      <%= text_area_tag 'denom', @definition['定義の要約']['分母'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+      <%= text_area_tag 'denom', @definition['def_summary']['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
       <br>
     </div>
 
@@ -86,38 +90,102 @@
     <h4><b>分母の定義</b></h4>
     <div class="form-group">
       <div id="denom-def">
-        <% @definition['指標の定義/算出方法']['分母の定義'].each do |key, d_denom| %>
+        <% @definition['definitions']['def_denom'].each do |key, d_denom| %>
           <div id="denom-def<%= key %>">
             <h5><b>定義<%= key %></b></h5>
             <h5>説明</h5>
-            <%= text_area_tag "denom_exp#{key}", d_denom['説明'], :class => 'form-control', :placeholder =>
+            <%= text_area_tag "denom_exp#{key}", d_denom['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
-            <input id="denom_file<%= key %>" name="denom_file<%= key %>" type="file">
+            <% if d_denom['data'].present? %>
+              <table class="table table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <% d_denom['data'].each do |column| %>
+                      <th><%= column.keys[0] %></th>
+                    <% end %>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% max_row_num = [5, d_denom['data'][0].values[0].length].min %>
+                  <% max_row_num.times do |ith_row| %>
+                    <tr>
+                      <% d_denom['data'].each do |column| %>
+                        <td><%= column.values[0][ith_row] %></td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% end %>
+            <% if d_denom['data'].present? %>
+              <label class="radio-inline">
+                <%= radio_button "denom_csv_form#{key}", '', 'yes', {:onChange => "hideDenomCSVForm(#{key})", :checked => true} %>そのまま使う
+              </label>
+              <label class="radio-inline">
+                <%= radio_button "denom_csv_form#{key}", '', 'no', :onChange => "showDenomCSVForm(#{key})" %>データを変更する
+              </label>
+              <input id="denom_file<%= key %>" style="display: none" name="denom_file<%= key %>" type="file">
+              <p id="denom_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+            <% else %>
+              <input id="denom_file<%= key %>" name="denom_file<%= key %>" type="file">
+            <% end %>
             <br>
           </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= @definition['指標の定義/算出方法']['分母の定義'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= @definition['definitions']['def_denom'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
     <h4><b>分子の定義</b></h4>
     <div class="form-group">
       <div id="numer-def">
-        <% @definition['指標の定義/算出方法']['分子の定義'].each do |key, d_numer| %>
+        <% @definition['definitions']['def_numer'].each do |key, d_numer| %>
           <div id="numer-def<%= key %>">
             <h5><b>定義<%= key %></b></h5>
             <h5>説明</h5>
-            <%= text_area_tag "numer_exp#{key}", d_numer['説明'], :class => 'form-control', :placeholder =>
+            <%= text_area_tag "numer_exp#{key}", d_numer['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
-            <input id="numer_file<%= key %>" name="numer_file<%= key %>" type="file">
+            <% if d_numer['data'].present? %>
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_numer['data'].each do |column| %>
+                  <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_numer['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                <tr>
+                  <% d_numer['data'].each do |column| %>
+                  <td><%= column.values[0][ith_row] %></td>
+                  <% end %>
+                </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <% end %>
+            <% if d_numer['data'].present? %>
+              <label class="radio-inline">
+                <%= radio_button "numer_csv_form#{key}", '', 'yes', {:onChange => "hideNumerCSVForm(#{key})", :checked => true} %>そのまま使う
+              </label>
+              <label class="radio-inline">
+                <%= radio_button "numer_csv_form#{key}", '', 'no', :onChange => "showNumerCSVForm(#{key})" %>データを変更する
+              </label>
+              <input id="numer_file<%= key %>" style="display: none" name="numer_file<%= key %>" type="file">
+              <p id="numer_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+            <% else %>
+              <input id="numer_file<%= key %>" name="numer_file<%= key %>" type="file">
+            <% end %>
             <br>
           </div>
-        <% end %>
+          <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= @definition['指標の定義/算出方法']['分子の定義'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= @definition['definitions']['def_numer'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -126,42 +194,42 @@
 
     <div class="form-group">
       <h4><b>薬剤一覧の出力</b></h4>
-      <% if @definition['薬剤一覧の出力'] %>
+      <% if @definition['drug_output'] %>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'yes', {:checked => true} %>あり
+          <%= radio_button 'drug_output', '', 'yes', {:checked => true} %>あり
         </label>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'no', {} %>なし
+          <%= radio_button 'drug_output', '', 'no', {} %>なし
         </label>
       <% else %>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'yes', {} %>あり
+          <%= radio_button 'drug_output', '', 'yes', {} %>あり
         </label>
         <label class="radio-inline">
-          <%= radio_button 'drug_output', @definition['薬剤一覧の出力'], 'no', {:checked => true} %>なし
+          <%= radio_button 'drug_output', '', 'no', {:checked => true} %>なし
         </label>
       <% end %>
     </div>
 
     <div class="form-group">
       <h4><b>リスクの調整因子の定義</b></h4>
-      <% if @definition['リスクの調整因子の定義'] %>
+      <% if @definition['factor_definition'] %>
         <label class="radio-inline">
-          <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
+          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
         </label>
         <label class="radio-inline">
-          <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'no', {:onChange => 'hideDetail()'} %>なし
+          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()'} %>なし
         </label>
         <div id="factor_definition_detail">
           <h5><b>詳細</b></h5>
-          <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= @definition['定義の詳細'] %></textarea>
+          <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= @definition['factor_definition_detail'] %></textarea>
         </div>
       <% else %>
         <label class="radio-inline">
-          <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'yes', {:onChange => 'showDetail()'} %>あり
+          <%= radio_button 'factor_definition','', 'yes', {:onChange => 'showDetail()'} %>あり
         </label>
         <label class="radio-inline">
-          <%= radio_button 'factor_definition', @definition['リスクの調整因子の定義'], 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
+          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
         </label>
         <div id="factor_definition_detail"></div>
       <% end %>
@@ -174,29 +242,29 @@
     <h4><b>指標の算出方法</b></h4>
     <div class="form-group">
       <h5><b>説明</b></h5>
-      <%= text_field_tag 'method_explanation', @definition['指標の算出方法']['説明'], :class => 'form-control', :placeholder => '(e.g.) 分子÷分母' %>
+      <%= text_field_tag 'method_explanation', @definition['method']['explanation'], :class => 'form-control', :placeholder => '(e.g.) 分子÷分母' %>
     </div>
     <div class="form-group">
       <h5><b>単位</b></h5>
-      <%= text_field_tag 'method_unit', @definition['指標の算出方法']['単位'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
+      <%= text_field_tag 'method_unit', @definition['method']['unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
       <br>
     </div>
 
     <h4><b>結果提示時の並び順</b></h4>
     <div class="form-group">
-      <% if @definition['結果提示時の並び順'] == 'asc' %>
+      <% if @definition['order'] == 'asc' %>
         <label class="radio-inline">
-          <%= radio_button 'order', @definition['結果提示時の並び順'], 'asc', {:checked => true} %>昇順
+          <%= radio_button 'order', '', 'asc', {:checked => true} %>昇順
         </label>
         <label class="radio-inline">
-          <%= radio_button 'order', @definition['結果提示時の並び順'], 'desc', {} %>降順
+          <%= radio_button 'order','', 'desc', {} %>降順
         </label>
       <% else %>
         <label class="radio-inline">
-          <%= radio_button 'order', @definition['結果提示時の並び順'], 'asc', {} %>昇順
+          <%= radio_button 'order', '', 'asc', {} %>昇順
         </label>
         <label class="radio-inline">
-          <%= radio_button 'order', @definition['結果提示時の並び順'], 'desc', {:checked => true} %>降順
+          <%= radio_button 'order', '', 'desc', {:checked => true} %>降順
         </label>
       <% end %>
       <br>
@@ -207,13 +275,13 @@
 
     <h4><b>測定上の限界/解釈上の注意</b></h4>
     <div class="form-group">
-      <%= text_area_tag 'warning', @definition['測定上の限界/解釈上の注意'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
+      <%= text_area_tag 'annotation', @definition['annotation'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
       <br>
     </div>
 
     <h4><b>参考値</b></h4>
     <div class="form-group">
-      <%= text_area_tag 'standard_value', @definition['参考値'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+      <%= text_area_tag 'standard_value', @definition['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
       <br>
     </div>
 
@@ -223,12 +291,12 @@
     <h4><b>参考資料</b></h4>
     <div class="form-group">
       <div id="references">
-        <% @definition['参考資料'].each_with_index do |ref, index| %>
+        <% @definition['references'].each_with_index do |ref, index| %>
           <textarea class="form-control" id="reference<%= index+1 %>" name="reference<%= index+1 %>" type="text"
             placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><%= ref %></textarea><br>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm(<%= @definition['参考資料'].size %>)">＋</i></button><nobr> 追加<nobr>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm(<%= @definition['references'].size %>)">＋</i></button><nobr> 追加<nobr>
       <br>
     </div>
 
@@ -237,7 +305,7 @@
 
     <h4><b>定義見直しのタイミング</b></h4>
     <div class="form-group">
-      <%= text_field_tag 'review_span', @definition['定義見直しのタイミング'], :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
+      <%= text_field_tag 'review_span', @definition['review_span'], :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
       <br>
     </div>
 
@@ -245,16 +313,16 @@
     <div class="form-group">
       <%= select_tag('indicator', options_for_select([
       ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
-      ], @definition['指標タイプ']), :class => "form-control  btn-sm") %>
+      ], @definition['indicator']), :class => "form-control  btn-sm") %>
       <br>
       <br>
     </div>
 
-    <% if !@edit_logs.blank? %>
+    <% if !@logs.blank? %>
       <h4><b>変更履歴</b></h4>
     <% end %>
-    <% @edit_logs.each do |log| %>
-      <%= log['変更日時'] %>　<%= log['変更者'] %>: <%= log['変更メッセージ'] %><br>
+    <% @logs.each do |log| %>
+      <%= log['created_at'] %>　<%= log['editor'] %>: <%= log['message'] %><br>
     <% end %>
 
     <h4><b>変更者</b></h4>
@@ -268,16 +336,39 @@
 
     <h4><b>変更メッセージ</b></h4>
     <div class="form-group">
-      <%= text_field_tag 'edit_message', params['edit_message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
+      <%= text_field_tag 'message', params['message'], :class => 'form-control', :placeholder => '変更メッセージ' %>
       <br>
     </div>
 
   </div>
   <div class="col-xs-4">
 
+    <%= hidden_field_tag 'log_id', @definition.log_id %>
     <div class="form-group">
       <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
     </div>
 
   </div>
 <% end %>
+
+
+<div class="modal fade" id="confirmDupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">指標番号が重複しています</h4>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <p>この定義書の登録により、以下の定義書が上書きされます。<p>
+            <div id="dup_numbers"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+          <a href="" id="confirmButton" class="btn btn-primary">登録</a>
+        </div>
+      </div>
+    </div>
+  </div>

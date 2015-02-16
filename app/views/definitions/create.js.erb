@@ -1,0 +1,21 @@
+<% if @error.present? %>
+  <!-- show error messages -->
+  $('#error').html('');
+  <% @error.each do |message| %>
+    $('#error').append('<p class="text-danger">・<%= message %></p>');
+  <% end %>
+  $("html,body").animate({scrollTop:0},'fast');
+<% else %>
+  <% if @dups.present? %>
+    <!-- show modal-->
+    $('#confirmDupModal').modal('show');
+    $('#dup_numbers').html('');
+    $('#dup_numbers').append('<input type="hidden" name="_id" value="<%= @definition._id %>">');
+    <% @dups.each do |dup| %>
+      $('#dup_numbers').append('<p><%= dup[0] %>: <%= dup[1] %></p>');
+    <% end %>
+    $('#confirmButton').attr('href', '/definitions/confirm/<%= @definition._id %>');
+  <% else %>
+    location.href='<%= def_success_url %>';
+  <% end %>
+<% end %>

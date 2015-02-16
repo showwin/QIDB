@@ -50,6 +50,16 @@ function addDenomDefForm(init){
 	defForm.append('<br>');
 }
 
+function hideDenomCSVForm(id){
+	$('#denom_file'+id).hide();
+	$('#denom_file'+id+'_exp').hide();
+}
+
+function showDenomCSVForm(id){
+	$('#denom_file'+id).show();
+	$('#denom_file'+id+'_exp').show();
+}
+
 function addNumerDefForm(init){
 	if (init > numerDefCounter) {
 		numerDefCounter = init;
@@ -96,8 +106,17 @@ function showDetail(init){
 	html += '<input id="risk_file'+id+'" name="risk_file'+id+'" type="file">';
 	html += '<br>';
 	html += '<button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefFrom(<%= i_risk-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>'
-	$(html).appendTo('#factor_definition_detail');
+
+function hideNumerCSVForm(id){
+	$('#numer_file'+id).hide();
+	$('#numer_file'+id+'_exp').hide();
 }
+
+function showNumerCSVForm(id){
+	$('#numer_file'+id).show();
+	$('#numer_file'+id+'_exp').show();
+}
+
 
 function hideDetail(){
 	$('#factor_definition_detail').empty();

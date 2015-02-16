@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get 'download_csv' => 'home#output_csv', as: :download_csv
   post 'definitions/import' => 'definitions#import', as: :import
   get 'definitions/upload' => 'definitions#upload', as: :upload
+  get 'definitions/confirm/:id' => 'definitions#confirm', as: :confirm_dup
+  get 'definitions/success' => 'definitions#success', as: :def_success
 
   resources :definitions
 

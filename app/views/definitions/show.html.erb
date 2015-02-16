@@ -29,16 +29,14 @@
         <%= 1.to_s %>
       </div>
       <div class="panel-body">
-        <label>指標番号</label>
+        <label>指標番号</label>:
         <% @projects.each do |prjt| %>
-          <%= prjt %>: <%= @definition['numbers']['prjt'] %></p>
-        <% end %>
+          <% next if @definition['numbers'][prjt[1]].blank? %>
+          <br><%= prjt[0] %>: <%= @definition['numbers'][prjt[1]] %>
+        <% end %></p>
         <label>年度</label>:
-        <% if @definition['years'].present? %>
-          <% @definition['years'].each do |var| %>
-            <%= var %>&nbsp;
-          <% end %></p>
-        <% end %>
+        <% ys = @definition.years.inject{ |ys, year| ys += ', '+year} %>
+          <%= ys %></p>
         <label>更新日</label>: <%= @definition['created_at'] %></p>
         <label>指標群</label>: <%= @definition['group'] %></p>
         <label>名称</label>: <%= @definition['name'] %></p>

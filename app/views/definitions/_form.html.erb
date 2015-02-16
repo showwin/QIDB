@@ -1,5 +1,6 @@
 <%= form_tag definitions_path, multipart: true, remote: true do %>
 
+
   <div id="error"></div>
 
   <div class="col-xs-4">
@@ -92,19 +93,16 @@
 
     <div class="form-group">
       <div id="denom-def">
-        <% i_denom = 1%>
-        <% while params["denom_exp#{i_denom}"] do %>
-          <div id="denom-def<%= i_denom %>">
-            <h5><b>定義<%= i_denom %></b></h5>
-            <h5>説明</h5>
-            <%= text_area_tag "denom_exp#{i_denom}", params["denom_exp#{i_denom}"], :class => 'form-control', :placeholder =>
-            '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-            <h5>CSVデータ(option)</h5>
-            <input id="denom_file<%= i_denom %>" name="denom_file<%= i_denom %>" type="file">
-            <br>
-          </div>
-          <% i_denom += 1 %>
-        <% end %>
+        <% i_denom = 1 %>
+        <div id="denom-def<%= i_denom %>">
+          <h5><b>定義<%= i_denom %></b></h5>
+          <h5>説明</h5>
+          <%= text_area_tag "denom_exp#{i_denom}", params["denom_exp#{i_denom}"], :class => 'form-control', :placeholder =>
+          '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
+          <h5>CSVデータ(option)</h5>
+          <input id="denom_file<%= i_denom %>" name="denom_file<%= i_denom %>" type="file">
+          <br>
+        </div>
       </div>
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= i_denom-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
@@ -115,7 +113,6 @@
     <div class="form-group">
       <div id="numer-def">
         <% i_numer = 1%>
-        <% while params["numer_exp#{i_numer}"] do %>
         <div id="numer-def<%= i_numer %>">
           <h5><b>定義<%= i_numer %></b></h5>
           <h5>説明</h5>
@@ -125,8 +122,6 @@
           <input id="numer_file<%= i_numer %>" name="numer_file<%= i_numer %>" type="file">
           <br>
         </div>
-        <% i_numer += 1 %>
-        <% end %>
       </div>
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= i_numer-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
@@ -153,41 +148,32 @@
             <%= radio_button 'drug_output', '', 'no', {:checked => true} %>なし
           </label>
         <% end %>
-
         <br>
     </div>
 
   </div>
-  <div class="col-xs-9">
 
-    <div class="form-group">
-      <h4><b>リスクの調整因子の定義</b></h4>
-
-      <% if params['factor_definition'] && params['factor_definition'].to_a[0][1] == 'yes' %>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
-        </label>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()'} %>なし
-        </label>
-        <div id="factor_definition_detail">
-          <h5><b>詳細</b></h5>
-          <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= params['definition_detail'] %></textarea>
-        </div>
-      <% else %>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()'} %>あり
-        </label>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
-        </label>
-        <div id="factor_definition_detail"></div>
-      <% end %>
-
-      <br>
+<div class="col-xs-9">
+  <div class="form-group">
+    <h4><b>リスクの調整因子の定義</b></h4>
+    <div id="risk-def">
+      <% i_risk = 1 %>
+      <div id="risk-def<%= i_risk %>">
+        <h5><b>定義<%= i_risk %></b></h5>
+        <h5>説明</h5>
+        <%= text_area_tag "risk_exp#{i_risk}", params["risk_exp#{i_risk}"], :class => 'form-control' %>
+        <h5>CSVデータ(option)</h5>
+        <input id="risk_file<%= i_risk %>" name="risk_file<%= i_risk %>" type="file">
+        <br>
+      </div>
     </div>
-
+    <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= i_risk-1 %>)">＋</i></button><nobr> (定義の追加)</nobr>
+    <br><br>
   </div>
+</div>
+
+
+
   <div class="col-xs-4">
 
     <h4><b>指標の算出方法</b></h4>
@@ -200,6 +186,7 @@
       <%= text_field_tag 'method_unit', params['method_unit'], :class => 'form-control', :placeholder => '(e.g.) パーセント' %>
       <br>
     </div>
+
 
     <h4><b>結果提示時の並び順</b></h5>
     <div class="form-group">

@@ -15,4 +15,5 @@
  *= require bootstrap
  *= require font-awesome.min
  *= require sb-admin
+ *= require jquery.dataTables.min
  */

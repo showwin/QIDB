@@ -213,27 +213,52 @@
 
     <div class="form-group">
       <h4><b>リスクの調整因子の定義</b></h4>
-      <% if @definition['factor_definition'] %>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'yes', {:onChange => 'showDetail()', :checked => true} %>あり
-        </label>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()'} %>なし
-        </label>
-        <div id="factor_definition_detail">
-          <h5><b>詳細</b></h5>
-          <textarea class="form-control" id="definition_detail" name="definition_detail" placeholder="(e.g.) something" type="text" ><%= @definition['factor_definition_detail'] %></textarea>
+      <div id="risk-def">
+        <% @definition['def_risks'].each do |key, d_risk| %>
+        <div id="risk-def<%= key %>">
+          <h5><b>定義<%= key %></b></h5>
+          <h5>説明</h5>
+          <%= text_area_tag "risk_exp#{key}", d_risk["risk_exp#{key}"], :class => 'form-control' %>
+          <h5>CSVデータ(option)</h5>
+          <% if d_risk['data'].present? %>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <% d_risk['data'].each do |column| %>
+                <th><%= column.keys[0] %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% max_row_num = [5, d_risk['data'][0].values[0].length].min %>
+              <% max_row_num.times do |ith_row| %>
+              <tr>
+                <% d_risk['data'].each do |column| %>
+                <td><%= column.values[0][ith_row] %></td>
+                <% end %>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+          <% if d_risk['data'].present? %>
+          <label class="radio-inline">
+            <%= radio_button "risk_csv_form#{key}", '', 'yes', {:onChange => "hideRiskCSVForm(#{key})", :checked => true} %>そのまま使う
+          </label>
+          <label class="radio-inline">
+            <%= radio_button "risk_csv_form#{key}", '', 'no', :onChange => "showRiskCSVForm(#{key})" %>データを変更する
+          </label>
+          <input id="risk_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <p id="risk_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+          <% else %>
+          <input id="risk_file<%= key %>" name="risk_file<%= key %>" type="file">
+          <% end %>
+          <br>
         </div>
-      <% else %>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition','', 'yes', {:onChange => 'showDetail()'} %>あり
-        </label>
-        <label class="radio-inline">
-          <%= radio_button 'factor_definition', '', 'no', {:onChange => 'hideDetail()', :checked => true} %>なし
-        </label>
-        <div id="factor_definition_detail"></div>
-      <% end %>
-      <br>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= @definition['def_risks'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <br><br>
     </div>
 
   </div>

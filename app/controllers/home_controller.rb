@@ -4,26 +4,35 @@ class HomeController < ApplicationController
   end
 
   def search
-    @results = Definition.search(params['query'])
+    keywords = get_search_query
+    @results = Definition.search(keywords)
     render :index
   end
 
   def output_csv
-    @column_names = ['指標番号', '指標群', '名称', '分母', '分子', 'リスク調整',
-       '薬剤一覧出力', 'グラフの並び順', '指標タイプ']
-    all = Definition.all
+    @column_names = ['qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf',
+       '指標群', '名称', '分母', '分子', '薬剤一覧出力', 'グラフの並び順', '指標タイプ']
+    all = Definition.where(soft_delete: false)
     @contents = []
     all.each do |record|
       content = []
-      content << record['指標番号']
-      content << record['指標群']
-      content << record['名称']
-      content << (record['定義の要約'] ? record['定義の要約']['分母'] : '')
-      content << (record['定義の要約'] ? record['定義の要約']['分子'] : '')
-      content << record['リスクの調整因子の定義']
-      content << record['薬剤一覧の出力']
-      content << record['結果提示時の並び順']
-      content << record['指標タイプ']
+      content << record['numbers']['qip']
+      content << record['numbers']['jha']
+      content << record['numbers']['jmha']
+      content << record['numbers']['sai']
+      content << record['numbers']['min']
+      content << record['numbers']['jma']
+      content << record['numbers']['ajha']
+      content << record['numbers']['nho']
+      content << record['numbers']['rofuku']
+      content << record['numbers']['jamcf']
+      content << record['group']
+      content << record['name']
+      content << (record['def_summary'] ? record['def_summary']['denom'] : '')
+      content << (record['def_summary'] ? record['def_summary']['numer'] : '')
+      content << record['drug_output']
+      content << record['order']
+      content << record['indicator']
       @contents << content
     end
 
@@ -33,5 +42,12 @@ class HomeController < ApplicationController
       end
     end
   end
+
+  private
+    def get_search_query
+      search_keyword = params['query']
+      keyword = search_keyword.gsub(/(　)+/,"\s")
+      keyword.split("\s")
+    end
 
 end

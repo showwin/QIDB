@@ -129,7 +129,7 @@
           <% end %>
         <% end %>
         <label>薬剤一覧の出力</label>: <%= @definition['drug_output'] %></p>
-        <% @definition['factor_definition'].each do |key,value| %>
+        <% @definition['def_risks'].each do |key,value| %>
           <label>リスク調整因子の条件<%= key %></label>:</p>
           説明:<%= value['explanation'] %></p>
           <% if value['data'].present? %>
@@ -202,7 +202,7 @@
             <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
               <div class="panel-body">
                 <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['editor'] %>
+                  <label>変更者</label>: <%= log['editor'] %>　
                   <label>変更メッセージ</label>: <%= log['message'] %></p>
                 <% end %>
               </div>

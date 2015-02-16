@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 //= require bootstrap.min
 //= require sb-admin
 //= require definitions
-//= require jquery.dataTables.min
-//= require jquery.remotipart
+//= require plugins/dataTables/jquery.dataTables.min
+//= require plugins/dataTables/dataTables.bootstrap

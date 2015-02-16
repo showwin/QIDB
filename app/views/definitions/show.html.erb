@@ -60,7 +60,7 @@
                 <div class="panel-heading">分母のデータ</div>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table class="table table-striped table-bordered table-hover">
+                      <table class="table table-striped table-bordered table-hover" id="denom1_table">
                         <thead>
                           <tr>
                             <% value['data'].each do |i| %>
@@ -190,31 +190,36 @@
 
         <label>定義見直しのタイミング</label>: <%= @definition['review_span'] %></p>
 
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h4 class="panel-title">
-                <label data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" class="collapsed">
-                  変更履歴
-                </label>
-              </h4>
-            </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <label data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" class="collapsed">
+                変更履歴
+              </label>
+            </h4>
+          </div>
 
-            <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
-              <div class="panel-body">
-                <% @logs.each do |log| %>
-                  <label>変更者</label>: <%= log['editor'] %>　
-                  <label>変更メッセージ</label>: <%= log['message'] %></p>
-                <% end %>
-              </div>
+          <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+            <div class="panel-body">
+              <% @logs.each do |log| %>
+                <label>変更者</label>: <%= log['editor'] %>　
+                <label>変更メッセージ</label>: <%= log['message'] %></p>
+              <% end %>
             </div>
           </div>
-　
-
+        </div>
       </div>
     </div>
   </div>
-
 </div>
 
-
 <%= link_to '編集', edit_definition_path %>
+
+<script>
+$(document).ready(function() {
+  $('#denom1_table').dataTable({
+    "bSort": false,
+    "bFilter": false
+  });
+});
+</script>

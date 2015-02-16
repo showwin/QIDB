@@ -9,9 +9,9 @@ class Definition
   def find_duplicates
     dups = []
     @@projects.each do |prjt|
-      next if self['numbers'][prjt].blank?
-      bup = Definition.where('soft_delete' => false)
-                      .where("numbers.#{prjt}" => self['numbers'][prjt]).first
+      next if self.numbers[prjt].blank?
+      bup = Definition.where(soft_delete: false)
+                      .where("numbers.#{prjt}" => self.numbers[prjt]).first
       if bup.present?
         dups << [prjt, dup.numbers[prjt]]
       end
@@ -21,9 +21,9 @@ class Definition
 
   def remove_duplicate
     @@projects.each do |prjt|
-      next if self['numbers'][prjt].blank?
-      dups = Definition.where('soft_delete' => false)
-                       .where("numbers.#{prjt}" => self['numbers'][prjt])
+      next if self.numbers[prjt].blank?
+      dups = Definition.where(soft_delete: false)
+                       .where("numbers.#{prjt}" => self.numbers[prjt])
       if dups.present?
         dups.each do |dup|
           dup.soft_delete = true
@@ -34,7 +34,7 @@ class Definition
   end
 
   def tmp_save
-    self['soft_delete'] = true
+    self.soft_delete = true
     self.save
   end
 
@@ -48,7 +48,7 @@ class Definition
     self['dataset'] = get_datasets(params)
     self['def_summary'] = { 'numer' => params['numer'], 'denom' => params['denom'] }
     self['definitions'] = get_definitions(params, self.log_id)
-    self['drug_output'] = params['drug_output'].to_a[0] == "yes" ? true : false
+    self['drug_output'] = params['drug_output'][0] == "yes" ? true : false
     self['def_risks'] = get_def_risk(params)
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
     self['order'] = params['order'][0]
@@ -65,8 +65,9 @@ class Definition
   def get_numbers(params)
     result = {}
     @@projects.each do |prjt|
-      if params['project_'+prjt+'_number'].present?
-        result[prjt] = params['project_'+prjt+'_number']
+      number = params['project_'+prjt+'_number']
+      if number.present?
+        result[prjt] = number
       end
     end
     result
@@ -145,12 +146,14 @@ class Definition
 
   def get_def_data(id, type, params, log_id)
     if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
+      # すでにDBに入ってるものを持ってくる
       if type == 'denom' || type == 'numer'
         Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data']
       elsif type == 'risk'
         Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['data']
       end
     else
+      # アップロードされたCSVからデータを取得
       get_csv_data(params[type+'_file'+id.to_s])
     end
   end

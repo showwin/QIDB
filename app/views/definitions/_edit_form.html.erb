@@ -6,11 +6,11 @@
 
     <div class="form-group">
       <% @projects.each do |prjt| %>
-        <% if @definition['numbers'][prjt[1]].present? %>
+        <% if @definition.numbers[prjt[1]].present? %>
           <%= check_box_tag "project_#{prjt[1]}", true, true, :onChange => "showNumberForm('project_#{prjt[1]}')" %> <%= prjt[0] %>
           <label id="project_<%= prjt[1] %>_number">
             <input class="form-control input-sm" id="number" name="project_<%= prjt[1] %>_number"
-             value="<%= @definition['numbers'][prjt[1]] %>" placeholder="指標番号　(e.g.) 0548" type="text">
+             value="<%= @definition.numbers[prjt[1]] %>" placeholder="指標番号　(e.g.) 0548" type="text">
           </label><br>
         <% else %>
           <%= check_box_tag "project_#{prjt[1]}", true, false, :onChange => "showNumberForm('project_#{prjt[1]}')" %> <%= prjt[0] %>
@@ -23,7 +23,7 @@
     <div class="form-group">
       <h4><b>年度</b></h4>
       <% @years.each do |y| %>
-        <% if @definition['years'].include?(y) %>
+        <% if @definition.years.include?(y) %>
           <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
         <% else %>
           <%= check_box_tag "year_#{y}", true, checked = false %> <%= y %><br>
@@ -34,7 +34,7 @@
 
     <div class="form-group">
       <h4><b>指標群</b></h4>
-      <%= text_field_tag 'group', @definition['group'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
+      <%= text_field_tag 'group', @definition.group, :class => 'form-control', :placeholder => '(e.g.) 脳卒中' %>
       <br>
     </div>
 
@@ -43,13 +43,13 @@
 
     <div class="form-group">
       <h4><b>名称</b></h4>
-      <%= text_field_tag 'name', @definition['name'], :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
+      <%= text_field_tag 'name', @definition.name, :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
       <br>
     </div>
 
     <div class="form-group">
       <h4><b>意義</b></h4>
-      <%= text_field_tag 'meaning', @definition['meaning'], :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
+      <%= text_field_tag 'meaning', @definition.meaning, :class => 'form-control', :placeholder => '(e.g.) 脳卒中の診断後、できるだけ早期にリハビリを開始することが、機能の早期回復と低下抑制につながる。' %>
       <br>
     </div>
 
@@ -60,17 +60,17 @@
       <div id="dataset-form">
         <h4><b>必要なデータセット</b></h4>
         <% @dataset.each_with_index do |d, index| %>
-          <% if @definition['dataset'].include?(d) %>
+          <% if @definition.dataset.include?(d) %>
             <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
           <% else %>
             <%= check_box_tag "dataset_#{index}", d, checked = false, :class => "btn-sm" %> <%= d %><br>
           <% end %>
         <% end %>
-        <% (@definition['dataset'] - @dataset).each_with_index do |other, index| %>
+        <% (@definition.dataset - @dataset).each_with_index do |other, index| %>
           <%= text_field_tag "dataset_others_#{index}", other, :class => 'form-control', :placeholder => 'その他のデータセット名' %>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition['dataset'] - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition.dataset - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
       <br>
     </div>
 
@@ -80,9 +80,9 @@
     <h4><b>定義の要約</b></h4>
     <div class="form-group">
       <h5>分子</h5>
-      <%= text_area_tag 'numer', @definition['def_summary']['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+      <%= text_area_tag 'numer', @definition.def_summary['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
       <h5>分母</h5>
-      <%= text_area_tag 'denom', @definition['def_summary']['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+      <%= text_area_tag 'denom', @definition.def_summary['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
       <br>
     </div>
 
@@ -90,7 +90,7 @@
     <h4><b>分母の定義</b></h4>
     <div class="form-group">
       <div id="denom-def">
-        <% @definition['definitions']['def_denom'].each do |key, d_denom| %>
+        <% @definition.definitions['def_denom'].each do |key, d_denom| %>
           <div id="denom-def<%= key %>">
             <h5><b>定義<%= key %></b></h5>
             <h5>説明</h5>
@@ -141,7 +141,7 @@
     <h4><b>分子の定義</b></h4>
     <div class="form-group">
       <div id="numer-def">
-        <% @definition['definitions']['def_numer'].each do |key, d_numer| %>
+        <% @definition.definitions['def_numer'].each do |key, d_numer| %>
           <div id="numer-def<%= key %>">
             <h5><b>定義<%= key %></b></h5>
             <h5>説明</h5>
@@ -194,7 +194,7 @@
 
     <div class="form-group">
       <h4><b>薬剤一覧の出力</b></h4>
-      <% if @definition['drug_output'] %>
+      <% if @definition.drug_output %>
         <label class="radio-inline">
           <%= radio_button 'drug_output', '', 'yes', {:checked => true} %>あり
         </label>
@@ -214,7 +214,7 @@
     <div class="form-group">
       <h4><b>リスクの調整因子の定義</b></h4>
       <div id="risk-def">
-        <% @definition['def_risks'].each do |key, d_risk| %>
+        <% @definition.def_risks.each do |key, d_risk| %>
         <div id="risk-def<%= key %>">
           <h5><b>定義<%= key %></b></h5>
           <h5>説明</h5>
@@ -277,7 +277,7 @@
 
     <h4><b>結果提示時の並び順</b></h4>
     <div class="form-group">
-      <% if @definition['order'] == 'asc' %>
+      <% if @definition.order == 'asc' %>
         <label class="radio-inline">
           <%= radio_button 'order', '', 'asc', {:checked => true} %>昇順
         </label>
@@ -300,13 +300,13 @@
 
     <h4><b>測定上の限界/解釈上の注意</b></h4>
     <div class="form-group">
-      <%= text_area_tag 'annotation', @definition['annotation'], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
+      <%= text_area_tag 'annotation', @definition.annotation, :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
       <br>
     </div>
 
     <h4><b>参考値</b></h4>
     <div class="form-group">
-      <%= text_area_tag 'standard_value', @definition['standard_value'], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
+      <%= text_area_tag 'standard_value', @definition.standard_value, :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
       <br>
     </div>
 
@@ -316,7 +316,7 @@
     <h4><b>参考資料</b></h4>
     <div class="form-group">
       <div id="references">
-        <% @definition['references'].each_with_index do |ref, index| %>
+        <% @definition.references.each_with_index do |ref, index| %>
           <textarea class="form-control" id="reference<%= index+1 %>" name="reference<%= index+1 %>" type="text"
             placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><%= ref %></textarea><br>
         <% end %>
@@ -330,7 +330,7 @@
 
     <h4><b>定義見直しのタイミング</b></h4>
     <div class="form-group">
-      <%= text_field_tag 'review_span', @definition['review_span'], :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
+      <%= text_field_tag 'review_span', @definition.review_span, :class => 'form-control', :placeholder => '(e.g.) 2年に1度' %>
       <br>
     </div>
 
@@ -338,7 +338,7 @@
     <div class="form-group">
       <%= select_tag('indicator', options_for_select([
       ["割合", "割合"], ["リスク調整", "リスク調整"], ["平均値", "平均値"], ["中央値", "中央値"]
-      ], @definition['indicator']), :class => "form-control  btn-sm") %>
+      ], @definition.indicator), :class => "form-control  btn-sm") %>
       <br>
       <br>
     </div>
@@ -347,7 +347,7 @@
       <h4><b>変更履歴</b></h4>
     <% end %>
     <% @logs.each do |log| %>
-      <%= log['created_at'] %>　<%= log['editor'] %>: <%= log['message'] %><br>
+      <%= log.created_at %>　<%= log.editor %>: <%= log.message %><br>
     <% end %>
 
     <h4><b>変更者</b></h4>

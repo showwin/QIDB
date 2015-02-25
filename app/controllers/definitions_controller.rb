@@ -81,6 +81,11 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  def search
+    @definition = Definition.where(soft_delete: false).find_by("numbers.#{params[:prjt]}" => params[:qid])
+    redirect_to :action => "show", :id => @definition._id
+  end
+
   private
     def set_definition
       @definition = Definition.find(params[:id])

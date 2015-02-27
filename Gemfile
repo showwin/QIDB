@@ -35,6 +35,11 @@ gem 'therubyracer', :platforms => :ruby
 ### for Ajax file upload
 gem 'remotipart', '~> 1.0'
 
+### for output pdf
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+
+
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

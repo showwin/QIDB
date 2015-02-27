@@ -1,7 +1,7 @@
 class DefinitionsController < ApplicationController
-  before_action :set_definition, only: [:show, :edit, :update]
-  before_action :set_form_params, only: [:show, :new, :edit]
-  before_action :set_log, only: [:show, :edit]
+  before_action :set_definition, only: [:show, :edit, :update, :pdf]
+  before_action :set_form_params, only: [:show, :new, :edit, :pdf]
+  before_action :set_log, only: [:show, :edit, :pdf]
 
   def show
   end
@@ -84,6 +84,24 @@ class DefinitionsController < ApplicationController
   def search
     @definition = Definition.where(soft_delete: false).find_by("numbers.#{params[:prjt]}" => params[:qid])
     redirect_to :action => "show", :id => @definition._id
+  end
+
+  def pdf
+    respond_to do |format|
+      format.html {
+        redirect_to def_pdf_path(
+          :id => params[:id],
+          :format => :pdf
+        )
+      }
+      format.pdf do
+        render :pdf => 'sheet', #pdfファイルの名前
+        :encoding => 'UTF-8',
+        :template => '/definitions/pdf.pdf',
+        :layout => 'pdf.html.erb',
+        :no_background => false
+      end
+    end
   end
 
   private

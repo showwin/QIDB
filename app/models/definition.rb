@@ -112,8 +112,8 @@ class Definition
     denom_set = {}
     while params['denom_exp'+id.to_s].present? do
       exp = params['denom_exp'+id.to_s]
-      data = get_def_data(id, 'denom', params, log_id)
-      denom_set.store("#{id}", {'explanation' => exp, 'data' => data})
+      data,filename = get_def_data(id, 'denom', params, log_id)
+      denom_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
       id += 1
     end
     denom_set
@@ -123,8 +123,8 @@ class Definition
     numer_set = {}
     while params['numer_exp'+id.to_s].present? do
       exp = params['numer_exp'+id.to_s]
-      data = get_def_data(id, 'numer', params, log_id)
-      numer_set.store("#{id}", {'explanation' => exp, 'data' => data})
+      data,filename = get_def_data(id, 'numer', params, log_id)
+      numer_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
       id += 1
     end
     numer_set
@@ -144,7 +144,7 @@ class Definition
     risk_set
   end
 
-  def get_def_data(id, type, params, log_id)
+  def get_def_data_old(id, type, params, log_id)
     if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
       # すでにDBに入ってるものを持ってくる
       if type == 'denom' || type == 'numer'
@@ -158,10 +158,26 @@ class Definition
     end
   end
 
+
+  def get_def_data(id, type, params, log_id)
+    if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
+      # すでにDBに入ってるものを持ってくる
+      if type == 'denom' || type == 'numer'
+        return Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['filename']
+      elsif type == 'risk'
+        return Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['filename']
+      end
+    else
+      # アップロードされたCSVからデータを取得
+      get_csv_data(params[type+'_file'+id.to_s])
+    end
+  end
+
   def get_csv_data(file)
     return [] if !file
     raise "Unknown file type: #{file.original_filename}" if !(File.extname(file.original_filename) == '.csv')
     csv = CSV.read(file.path)
+    filename = file.original_filename
     data = []
     csv[0].each do |key|
       data << {key => []}
@@ -171,7 +187,7 @@ class Definition
         data[index][data[index].keys[0]] << value
       end
     end
-    data
+    return data,filename
   end
 
   def create_search_index(params)

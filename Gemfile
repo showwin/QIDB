@@ -39,7 +39,9 @@ gem 'remotipart', '~> 1.0'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 
-
+group :development, :test do
+  gem 'better_errors'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

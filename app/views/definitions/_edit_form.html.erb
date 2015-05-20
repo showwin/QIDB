@@ -92,8 +92,7 @@
       <div id="denom-def">
         <% @definition.definitions['def_denom'].each do |key, d_denom| %>
           <div id="denom-def<%= key %>">
-            <h5><b>定義<%= key %></b></h5>
-            <h5>説明</h5>
+            <h5><%= key %>. </h5>
             <%= text_area_tag "denom_exp#{key}", d_denom['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
@@ -143,8 +142,7 @@
       <div id="numer-def">
         <% @definition.definitions['def_numer'].each do |key, d_numer| %>
           <div id="numer-def<%= key %>">
-            <h5><b>定義<%= key %></b></h5>
-            <h5>説明</h5>
+            <h5><%= key %>. </h5>
             <%= text_area_tag "numer_exp#{key}", d_numer['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
             <h5>CSVデータ(option)</h5>
@@ -216,8 +214,7 @@
       <div id="risk-def">
         <% @definition.def_risks.each do |key, d_risk| %>
         <div id="risk-def<%= key %>">
-          <h5><b>定義<%= key %></b></h5>
-          <h5>説明</h5>
+          <h5><b><%= key %>. </b></h5>
           <%= text_area_tag "risk_exp#{key}", d_risk['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_risk['data'].present? %>
@@ -298,34 +295,161 @@
   </div>
   <div class="col-xs-9">
 
-    <h4><b>測定上の限界/解釈上の注意</b></h4>
     <div class="form-group">
-      <%= text_area_tag 'annotation', @definition.annotation, :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある' %>
-      <br>
-    </div>
-
-    <h4><b>参考値</b></h4>
-    <div class="form-group">
-      <%= text_area_tag 'standard_value', @definition.standard_value, :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後' %>
-      <br>
-    </div>
-
-  </div>
-  <div class="col-xs-11">
-
-    <h4><b>参考資料</b></h4>
-    <div class="form-group">
-      <div id="references">
-        <% @definition.references.each_with_index do |ref, index| %>
-          <textarea class="form-control" id="reference<%= index+1 %>" name="reference<%= index+1 %>" type="text"
-            placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /><%= ref %></textarea><br>
+      <h4><b>測定上の限界/解釈上の注意</b></h4>
+      <div id="anno-def">
+        <% @definition.annotation.each do |key, d_anno| %>
+        <div id="anno-def<%= key %>">
+          <h5><%= key %>. </h5>
+          <%= text_area_tag "anno_exp#{key}", d_anno['explanation'], :class => 'form-control' %>
+          <h5>CSVデータ(option)</h5>
+          <% if d_anno['data'].present? %>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <% d_anno['data'].each do |column| %>
+                <th><%= column.keys[0] %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% max_row_num = [5, d_anno['data'][0].values[0].length].min %>
+              <% max_row_num.times do |ith_row| %>
+              <tr>
+                <% d_anno['data'].each do |column| %>
+                <td><%= column.values[0][ith_row] %></td>
+                <% end %>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+          <% if d_anno['data'].present? %>
+          <label class="radio-inline">
+            <%= radio_button "anno_csv_form#{key}", '', 'yes', {:onChange => "hideAnnoCSVForm(#{key})", :checked => true} %>そのまま使う
+          </label>
+          <label class="radio-inline">
+            <%= radio_button "anno_csv_form#{key}", '', 'no', :onChange => "showAnnoCSVForm(#{key})" %>データを変更する
+          </label>
+          <input id="anno_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <p id="anno_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+          <% else %>
+          <input id="anno_file<%= key %>" name="anno_file<%= key %>" type="file">
+          <% end %>
+          <br>
+        </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addReferenceForm(<%= @definition['references'].size %>)">＋</i></button><nobr> 追加<nobr>
-      <br>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= @definition['annotation'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <br><br>
+    </div>
+  </div>
+
+
+  <div class="col-xs-9">
+    <div class="form-group">
+      <h4><b>参考値</b></h4>
+      <div id="ref_val-def">
+        <% @definition.standard_value.each do |key, d_ref_val| %>
+        <div id="ref_val-def<%= key %>">
+          <h5><%= key %>. </h5>
+          <%= text_area_tag "ref_val_exp#{key}", d_ref_val['explanation'], :class => 'form-control' %>
+          <h5>CSVデータ(option)</h5>
+          <% if d_ref_val['data'].present? %>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <% d_ref_val['data'].each do |column| %>
+                <th><%= column.keys[0] %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% max_row_num = [5, d_ref_val['data'][0].values[0].length].min %>
+              <% max_row_num.times do |ith_row| %>
+              <tr>
+                <% d_ref_val['data'].each do |column| %>
+                <td><%= column.values[0][ith_row] %></td>
+                <% end %>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+          <% if d_ref_val['data'].present? %>
+          <label class="radio-inline">
+            <%= radio_button "ref_val_csv_form#{key}", '', 'yes', {:onChange => "hideref_valCSVForm(#{key})", :checked => true} %>そのまま使う
+          </label>
+          <label class="radio-inline">
+            <%= radio_button "ref_val_csv_form#{key}", '', 'no', :onChange => "showref_valCSVForm(#{key})" %>データを変更する
+          </label>
+          <input id="ref_val_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <p id="ref_val_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+          <% else %>
+          <input id="ref_val_file<%= key %>" name="ref_val_file<%= key %>" type="file">
+          <% end %>
+          <br>
+        </div>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= @definition['standard_value'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <br><br>
+    </div>
+  </div>
+
+  <div class="col-xs-11">
+
+    <div class="form-group">
+      <h4><b>参考資料</b></h4>
+      <div id="ref_info-def">
+        <% @definition.references.each do |key, d_ref_info| %>
+        <div id="ref_info-def<%= key %>">
+          <h5><%= key %>. </h5>
+          <%= text_area_tag "ref_info_exp#{key}", d_ref_info['explanation'], :class => 'form-control' %>
+          <h5>CSVデータ(option)</h5>
+          <% if d_ref_info['data'].present? %>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <% d_ref_info['data'].each do |column| %>
+                <th><%= column.keys[0] %></th>
+                <% end %>
+              </tr>
+            </thead>
+            <tbody>
+              <% max_row_num = [5, d_ref_info['data'][0].values[0].length].min %>
+              <% max_row_num.times do |ith_row| %>
+              <tr>
+                <% d_ref_info['data'].each do |column| %>
+                <td><%= column.values[0][ith_row] %></td>
+                <% end %>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <% end %>
+          <% if d_ref_info['data'].present? %>
+          <label class="radio-inline">
+            <%= radio_button "ref_info_csv_form#{key}", '', 'yes', {:onChange => "hideref_infoCSVForm(#{key})", :checked => true} %>そのまま使う
+          </label>
+          <label class="radio-inline">
+            <%= radio_button "ref_info_csv_form#{key}", '', 'no', :onChange => "showref_infoCSVForm(#{key})" %>データを変更する
+          </label>
+          <input id="ref_info_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <p id="ref_info_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
+          <% else %>
+          <input id="ref_info_file<%= key %>" name="ref_info_file<%= key %>" type="file">
+          <% end %>
+          <br>
+        </div>
+        <% end %>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= @definition['references'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <br><br>
     </div>
 
   </div>
+
   <div class="col-xs-4">
 
     <h4><b>定義見直しのタイミング</b></h4>
@@ -373,6 +497,11 @@
       <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
     </div>
 
+  </div>
+  <div class="col-xs-9">
+    <div class="form-group">
+      <p class="text-danger">変更者、変更メッセージを入力しないとデータが登録されない場合があります。（CSVファイルなど）<p>
+    </div>
   </div>
 <% end %>
 

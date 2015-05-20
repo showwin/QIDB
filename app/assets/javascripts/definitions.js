@@ -2,6 +2,9 @@ var datasetCounter = 0;
 var denomDefCounter = 0;
 var numerDefCounter = 0;
 var riskDefCounter = 0;
+var annoDefCounter = 0;
+var ref_valDefCounter = 0;
+var ref_infoDefCounter = 0;
 var referenceCounter = 1;
 
 function showNumberForm(project){
@@ -104,6 +107,84 @@ function hideRiskCSVForm(id){
 function showRiskCSVForm(id){
 	$('#risk_file'+id).show();
 	$('#risk_file'+id+'_exp').show();
+}
+
+function addAnnoDefForm(init){
+	if (init > annoDefCounter) {
+		annoDefCounter = init;
+	}
+	annoDefCounter++;
+	id = annoDefCounter;
+
+	$('<div id="anno-def'+id+'">').appendTo($('#anno-def'));
+	var defForm = $('#anno-def'+id);
+	defForm.append('<h5>説明'+id+'</h5>');
+	defForm.append('<textarea class="form-control" id="anno_exp'+id+'" name="anno_exp'+id+'" type="text"></textarea>');
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="anno_file'+id+'" name="anno_file'+id+'" type="file">');
+	defForm.append('<br>');
+}
+
+function hideAnnoCSVForm(id){
+	$('#anno_file'+id).hide();
+	$('#anno_file'+id+'_exp').hide();
+}
+
+function showAnnoCSVForm(id){
+	$('#anno_file'+id).show();
+	$('#anno_file'+id+'_exp').show();
+}
+
+function addref_valDefForm(init){
+	if (init > ref_valDefCounter) {
+		ref_valDefCounter = init;
+	}
+	ref_valDefCounter++;
+	id = ref_valDefCounter;
+
+	$('<div id="ref_val-def'+id+'">').appendTo($('#ref_val-def'));
+	var defForm = $('#ref_val-def'+id);
+	defForm.append('<h5>説明'+id+'</h5>');
+	defForm.append('<textarea class="form-control" id="ref_val_exp'+id+'" name="ref_val_exp'+id+'" type="text"></textarea>');
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="ref_val_file'+id+'" name="ref_val_file'+id+'" type="file">');
+	defForm.append('<br>');
+}
+
+function hideref_valCSVForm(id){
+	$('#ref_val_file'+id).hide();
+	$('#ref_val_file'+id+'_exp').hide();
+}
+
+function showref_valCSVForm(id){
+	$('#ref_val_file'+id).show();
+	$('#ref_val_file'+id+'_exp').show();
+}
+
+function addref_infoDefForm(init){
+	if (init > ref_infoDefCounter) {
+		ref_infoDefCounter = init;
+	}
+	ref_infoDefCounter++;
+	id = ref_infoDefCounter;
+
+	$('<div id="ref_info-def'+id+'">').appendTo($('#ref_info-def'));
+	var defForm = $('#ref_info-def'+id);
+	defForm.append('<h5>説明'+id+'</h5>');
+	defForm.append('<textarea class="form-control" id="ref_info_exp'+id+'" name="ref_info_exp'+id+'" type="text"></textarea>');
+	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<input id="ref_info_file'+id+'" name="ref_info_file'+id+'" type="file">');
+	defForm.append('<br>');
+}
+
+function hideref_infoCSVForm(id){
+	$('#ref_info_file'+id).hide();
+	$('#ref_info_file'+id+'_exp').hide();
+}
+
+function showref_infoCSVForm(id){
+	$('#ref_info_file'+id).show();
+	$('#ref_info_file'+id+'_exp').show();
 }
 
 function addReferenceForm(init){

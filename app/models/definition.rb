@@ -52,9 +52,9 @@ class Definition
     self['def_risks'] = get_def_risk(params)
     self['method'] = { 'explanation' => params['method_explanation'], 'unit' => params['method_unit'] }
     self['order'] = params['order'][0]
-    self['annotation'] = params['annotation']
-    self['standard_value'] = params['standard_value']
-    self['references'] = get_references(params)
+    self['annotation'] = get_def_anno(params)
+    self['standard_value'] = get_def_ref_val(params)
+    self['references'] = get_def_ref_info(params)
     self['review_span'] = params['review_span']
     self['indicator'] = params['indicator']
     self['created_at'] = Time.now.strftime('%Y-%m-%d')
@@ -137,11 +137,47 @@ class Definition
     risk_set = {}
     while params['risk_exp'+id.to_s].present? do
       exp = params['risk_exp'+id.to_s]
-      data = get_def_data(id, 'risk', params, log_id)
-      risk_set.store("#{id}", {'explanation' => exp, 'data' => data})
+      data,filename = get_def_data(id, 'risk', params, log_id)
+      risk_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
       id += 1
     end
     risk_set
+  end
+
+  def get_def_anno(params)
+    id = 1
+    anno_set = {}
+    while params['anno_exp'+id.to_s].present? do
+      exp = params['anno_exp'+id.to_s]
+      data,filename = get_def_data(id, 'anno', params, log_id)
+      anno_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
+      id += 1
+    end
+    anno_set
+  end
+
+  def get_def_ref_val(params)
+    id = 1
+    ref_val_set = {}
+    while params['ref_val_exp'+id.to_s].present? do
+      exp = params['ref_val_exp'+id.to_s]
+      data,filename = get_def_data(id, 'ref_val', params, log_id)
+      ref_val_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
+      id += 1
+    end
+    ref_val_set
+  end
+
+  def get_def_ref_info(params)
+    id = 1
+    ref_info_set = {}
+    while params['ref_info_exp'+id.to_s].present? do
+      exp = params['ref_info_exp'+id.to_s]
+      data,filename = get_def_data(id, 'ref_info', params, log_id)
+      ref_info_set.store("#{id}", {'explanation' => exp, 'data' => data, 'filename' => filename})
+      id += 1
+    end
+    ref_info_set
   end
 
   def get_def_data_old(id, type, params, log_id)
@@ -166,6 +202,12 @@ class Definition
         return Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['filename']
       elsif type == 'risk'
         return Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['filename']
+      elsif type == 'anno'
+        return Definition.where(soft_delete: false).where(log_id: log_id).first.annotation[id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.annotation[id.to_s]['filename']
+      elsif type == 'ref_val'
+        return Definition.where(soft_delete: false).where(log_id: log_id).first.standard_value[id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.standard_value[id.to_s]['filename']
+      elsif type == 'ref_info'
+        return Definition.where(soft_delete: false).where(log_id: log_id).first.references[id.to_s]['data'],Definition.where(soft_delete: false).where(log_id: log_id).first.references[id.to_s]['filename']
       end
     else
       # アップロードされたCSVからデータを取得

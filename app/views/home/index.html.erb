@@ -18,7 +18,8 @@
   <dl>
   <% if !@results.nil? %>
     <% @results.each do |r| %>
-      <dt><a href= <%= "/definitions/#{r._id.to_s}" %>>  指標群: <%= r.group %> </a></dt>
+      <dt><a href= <%= "/definitions/#{r._id.to_s}" %>>指標番号: <%= r.numbers['qip'].to_s %></a></dt>
+      <dd>指標群: <%= r.group %></dd>
       <dd>名称: <%= r.name %></dd>
       <dd>意義: <%= r.meaning %></dd>
       <hr>

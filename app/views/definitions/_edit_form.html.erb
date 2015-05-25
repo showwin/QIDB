@@ -218,25 +218,7 @@
           <%= text_area_tag "risk_exp#{key}", d_risk['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_risk['data'].present? %>
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <% d_risk['data'].each do |column| %>
-                <th><%= column.keys[0] %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% max_row_num = [5, d_risk['data'][0].values[0].length].min %>
-              <% max_row_num.times do |ith_row| %>
-              <tr>
-                <% d_risk['data'].each do |column| %>
-                <td><%= column.values[0][ith_row] %></td>
-                <% end %>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+
           <% end %>
           <% if d_risk['data'].present? %>
           <label class="radio-inline">
@@ -304,25 +286,7 @@
           <%= text_area_tag "anno_exp#{key}", d_anno['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_anno['data'].present? %>
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <% d_anno['data'].each do |column| %>
-                <th><%= column.keys[0] %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% max_row_num = [5, d_anno['data'][0].values[0].length].min %>
-              <% max_row_num.times do |ith_row| %>
-              <tr>
-                <% d_anno['data'].each do |column| %>
-                <td><%= column.values[0][ith_row] %></td>
-                <% end %>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+
           <% end %>
           <% if d_anno['data'].present? %>
           <label class="radio-inline">
@@ -356,25 +320,7 @@
           <%= text_area_tag "ref_val_exp#{key}", d_ref_val['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_ref_val['data'].present? %>
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <% d_ref_val['data'].each do |column| %>
-                <th><%= column.keys[0] %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% max_row_num = [5, d_ref_val['data'][0].values[0].length].min %>
-              <% max_row_num.times do |ith_row| %>
-              <tr>
-                <% d_ref_val['data'].each do |column| %>
-                <td><%= column.values[0][ith_row] %></td>
-                <% end %>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+
           <% end %>
           <% if d_ref_val['data'].present? %>
           <label class="radio-inline">
@@ -408,25 +354,7 @@
           <%= text_area_tag "ref_info_exp#{key}", d_ref_info['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option)</h5>
           <% if d_ref_info['data'].present? %>
-          <table class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <% d_ref_info['data'].each do |column| %>
-                <th><%= column.keys[0] %></th>
-                <% end %>
-              </tr>
-            </thead>
-            <tbody>
-              <% max_row_num = [5, d_ref_info['data'][0].values[0].length].min %>
-              <% max_row_num.times do |ith_row| %>
-              <tr>
-                <% d_ref_info['data'].each do |column| %>
-                <td><%= column.values[0][ith_row] %></td>
-                <% end %>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+
           <% end %>
           <% if d_ref_info['data'].present? %>
           <label class="radio-inline">

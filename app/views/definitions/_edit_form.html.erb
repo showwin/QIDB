@@ -276,7 +276,7 @@
 
   </div>
   <div class="col-xs-9">
-
+    <% begin %>
     <div class="form-group">
       <h4><b>測定上の限界/解釈上の注意</b></h4>
       <div id="anno-def">
@@ -307,10 +307,28 @@
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= @definition['annotation'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
+    <% rescue NameError %>
+    <div class="form-group">
+      <h4><b>測定上の限界/解釈上の注意</b></h4>
+      <div id="anno-def">
+        <% i_anno = 1 %>
+        <div id="anno-def<%= i_anno %>">
+          <h5>説明<%= i_anno %></h5>
+          <%= text_area_tag "anno_exp#{i_anno}", params["anno_exp#{i_anno}"], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある'  %>
+          <h5>CSVデータ(option)</h5>
+          <input id="anno_file<%= i_anno %>" name="anno_file<%= i_anno %>" type="file">
+          <br>
+        </div>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= i_anno %>)">＋</i></button><nobr> (追加)</nobr>
+      <br><br>
+    </div>
+    <% end %>
   </div>
 
 
   <div class="col-xs-9">
+    <% begin %>
     <div class="form-group">
       <h4><b>参考値</b></h4>
       <div id="ref_val-def">
@@ -341,10 +359,27 @@
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= @definition['standard_value'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
+    <% rescue NameError %>
+    <div class="form-group">
+      <h4><b>参考値</b></h4>
+      <div id="ref_val-def">
+        <% i_ref_val = 1 %>
+        <div id="ref_val-def<%= i_ref_val %>">
+          <h5>説明<%= i_ref_val %></h5>
+          <%= text_area_tag "ref_val_exp#{i_ref_val}", params["ref_val_exp#{i_ref_val}"], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後'  %>
+          <h5>CSVデータ(option)</h5>
+          <input id="ref_val_file<%= i_ref_val %>" name="ref_val_file<%= i_ref_val %>" type="file">
+          <br>
+        </div>
+      </div>
+      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= i_ref_val %>)">＋</i></button><nobr> (追加)</nobr>
+      <br><br>
+    </div>
+    <% end %>
   </div>
 
   <div class="col-xs-11">
-
+    <% begin %>
     <div class="form-group">
       <h4><b>参考資料</b></h4>
       <div id="ref_info-def">
@@ -375,7 +410,23 @@
       <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= @definition['references'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
-
+    <% rescue NameError %>
+      <div class="form-group">
+        <h4><b>参考資料</b></h4>
+        <div id="ref_info-def">
+          <% i_ref_info = 1 %>
+          <div id="ref_info-def<%= i_ref_info %>">
+            <h5>説明<%= i_ref_info %></h5>
+            <%= text_area_tag "ref_info_exp#{i_ref_info}", params["ref_info_exp#{i_ref_info}"], :class => 'form-control', :placeholder => "American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p."  %>
+            <h5>CSVデータ(option)</h5>
+            <input id="ref_info_file<%= i_ref_info %>" name="ref_info_file<%= i_ref_info %>" type="file">
+            <br>
+          </div>
+        </div>
+        <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= i_ref_info %>)">＋</i></button><nobr> (追加)</nobr>
+        <br><br>
+      </div>
+    <% end %>
   </div>
 
   <div class="col-xs-4">

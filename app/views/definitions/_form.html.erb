@@ -82,9 +82,9 @@
 
     <div class="form-group">
       <h5>分子</h5>
-      <%= text_area_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+      <%= text_field_tag 'numer', params['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
       <h5>分母</h5>
-      <%= text_area_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+      <%= text_field_tag 'denom', params['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
       <br>
     </div>
 

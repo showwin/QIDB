@@ -1,0 +1,14 @@
+Style/AsciiComments:
+  Enabled: false
+AllCops:
+  Exclude:
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "db/**/*"
+    - 'config/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+  RunRailsCops: true
+LineLength:
+  Max: 100

@@ -3,9 +3,9 @@ production:
     default:
       hosts:
         - localhost:27017
-      database: qidb_production
-      username: qidb
-      password: qidb
+      database: <%= ENV["MONGODB_DATABASE"] || 'qidb_production' %>
+      username: <%= ENV["MONGODB_USERNAME"] || 'qidb_user' %>
+      password: <%= ENV["MONGODB_PASSWORD"] || 'qidb_pass'%>
 
 development:
   # Configure available database sessions. (required)

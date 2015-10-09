@@ -95,17 +95,6 @@ class Definition
     set
   end
 
-  def get_references(params)
-    id = 1
-    set = []
-    while params['reference'+id.to_s].present? do
-      data = params['reference'+id.to_s]
-      set << data if !set.include?(data)
-      id += 1
-    end
-    set
-  end
-
   def get_definitions(params, log_id)
     #分母 denom
     id = 1
@@ -180,21 +169,6 @@ class Definition
     ref_info_set
   end
 
-  def get_def_data_old(id, type, params, log_id)
-    if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
-      # すでにDBに入ってるものを持ってくる
-      if type == 'denom' || type == 'numer'
-        Definition.where(soft_delete: false).where(log_id: log_id).first.definitions['def_'+type][id.to_s]['data']
-      elsif type == 'risk'
-        Definition.where(soft_delete: false).where(log_id: log_id).first.def_risks[id.to_s]['data']
-      end
-    else
-      # アップロードされたCSVからデータを取得
-      get_csv_data(params[type+'_file'+id.to_s])
-    end
-  end
-
-
   def get_def_data(id, type, params, log_id)
     if params[type+'_csv_form'+id.to_s].present? && params[type+'_csv_form'+id.to_s][0] == "yes"
       # すでにDBに入ってるものを持ってくる
@@ -252,7 +226,7 @@ class Definition
       params['method_unit'].to_s + \
       params['warning'].to_s + \
       params['standard_value'].to_s + \
-      get_references(params).to_s + \
+      get_def_ref_info(params).to_s + \
       params['review_span'].to_s + \
       Time.now.to_s
   end
@@ -311,7 +285,11 @@ class Definition
         end
       end
 
-      @definition.init_params(params)
+      params['drug_output'] = []
+      params['drug_output'][0] = false
+      params['order'] = []
+      params['order'][0] = 'asc'
+
       @definition.set_params(params)
 
       @definition.remove_duplicate
@@ -321,13 +299,6 @@ class Definition
 
     end
     return flag
-  end
-
-  def init_params(params)
-    params['drug_output'] = []
-    params['drug_output'][0] = false
-    params['order'] = []
-    params['order'][0] = 'asc'
   end
 
   def self.search(keywords)

@@ -19,7 +19,7 @@ json.set! :definitions do
       d.denom definition.definitions['def_denom']
       d.numer definition.definitions['def_numer']
     end
-    json.drag_output definition.drug_output
+    json.drug_output definition.drug_output
     json.def_risks definition.def_risks
     json.method do |m|
       m.explanation definition['method']['explanation']

@@ -47,6 +47,8 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'did_you_mean'
   gem 'timecop'
+  gem 'simplecov', require: false
+  gem 'coveralls', require: false
 end
 
 gem 'rb-readline'

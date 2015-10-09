@@ -70,7 +70,7 @@
           <%= text_field_tag "dataset_others_#{index}", other, :class => 'form-control', :placeholder => 'その他のデータセット名' %>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition.dataset - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
+      <button id="add_dataset" type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= (@definition.dataset - @dataset).size %>)">＋</i></button><nobr> 追加</nobr>
       <br>
     </div>
 
@@ -133,7 +133,7 @@
           </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= @definition['definitions']['def_denom'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_denom_exp" type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= @definition['definitions']['def_denom'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -183,7 +183,7 @@
           </div>
           <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= @definition['definitions']['def_numer'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_numer_exp" type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= @definition['definitions']['def_numer'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -236,7 +236,7 @@
         </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= @definition['def_risks'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_risk_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= @definition['def_risks'].size %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -304,7 +304,7 @@
         </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= @definition['annotation'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <button id="add_anno_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= @definition['annotation'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
     <% rescue NameError %>
@@ -320,7 +320,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= i_anno %>)">＋</i></button><nobr> (追加)</nobr>
+      <button id="add_anno_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= i_anno %>)">＋</i></button><nobr> (追加)</nobr>
       <br><br>
     </div>
     <% end %>
@@ -356,7 +356,7 @@
         </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= @definition['standard_value'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <button id="add_ref_val_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= @definition['standard_value'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
     <% rescue NameError %>
@@ -372,7 +372,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= i_ref_val %>)">＋</i></button><nobr> (追加)</nobr>
+      <button id="add_ref_val_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= i_ref_val %>)">＋</i></button><nobr> (追加)</nobr>
       <br><br>
     </div>
     <% end %>
@@ -407,7 +407,7 @@
         </div>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= @definition['references'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
+      <button id="add_ref_info_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= @definition['references'].size %>)">＋</i></button><nobr> (説明の追加)</nobr>
       <br><br>
     </div>
     <% rescue NameError %>
@@ -423,7 +423,7 @@
             <br>
           </div>
         </div>
-        <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= i_ref_info %>)">＋</i></button><nobr> (追加)</nobr>
+        <button id="add_ref_info_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= i_ref_info %>)">＋</i></button><nobr> (追加)</nobr>
         <br><br>
       </div>
     <% end %>

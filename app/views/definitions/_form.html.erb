@@ -71,7 +71,7 @@
           <% i_data += 1 %>
         <% end %>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= i_data %>)">＋</i></button><nobr> 追加</nobr>
+      <button id="add_dataset" type="button" class="btn btn-sm btn-success btn-circle" onClick="addDatasetForm(<%= i_data %>)">＋</i></button><nobr> 追加</nobr>
       <br>
     </div>
 
@@ -104,7 +104,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= i_denom %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_denom_exp" type="button" class="btn btn-sm btn-success btn-circle" onClick="addDenomDefForm(<%= i_denom %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -123,7 +123,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= i_numer %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_numer_exp" type="button" class="btn btn-sm btn-success btn-circle" onClick="addNumerDefForm(<%= i_numer %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -167,7 +167,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= i_risk %>)">＋</i></button><nobr> (定義の追加)</nobr>
+      <button id="add_risk_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addRiskDefForm(<%= i_risk %>)">＋</i></button><nobr> (定義の追加)</nobr>
       <br><br>
     </div>
 
@@ -226,7 +226,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= i_anno %>)">＋</i></button><nobr> (追加)</nobr>
+      <button id="add_anno_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addAnnoDefForm(<%= i_anno %>)">＋</i></button><nobr> (追加)</nobr>
       <br><br>
     </div>
 
@@ -245,7 +245,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= i_ref_val %>)">＋</i></button><nobr> (追加)</nobr>
+      <button id="add_ref_val_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_valDefForm(<%= i_ref_val %>)">＋</i></button><nobr> (追加)</nobr>
       <br><br>
     </div>
   </div>
@@ -263,7 +263,7 @@
           <br>
         </div>
       </div>
-      <button type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= i_ref_info %>)">＋</i></button><nobr> (追加)</nobr>
+      <button id="add_ref_info_def" type="button" class="btn btn-sm btn-success btn-circle" onClick="addref_infoDefForm(<%= i_ref_info %>)">＋</i></button><nobr> (追加)</nobr>
       <br><br>
     </div>
   </div>

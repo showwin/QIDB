@@ -10,6 +10,9 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 
+require 'simplecov'
+SimpleCov.start 'rails'
+
 Capybara.javascript_driver = :poltergeist
 
 Capybara.register_driver :poltergeist do |app|

@@ -19,7 +19,7 @@ end
 
 Capybara.default_driver   = :rack_test
 Capybara.default_selector = :css
-Capybara.default_wait_time = 5
+Capybara.default_max_wait_time = 5
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 

@@ -19,7 +19,7 @@ module CreateDefinition
                      { '2010' => %w(true true true true true false true false false true true false true) },
                      { '2012' => %w(true true true true true true false true false true false true true) },
                      { '2014' => %w(false false false false false false false true false false false true false) }],
-                   'filename' => nil }
+                   'filename' => 'denom_filename' }
     def_denom2 = { 'explanation' => '分母の定義2', 'data' => nil, 'filename' => nil }
     def_denom = { '1' => def_denom1, '2' => def_denom2 }
     def_numer1 = { 'explanation' => '分子1',
@@ -29,7 +29,7 @@ module CreateDefinition
                      { '2010' => %w(true) },
                      { '2012' => %w(true) },
                      { '2014' => %w(false) }],
-                   'filename' => nil }
+                   'filename' => 'numer_filename' }
     def_numer2 = { 'explanation' => '分子2', 'data' => nil, 'filename' => nil }
     def_numer = { '1' => def_numer1, '2' => def_numer2 }
     @definition['definitions'] = { 'def_denom' => def_denom, 'def_numer' => def_numer }

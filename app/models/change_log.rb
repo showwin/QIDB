@@ -9,7 +9,7 @@ class ChangeLog
     self['log_id'] = log_id
     self['editor'] = editor
     self['message'] = message
-    self['created_at'] = Date.today.to_s
+    self['created_at'] = Time.zone.today.to_s
     self['soft_delete'] = false
   end
 
@@ -18,17 +18,8 @@ class ChangeLog
     self.save!
   end
 
-  def tmp_save!
+  def save_draft!
     self.soft_delete = true
     self.save!
-  end
-
-  def self.make_json(log_id)
-    logs = ChangeLog.where(log_id: log_id)
-    result = []
-    logs.each do |log|
-      result << log
-    end
-    result
   end
 end

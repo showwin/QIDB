@@ -9,8 +9,7 @@ class DefinitionsController < ApplicationController
   end
 
   def create
-    @definition = Definition.new
-    @definition.set_params(params)
+    @definition = Definition.init_params(DefinitionForm.new(params))
 
     # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
     @error = check_necessary_params
@@ -22,7 +21,7 @@ class DefinitionsController < ApplicationController
     if @dups.blank?
       @definition.save_with_log!(params[:editor], params[:message])
     else
-      @definition.tmp_save_with_log!(params[:editor], params[:message])
+      @definition.save_draft_with_log!(params[:editor], params[:message])
     end
   end
 
@@ -40,8 +39,7 @@ class DefinitionsController < ApplicationController
 
   # same as create
   def update
-    @definition = Definition.new
-    @definition.set_params(params)
+    @definition = Definition.init_params(DefinitionForm.new(params))
 
     # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
     @error = check_necessary_params
@@ -53,7 +51,7 @@ class DefinitionsController < ApplicationController
     if @dups.blank?
       @definition.save_with_log!(params[:editor], params[:message])
     else
-      @definition.tmp_save_with_log!(params[:editor], params[:message])
+      @definition.save_draft_with_log!(params[:editor], params[:message])
     end
   end
 

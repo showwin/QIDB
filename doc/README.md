@@ -303,12 +303,15 @@ QIDBでは以下の4点を開発要件とする。
 
 
 ## 4.2 QI定義書DBのAPI利用
-* QIDBのAPIは[http://10.238.83.176/api/v1/definition_api?id=0548](http://10.238.83.176/api/v1/definition_api?id=0548)のようなURLで提供される。
+* QIDBのAPIは[http://10.238.83.176/api/v1/definition_api?id=0548](http://10.238.83.176/api/v1/definitions?project=qip&id=0548)のようなURLで提供される。
 * 返されるデータはJSON形式のデータである。
 * JSON-LD形式で提供する予定であったが、開発者の"都合"でJSON形式の提供にとどまっている。
-* `id=xxxx`の部分で、取得したいデータを指定する
-* `xxxx`が`all`という文字列の場合には、DB内に保存されているすべての定義書の情報を取得する
-* `xxxx`が`all`以外の、例えば`0548`のような場合には、指標番号が0548の定義書の情報を取得することができる
+* 上のリクエストでは、QIPの指標番号0548の指標情報が取得できる。
+* QIPの指標をすべて得たい場合には `/api/v1/definitions?project=qip`
+| リクエストパラメータ | 型 | 備考 |
+|:--:|:--:|:--:|
+| project | 文字列 | プロジェクト名 ('qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf' のいずれか) |
+| id | 数値 | 指標番号 (idを指定する場合には、projectの指定が必須)|
 
 ## 4.3 QI定義書の閲覧
 * 定義書は[http://10.238.83.176/definitions/固有のid](http://10.238.83.176/definitions/0548)のようなURLでその内容を閲覧することができる。

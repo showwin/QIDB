@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Definition', type: :request do
+RSpec.describe 'Definitions', type: :request do
   before(:each) do
     @d1 = create_definition
   end
@@ -9,7 +9,7 @@ RSpec.describe 'Definition', type: :request do
     it 'should return correct content' do
       l1 = create_change_log(editor: 'editor1', message: 'massage1', log_id: @d1.log_id)
       l2 = create_change_log(editor: 'editor2', message: 'massage2', log_id: @d1.log_id)
-      get '/api/v1/definition_api?id=64&project=qip'
+      get '/api/v1/definitions?id=64&project=qip'
       expect(response).to be_success
       expect(response.status).to eq(200)
       expect(response_json['status']).to eq(200)
@@ -50,19 +50,35 @@ RSpec.describe 'Definition', type: :request do
 
     it 'should return all definitions' do
       create_definition
-      get '/api/v1/definition_api?id=all&project=qip'
+      get '/api/v1/definitions?project=qip'
       expect(response).to be_success
       expect(response.status).to eq(200)
       expect(response_json['status']).to eq(200)
       expect(response_json['message']).to eq('OK')
       expect(response_json['definitions'].size).to eq(2)
 
-      get '/api/v1/definition_api?id=all'
+      get '/api/v1/definitions'
       expect(response).to be_success
       expect(response.status).to eq(200)
       expect(response_json['status']).to eq(200)
       expect(response_json['message']).to eq('OK')
       expect(response_json['definitions'].size).to eq(2)
+    end
+
+    it 'should return 400' do
+      get '/api/v1/definitions?id=1234'
+      expect(response).to be_success
+      expect(response.status).to eq(200)
+      expect(response_json['status']).to eq(400)
+      expect(response_json['message']).to eq('Invalid Parameters')
+    end
+
+    it 'should return 404' do
+      get '/api/v1/definitions?project=abc'
+      expect(response).to be_success
+      expect(response.status).to eq(200)
+      expect(response_json['status']).to eq(404)
+      expect(response_json['message']).to eq('Not Found')
     end
   end
 end

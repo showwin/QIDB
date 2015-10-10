@@ -32,7 +32,7 @@ json.set! :definitions do
     json.review_span definition.review_span
     json.indicator definition.indicator
     json.created_at definition.created_at
-    logs = ChangeLog.make_json(definition.log_id)
+    logs = ChangeLog.where(log_id: definition.log_id).to_a
     json.set! :change_log do |log|
       json.array!(logs) do |l|
         log.editor l.editor

@@ -4,6 +4,22 @@ class Definition
   include Mongoid::Document
   include Mongoid::Attributes::Dynamic
 
+  scope :search_by_prjt_and_id, lambda { |params|
+    return if params[:project].blank?
+
+    if params[:id].present?
+      # 機関と指標番号が指定されている場合
+      where("numbers.#{params[:project]}" => params[:id])
+    else
+      # 特定の機関の全ての定義書を返す場合
+      ne("numbers.#{params[:project]}" => nil)
+    end
+  }
+
+  scope :active, lambda {
+    where(soft_delete: false)
+  }
+
   @@projects = ['qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf']
 
   def find_duplicates

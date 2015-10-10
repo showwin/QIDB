@@ -13,12 +13,13 @@ RSpec.describe ChangeLog, type: :model do
   describe '#set_params' do
     it 'should init params' do
       cl = ChangeLog.new
-      params = { 'editor' => 'editor1', 'message' => 'message1' }
-      cl.set_params(params, 1, 2)
+      editor = 'editor1'
+      message = 'message1'
+      cl.set_params(editor, message, 1, 2)
       expect(cl._id).to eq(1)
       expect(cl.log_id).to eq(2)
-      expect(cl.editor).to eq('editor1')
-      expect(cl.message).to eq('message1')
+      expect(cl.editor).to eq(editor)
+      expect(cl.message).to eq(message)
       expect(cl.created_at).to eq(Time.zone.today.to_s)
       expect(cl.soft_delete).to be_falsey
     end
@@ -28,7 +29,7 @@ RSpec.describe ChangeLog, type: :model do
     it 'should change soft_delete true' do
       cl = create_change_log(editor: 'editor1', message: 'message1')
       expect(cl.soft_delete).to be_falsey
-      cl.tmp_save
+      cl.tmp_save!
       expect(cl.soft_delete).to be_truthy
     end
   end

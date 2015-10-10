@@ -12,7 +12,6 @@ Rails.application.routes.draw do
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
   get 'definitions/:prjt/:qid' => 'definitions#search', as: :def_search
 
-
   resources :definitions
 
   scope module: :api, path: 'api', defaults: { format: 'json' } do

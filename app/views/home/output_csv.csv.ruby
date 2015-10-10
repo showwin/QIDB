@@ -1,6 +1,6 @@
 require 'csv'
 CSV.generate do |csv|
-  csv << @column_names
+  csv << CSV_COLUMNS
   @contents.each do |content|
     csv << content
   end

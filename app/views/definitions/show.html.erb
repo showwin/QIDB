@@ -21,7 +21,7 @@
       </div>
       <div class="panel-body">
         <label>指標番号</label>:
-        <% @projects.each do |prjt| %>
+        <% PROJECT_NAME_KEYS.each do |prjt| %>
           <% next if @definition.numbers[prjt[1]].blank? %>
           <br><%= prjt[0] %>: <%= @definition.numbers[prjt[1]] %>
         <% end %></p>

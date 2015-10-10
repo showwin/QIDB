@@ -20,11 +20,9 @@ class Definition
     where(soft_delete: false)
   }
 
-  @@projects = ['qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf']
-
   def find_duplicates
     dups = []
-    @@projects.each do |prjt|
+    PROJECT_NAMES.each do |prjt|
       next if self.numbers[prjt].blank?
       bup = Definition.where(soft_delete: false)
                       .where("numbers.#{prjt}" => self.numbers[prjt]).first
@@ -36,7 +34,7 @@ class Definition
   end
 
   def remove_duplicate
-    @@projects.each do |prjt|
+    PROJECT_NAMES.each do |prjt|
       next if self.numbers[prjt].blank?
       dups = Definition.where(soft_delete: false)
                        .where("numbers.#{prjt}" => self.numbers[prjt])
@@ -49,9 +47,32 @@ class Definition
     end
   end
 
-  def tmp_save
+  def save_with_log!(editor, message)
+    log = ChangeLog.new
+    log.set_params(editor, message, _id, log_id)
+    self.save!
+    log.save!
+  end
+
+  def tmp_save_with_log!(editor, message)
+    log = ChangeLog.new
+    log.set_params(editor, message, _id, log_id)
+    self.tmp_save!
+    log.tmp_save!
+  end
+
+  def tmp_save!
     self.soft_delete = true
-    self.save
+    self.save!
+  end
+
+  def make_public
+    remove_duplicate
+    self.soft_delete = false
+    self.save!
+
+    log = ChangeLog.find_by(_id: _id)
+    log.make_public
   end
 
   def set_params(params)
@@ -80,7 +101,7 @@ class Definition
 
   def get_numbers(params)
     result = {}
-    @@projects.each do |prjt|
+    PROJECT_NAMES.each do |prjt|
       number = params['project_'+prjt+'_number']
       if number.present?
         result[prjt] = number
@@ -224,7 +245,7 @@ class Definition
 
   def create_search_index(params)
     numbers = ""
-    @@projects.each do |prjt|
+    PROJECT_NAMES.each do |prjt|
       numbers += prjt+params['project_'+prjt+'_number'] if params['project_'+prjt+'_number']
     end
     index =

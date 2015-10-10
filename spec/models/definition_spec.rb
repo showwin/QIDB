@@ -33,7 +33,7 @@ RSpec.describe Definition, type: :model do
     it 'should soft delete' do
       d_org = create_definition
       expect(d_org.soft_delete).to be_falsey
-      d_org.tmp_save
+      d_org.tmp_save!
       expect(d_org.soft_delete).to be_truthy
     end
   end

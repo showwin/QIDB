@@ -30,7 +30,6 @@ RSpec.describe HomeController, type: :feature do
     visit '/'
     expect(page).to have_content('Download CSV')
     click_link('Download CSV')
-    # bug exists here
-    # expect(page.response_headers['Content-Type']).to eq('application/csv')
+    expect(page.response_headers['Content-Type']).to eq('text/csv')
   end
 end

@@ -7,7 +7,7 @@
 
     <div class="form-group">
       <h4><b>プロジェクト名</b></h4>
-      <% @projects.each do |p| %>
+      <% PROJECT_NAME_KEYS.each do |p| %>
         <% if params["project_#{p[1]}"] == 'true' %>
           <%= check_box_tag "project_#{p[1]}", true, true, :onChange => "showNumberForm('project_#{p[1]}')" %> <%= p[0] %>
           <label id="project_<%= p[1] %>_number"><input class="form-control input-sm" id="number" name="project_<%= p[1] %>_number" value='<%= params["project_#{p[1]}_number"] %>' placeholder="指標番号　(e.g.) 0548" type="text"></label><br>
@@ -21,7 +21,7 @@
 
     <div class="form-group">
       <h4><b>年度</b></h4>
-      <% @years.each do |y| %>
+      <% YEAR_OPTIONS.each do |y| %>
         <% if params["year_#{y}"] == 'true' %>
           <%= check_box_tag "year_#{y}", true, checked = true %> <%= y %><br>
         <% else %>
@@ -58,7 +58,7 @@
     <div class="form-group">
       <div id="dataset-form">
         <h4><b>必要なデータセット</b></h4>
-        <% @dataset.each_with_index do |d, index| %>
+        <% DATASET_OPTIONS.each_with_index do |d, index| %>
           <% if params["dataset_#{index}"] %>
             <%= check_box_tag "dataset_#{index}", d, checked = true, :class => "btn-sm" %> <%= d %><br>
           <% else %>

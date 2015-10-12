@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DefinitionForm do
+RSpec.describe DefinitionForm, type: :controller do
   describe '#set_params' do
   end
 
@@ -122,8 +122,24 @@ RSpec.describe DefinitionForm do
     end
   end
 
-  describe '#get_csv_data' do
-    # CSVの読み込みは features テストの方でカバー
+  describe '#read_csv_data' do
+    it 'should read csv encoded by SJIS' do
+      params = { 'denom_exp1' => '分母説明1',
+                 'denom_file1' => fixture_file_upload('spec/fixtures/def_data2.csv', 'text/csv') }
+      d = DefinitionForm.new(definition_form_params.update(params))
+      expect(d.def_denom['1']['data']).to \
+        eq([{ 'ICD-10コード' => %w(C33$ C34$ C37$ C381 C382 C383) },
+            { '病名' => %w(気管の腫瘍 気管支及び肺の腫瘍 胸腺の腫瘍 前縦隔の腫瘍 後縦隔の腫瘍 部位不明の縦隔腫瘍) }])
+    end
+  end
+
+  describe '#read_csv_filename' do
+    it 'should read filename' do
+      params = { 'denom_exp1' => '分母説明1',
+                 'denom_file1' => fixture_file_upload('spec/fixtures/def_data.csv', 'text/csv') }
+      d = DefinitionForm.new(definition_form_params.update(params))
+      expect(d.def_denom['1']['filename']).to eq('def_data.csv')
+    end
   end
 
   describe '#create_search_index' do

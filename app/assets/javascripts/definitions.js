@@ -40,7 +40,7 @@ function addDenomDefForm(init){
 	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
 	defForm.append('<textarea class="form-control" id="denom_exp'+id+'" name="denom_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="denom_file'+id+'" name="denom_file'+id+'" type="file">');
 	defForm.append('<br>');
 }
@@ -67,7 +67,7 @@ function addNumerDefForm(init){
 	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
 	defForm.append('<textarea class="form-control" id="numer_exp'+id+'" name="numer_exp'+id+'"placeholder="脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="numer_file'+id+'" name="numer_file'+id+'" type="file">');
 	defForm.append('<br>');
 }
@@ -94,7 +94,7 @@ function addRiskDefForm(init){
 	defForm.append('<h5><b>定義'+id+'</b></h5>');
 	defForm.append('<h5>説明</h5>');
 	defForm.append('<textarea class="form-control" id="risk_exp'+id+'" name="risk_exp'+id+'" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="risk_file'+id+'" name="risk_file'+id+'" type="file">');
 	defForm.append('<br>');
 }
@@ -120,7 +120,7 @@ function addAnnoDefForm(init){
 	var defForm = $('#anno-def'+id);
 	defForm.append('<h5>説明'+id+'</h5>');
 	defForm.append('<textarea class="form-control" id="anno_exp'+id+'" name="anno_exp'+id+'" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="anno_file'+id+'" name="anno_file'+id+'" type="file">');
 	defForm.append('<br>');
 }
@@ -146,7 +146,7 @@ function addref_valDefForm(init){
 	var defForm = $('#ref_val-def'+id);
 	defForm.append('<h5>説明'+id+'</h5>');
 	defForm.append('<textarea class="form-control" id="ref_val_exp'+id+'" name="ref_val_exp'+id+'" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="ref_val_file'+id+'" name="ref_val_file'+id+'" type="file">');
 	defForm.append('<br>');
 }
@@ -172,7 +172,7 @@ function addref_infoDefForm(init){
 	var defForm = $('#ref_info-def'+id);
 	defForm.append('<h5>説明'+id+'</h5>');
 	defForm.append('<textarea class="form-control" id="ref_info_exp'+id+'" name="ref_info_exp'+id+'" type="text"></textarea>');
-	defForm.append('<h5>CSVデータ(option)</h5>');
+	defForm.append('<h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>');
 	defForm.append('<input id="ref_info_file'+id+'" name="ref_info_file'+id+'" type="file">');
 	defForm.append('<br>');
 }

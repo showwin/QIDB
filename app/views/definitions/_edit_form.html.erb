@@ -95,7 +95,7 @@
             <h5><%= key %>. </h5>
             <%= text_area_tag "denom_exp#{key}", d_denom['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-            <h5>CSVデータ(option)</h5>
+            <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
             <% if d_denom['data'].present? %>
               <table class="table table-bordered table-hover">
                 <thead>
@@ -145,7 +145,7 @@
             <h5><%= key %>. </h5>
             <%= text_area_tag "numer_exp#{key}", d_numer['explanation'], :class => 'form-control', :placeholder =>
             '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-            <h5>CSVデータ(option)</h5>
+            <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
             <% if d_numer['data'].present? %>
             <table class="table table-bordered table-hover">
               <thead>
@@ -216,7 +216,7 @@
         <div id="risk-def<%= key %>">
           <h5><b><%= key %>. </b></h5>
           <%= text_area_tag "risk_exp#{key}", d_risk['explanation'], :class => 'form-control' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_risk['data'].present? %>
 
           <% end %>
@@ -284,7 +284,7 @@
         <div id="anno-def<%= key %>">
           <h5><%= key %>. </h5>
           <%= text_area_tag "anno_exp#{key}", d_anno['explanation'], :class => 'form-control' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_anno['data'].present? %>
 
           <% end %>
@@ -315,7 +315,7 @@
         <div id="anno-def<%= i_anno %>">
           <h5>説明<%= i_anno %></h5>
           <%= text_area_tag "anno_exp#{i_anno}", params["anno_exp#{i_anno}"], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある'  %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="anno_file<%= i_anno %>" name="anno_file<%= i_anno %>" type="file">
           <br>
         </div>
@@ -336,7 +336,7 @@
         <div id="ref_val-def<%= key %>">
           <h5><%= key %>. </h5>
           <%= text_area_tag "ref_val_exp#{key}", d_ref_val['explanation'], :class => 'form-control' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_ref_val['data'].present? %>
 
           <% end %>
@@ -367,7 +367,7 @@
         <div id="ref_val-def<%= i_ref_val %>">
           <h5>説明<%= i_ref_val %></h5>
           <%= text_area_tag "ref_val_exp#{i_ref_val}", params["ref_val_exp#{i_ref_val}"], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後'  %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="ref_val_file<%= i_ref_val %>" name="ref_val_file<%= i_ref_val %>" type="file">
           <br>
         </div>
@@ -387,7 +387,7 @@
         <div id="ref_info-def<%= key %>">
           <h5><%= key %>. </h5>
           <%= text_area_tag "ref_info_exp#{key}", d_ref_info['explanation'], :class => 'form-control' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_ref_info['data'].present? %>
 
           <% end %>
@@ -418,7 +418,7 @@
           <div id="ref_info-def<%= i_ref_info %>">
             <h5>説明<%= i_ref_info %></h5>
             <%= text_area_tag "ref_info_exp#{i_ref_info}", params["ref_info_exp#{i_ref_info}"], :class => 'form-control', :placeholder => "American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p."  %>
-            <h5>CSVデータ(option)</h5>
+            <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
             <input id="ref_info_file<%= i_ref_info %>" name="ref_info_file<%= i_ref_info %>" type="file">
             <br>
           </div>

@@ -99,7 +99,7 @@
           <h5>説明</h5>
           <%= text_area_tag "denom_exp#{i_denom}", params["denom_exp#{i_denom}"], :class => 'form-control', :placeholder =>
           '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="denom_file<%= i_denom %>" name="denom_file<%= i_denom %>" type="file">
           <br>
         </div>
@@ -118,7 +118,7 @@
           <h5>説明</h5>
           <%= text_area_tag "numer_exp#{i_numer}", params["numer_exp#{i_numer}"], :class => 'form-control', :placeholder =>
           '脳血管疾患等リハビリテーションまたはリハビリテーション総合計画評価を受けた症例　レセ電コードに以下のいずれかが含まれる症例' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="numer_file<%= i_numer %>" name="numer_file<%= i_numer %>" type="file">
           <br>
         </div>
@@ -162,7 +162,7 @@
           <h5><b>定義<%= i_risk %></b></h5>
           <h5>説明</h5>
           <%= text_area_tag "risk_exp#{i_risk}", params["risk_exp#{i_risk}"], :class => 'form-control' %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="risk_file<%= i_risk %>" name="risk_file<%= i_risk %>" type="file">
           <br>
         </div>
@@ -216,7 +216,7 @@
         <div id="anno-def<%= i_anno %>">
           <h5>説明<%= i_anno %></h5>
           <%= text_area_tag "anno_exp#{i_anno}", params["anno_exp#{i_anno}"], :class => 'form-control', :placeholder => '(e.g.) 適用外の患者も含まれてしまうため、値が低く算出される可能性がある'  %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="anno_file<%= i_anno %>" name="anno_file<%= i_anno %>" type="file">
           <br>
         </div>
@@ -235,7 +235,7 @@
         <div id="ref_val-def<%= i_ref_val %>">
           <h5>説明<%= i_ref_val %></h5>
           <%= text_area_tag "ref_val_exp#{i_ref_val}", params["ref_val_exp#{i_ref_val}"], :class => 'form-control', :placeholder => '(e.g.) QIPの過去の指標では60%前後'  %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="ref_val_file<%= i_ref_val %>" name="ref_val_file<%= i_ref_val %>" type="file">
           <br>
         </div>
@@ -253,7 +253,7 @@
         <div id="ref_info-def<%= i_ref_info %>">
           <h5>説明<%= i_ref_info %></h5>
           <%= text_area_tag "ref_info_exp#{i_ref_info}", params["ref_info_exp#{i_ref_info}"], :class => 'form-control', :placeholder => "American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p."  %>
-          <h5>CSVデータ(option)</h5>
+          <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <input id="ref_info_file<%= i_ref_info %>" name="ref_info_file<%= i_ref_info %>" type="file">
           <br>
         </div>

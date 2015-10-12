@@ -177,16 +177,11 @@
     <h4><b>指標の算出方法</b></h4>
     <div class="form-group">
       <h5><b>説明</b></h5>
-      <%= select_tag('method_explanation', options_for_select([["分子÷分母", "分子÷分母"]],
-       params['method_explanation']), :class => "form-control  btn-sm") %>
-        <br>
-        <br>
+      <%= text_field_tag 'method_explanation', '分子÷分母', :class => 'form-control' %>
     </div>
     <div class="form-group">
       <h5><b>単位</b></h5>
-      <%= select_tag('method_unit', options_for_select([["パーセント", "パーセント"]],
-        params['method_unit']), :class => "form-control  btn-sm") %>
-      <br>
+      <%= text_field_tag 'method_unit', 'パーセント', :class => 'form-control' %>
       <br>
     </div>
 

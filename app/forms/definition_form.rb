@@ -163,7 +163,7 @@ class DefinitionForm
     return [] unless file
     fail "Unknown file type: #{file.original_filename}" unless \
       (File.extname(file.original_filename) == '.csv')
-    csv = CSV.read(file.path)
+    csv = CSV.read(file.path, 'rt:cp932:utf-8')
     data = csv[0].each_with_object([]) do |key, d|
       d << { key => [] }
     end

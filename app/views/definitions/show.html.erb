@@ -47,7 +47,7 @@
           <%= key %>：<%= value['explanation'] %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
-              <div class="panel panel-default">
+              <div class="panel panel-default" id="def_denom_<%= key %>_data">
                 <div class="panel-heading">分母のデータ<%= key %>　
                   <a data-toggle="collapse" data-parent="#accordion" href="#denom<%= key %>_panel" aria-expanded="false" class="collapsed">
                     内容を見る
@@ -92,7 +92,7 @@
           <%= key %>：<%= value['explanation'] %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
-              <div class="panel panel-default">
+              <div class="panel panel-default" id="def_numer_<%= key %>_data">
                 <div class="panel-heading">分子のデータ<%= key %>　
                   <a data-toggle="collapse" data-parent="#accordion" href="#numer<%= key %>_panel" aria-expanded="false" class="collapsed">
                     内容を見る

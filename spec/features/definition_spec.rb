@@ -22,11 +22,6 @@ RSpec.describe DefinitionsController, type: :feature do
     find('#numer').set('定義の要約分子')
     find('#denom').set('定義の要約分母')
     find('#denom_exp1').set('分母の定義1')
-
-    # csv file upload
-    # バグがあって動かない
-    # attach_file 'denom_file1', 'spec/fixtures/def_data.csv'
-
     find('#add_denom_exp').click
     find('#denom_exp2').set('分母の定義2')
     find('#numer_exp1').set('分子の定義1')
@@ -85,10 +80,6 @@ RSpec.describe DefinitionsController, type: :feature do
     expect(page).to have_content('中央値')
     find('#show_change_log').click
     expect(page).to have_content('変更者: 作成者1　 変更メッセージ: テストのために作成しました')
-
-    # CSV アップロードの中身確認
-    # first('.panel-default').click_link('内容を見る').first
-    # expect(page).to have_content('クロピドグレル硫酸塩')
   end
 
   scenario 'update definition', js: true do

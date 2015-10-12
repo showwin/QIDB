@@ -77,7 +77,7 @@ class DefinitionsController < ApplicationController
       format.pdf do
         render pdf: 'sheet',
                encoding: 'UTF-8',
-               template: '/definitions/pdf.pdf',
+               template: '/definitions/show.pdf.erb',
                layout: 'pdf.html.erb',
                no_background: false
       end

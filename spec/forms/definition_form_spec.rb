@@ -134,7 +134,7 @@ RSpec.describe DefinitionForm do
         eq('{"qip"=>"123333"}[]名称{"numer"=>nil, "denom"=>nil}{}{"exp' \
            'lanation"=>nil, "unit"=>nil}{}{}{"1"=>{"explanation"=>"参考資料' \
            '1", "data"=>[], "filename"=>nil}, "2"=>{"explanation"=>"参考資料2",' \
-           ' "data"=>[], "filename"=>nil}}2015-10-10')
+           ' "data"=>[], "filename"=>nil}}' + Time.zone.now.strftime('%Y-%m-%d'))
     end
   end
 

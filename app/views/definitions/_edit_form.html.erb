@@ -5,6 +5,7 @@
   <div class="col-xs-4">
 
     <div class="form-group">
+      <h4><b>プロジェクト名</b></h4>
       <% PROJECT_NAME_KEYS.each do |prjt| %>
         <% if @definition.numbers[prjt[1]].present? %>
           <%= check_box_tag "project_#{prjt[1]}", true, true, :onChange => "showNumberForm('project_#{prjt[1]}')" %> <%= prjt[0] %>
@@ -472,6 +473,7 @@
   <div class="col-xs-4">
 
     <%= hidden_field_tag 'log_id', @definition.log_id %>
+    <%= hidden_field_tag 'duplicate_flg', @duplicate_flg %>
     <div class="form-group">
       <%= submit_tag "　作　成　", :class => "btn btn-lg btn-success" %>
     </div>

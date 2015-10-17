@@ -170,6 +170,55 @@ RSpec.describe DefinitionsController, type: :feature do
     expect(page).to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
   end
 
+  scenario 'duplicate definition', js: true do
+    visit '/definitions/qip/64'
+    expect(page).to have_content('指標群: 呼吸器系')
+
+    # 編集ページへ
+    click_link('複製')
+    find('#project_rofuku').set(true)
+    fill_in('project_rofuku_number', with: '12345')
+    find('#year_2014').set(true)
+    find('#group').set('循環器系')
+    find('#editor').set('変更者1')
+    find('#message').set('テストのために変更しました')
+    click_button('　作　成　')
+
+    # 確認 Modal が出る
+    expect(page).to have_content('レコードの登録が完了しました')
+    expect(page).to have_content('次の定義を登録する')
+    expect(page).to have_content('TOPに戻る')
+
+    # もとの定義書が変更されていない確認
+    visit '/definitions/qip/64'
+    expect(page).to have_content('QIP')
+    expect(page).to have_content('64')
+    expect(page).to have_content('2008')
+    expect(page).to have_content('2010')
+    expect(page).not_to have_content('2014')
+    expect(page).to have_content('呼吸器系')
+    find('#show_change_log').click
+    expect(page).not_to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
+    expect(page).not_to have_content('アルガトロバン水和物')
+    first('.panel-default').click_link('内容を見る').first
+    expect(page).to have_content('アルガトロバン水和物')
+
+    # 複製した定義書の確認
+    visit '/definitions/rofuku/12345'
+    expect(page).to have_content('労災')
+    expect(page).to have_content('12345')
+    expect(page).to have_content('2008')
+    expect(page).to have_content('2010')
+    expect(page).to have_content('2014')
+    expect(page).to have_content('循環器系')
+    expect(page).to have_content('縦隔生検を実施した')
+    find('#show_change_log').click
+    expect(page).to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
+    expect(page).not_to have_content('アルガトロバン水和物')
+    first('.panel-default').click_link('内容を見る').first
+    expect(page).to have_content('アルガトロバン水和物')
+  end
+
   scenario 'cannot update definition without editor info', js: true do
     visit '/definitions/qip/64'
     expect(page).to have_content('指標群: 呼吸器系')

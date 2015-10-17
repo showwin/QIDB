@@ -66,16 +66,21 @@ class Definition
     self.save!
   end
 
+  def update_log_id
+    self.log_id = Definition.count
+  end
+
   class << self
     def init_params(params)
       d = Definition.new
       param_list = %w(log_id numbers years group name meaning dataset def_summary
                       definitions drug_output def_risks method order annotation
                       standard_value references review_span indicator created_at
-                      search_index soft_delete)
+                      search_index soft_delete duplicate_flg)
       param_list.each do |name|
         d[name] = eval("params.#{name}")
       end
+      d.update_log_id if d.duplicate_flg
       d
     end
 

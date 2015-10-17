@@ -1,6 +1,6 @@
 class DefinitionsController < ApplicationController
-  before_action :set_definition, only: [:show, :edit, :update, :pdf]
-  before_action :set_log, only: [:show, :edit, :pdf]
+  before_action :set_definition, only: [:show, :edit, :duplicate, :update, :pdf]
+  before_action :set_log, only: [:show, :edit, :duplicate, :pdf]
 
   def show
   end
@@ -37,22 +37,11 @@ class DefinitionsController < ApplicationController
   def edit
   end
 
-  # same as create
-  def update
-    @definition = Definition.init_params(DefinitionForm.new(params))
-
-    # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
-    @error = check_necessary_params
-
-    # すでに使われている指標番号を見つける
-    @dups = @definition.find_duplicates
-
-    return if @error.present?
-    if @dups.blank?
-      @definition.save_with_log!(params[:editor], params[:message])
-    else
-      @definition.save_draft_with_log!(params[:editor], params[:message])
-    end
+  def duplicate
+    @definition.numbers = {}
+    @logs = []
+    @duplicate_flg = true
+    render :edit
   end
 
   def upload

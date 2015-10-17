@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'definitions/confirm/:id' => 'definitions#confirm', as: :confirm_dup
   get 'definitions/success' => 'definitions#success', as: :def_success
   get 'definitions/:id/edit' => 'definitions#edit', as: :def_edit
+  get 'definitions/:id/duplicate' => 'definitions#duplicate', as: :def_duplicate
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
   get 'definitions/:prjt/:qid' => 'definitions#search', as: :def_search
 

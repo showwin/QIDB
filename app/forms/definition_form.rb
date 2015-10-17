@@ -3,7 +3,7 @@ class DefinitionForm
   attr_reader :log_id, :numbers, :years, :group, :name, :meaning, :dataset, :def_summary,
               :definitions, :drug_output, :def_risks, :method, :order, :annotation,
               :standard_value, :references, :review_span, :indicator, :created_at,
-              :search_index, :soft_delete
+              :search_index, :soft_delete, :duplicate_flg
 
   def initialize(params = [])
     @params = params
@@ -28,10 +28,11 @@ class DefinitionForm
     @created_at = Time.zone.now.strftime('%Y-%m-%d')
     @search_index = search_index
     @soft_delete = false
+    @duplicate_flg = params[:duplicate_flg] == 'true'
   end
 
   def log_id
-    @params['log_id'].blank? ? Definition.all.size : @params['log_id'].to_i
+    @params['log_id'].blank? ? Definition.count : @params['log_id'].to_i
   end
 
   def numbers

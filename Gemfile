@@ -15,7 +15,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 ### for MongoDB
 gem 'io-console'
-gem 'mongoid', '~> 5.0.0'
+gem 'mongoid', '~> 4.0.0'
 
 ### for api
 gem 'rails-api'

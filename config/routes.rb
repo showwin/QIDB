@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-
   root 'home#index'
 
   get 'search' => 'home#search', as: :search
+  get 'login' => 'home#login', as: :login
+  get 'logout' => 'home#logout', as: :logout
   get 'download_csv' => 'home#output_csv', as: :download_csv
   post 'definitions/import' => 'definitions#import', as: :import
   get 'definitions/upload' => 'definitions#upload', as: :upload
@@ -20,5 +21,4 @@ Rails.application.routes.draw do
       resources :definitions, only: [:index]
     end
   end
-
 end

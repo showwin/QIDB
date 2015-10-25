@@ -5,9 +5,29 @@ RSpec.describe DefinitionsController, type: :feature do
     @d1 = create_definition
   end
 
-  scenario 'create new definition and show it', js: true do
-    # 新規作成ページへ
+  scenario 'normal user cannot access some page', js: true do
+    # トップページにリダイレクト
     visit '/definitions/new'
+    expect(page).to have_content('検索キーワード')
+
+    visit "/definitions/#{@d1._id}/edit"
+    expect(page).to have_content('検索キーワード')
+
+    visit "/definitions/#{@d1._id}/duplicate"
+    expect(page).to have_content('検索キーワード')
+
+    visit "/definitions/#{@d1._id}"
+    expect(page).not_to have_content('編集')
+    expect(page).not_to have_content('複製')
+    expect(page).not_to have_content('削除')
+  end
+
+  scenario 'create new definition and show it', js: true do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    # 新規作成ページへ
+    click_link '新規作成'
 
     # データの入力
     find('#project_rofuku').set(true)
@@ -83,6 +103,10 @@ RSpec.describe DefinitionsController, type: :feature do
   end
 
   scenario 'update definition', js: true do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    # 定義書ページヘ
     visit '/definitions/qip/64'
     expect(page).to have_content('指標群: 呼吸器系')
 
@@ -171,6 +195,10 @@ RSpec.describe DefinitionsController, type: :feature do
   end
 
   scenario 'duplicate definition', js: true do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    # 定義書ページヘ
     visit '/definitions/qip/64'
     expect(page).to have_content('指標群: 呼吸器系')
 
@@ -219,7 +247,30 @@ RSpec.describe DefinitionsController, type: :feature do
     expect(page).to have_content('アルガトロバン水和物')
   end
 
+  scenario 'delete definition', js: true do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    # 定義書ページヘ
+    visit '/definitions/qip/64'
+    expect(page).to have_content('指標群: 呼吸器系')
+
+    # 編集ページへ
+    click_link('削除')
+
+    # トップページへリダイレクト
+    find('#btn-input').set('呼吸器系')
+    click_button('　検　索　')
+
+    # 検索結果
+    expect(page).not_to have_content('指標番号: 64')
+  end
+
   scenario 'cannot update definition without editor info', js: true do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    # 定義書ページヘ
     visit '/definitions/qip/64'
     expect(page).to have_content('指標群: 呼吸器系')
 
@@ -242,8 +293,7 @@ RSpec.describe DefinitionsController, type: :feature do
 
       # 指標ページへリダイレクト
       expect(page).to have_content('指標群: 呼吸器系')
-      expect(page).to have_content('編集')
-      expect(page).to have_content('pdf')
+      expect(page).to have_content('指標のPDFをダウンロード')
       expect(page).not_to have_content('アルガトロバン水和物')
       first('.panel-default').click_link('内容を見る').first
       expect(page).to have_content('アルガトロバン水和物')
@@ -253,8 +303,8 @@ RSpec.describe DefinitionsController, type: :feature do
   describe '#pdf' do
     it 'should download pdf file' do
       visit '/definitions/qip/64'
-      expect(page).to have_content('pdf')
-      click_link('pdf')
+      expect(page).to have_content('指標のPDFをダウンロード')
+      click_link('指標のPDFをダウンロード')
       # bug exists here
       expect(page.response_headers['Content-Type']).to eq('application/pdf')
     end

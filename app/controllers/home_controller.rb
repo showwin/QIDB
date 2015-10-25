@@ -3,7 +3,18 @@ class HomeController < ApplicationController
   def index
   end
 
+  def login
+    session[:admin] = true
+    redirect_to root_path
+  end
+
+  def logout
+    session[:admin] = nil
+    redirect_to root_path
+  end
+
   def search
+    session[:user_id] = 3
     keywords = format_search_query
     @results = Definition.search(keywords)
     render :index

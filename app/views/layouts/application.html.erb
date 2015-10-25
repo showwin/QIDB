@@ -8,10 +8,24 @@
 </head>
 <body>
   <div id="wrapper">
+
+    <% if admin? %>
+      <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+          <a href="/"><b class="navbar-brand">QIDB管理ツール</b></a>
+          <%= link_to '新規作成', new_definition_path, class: 'navbar-brand' %>
+          <% if @definition %>
+            <%= link_to '編集', edit_definition_path, class: 'navbar-brand' %>
+            <%= link_to '複製', def_duplicate_path, class: 'navbar-brand' %>
+            <%= link_to '削除', definition_path, data: { confirm: "本当に削除しますか？"}, method: :delete, class: 'navbar-brand' %>
+          <% end %>
+          <%= link_to 'ログアウト', logout_path, class: 'navbar-brand' %>
+        </div>
+      </nav>
+    <% end %>
+
     <div id="page-wrapper">
-
       <%= yield %>
-
     </div>
   </div>
 </body>

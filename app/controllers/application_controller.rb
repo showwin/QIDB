@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
     session[:admin]
   end
   helper_method :admin?
+
+  def format_query_keywords(query)
+    query.present? ? query.gsub(/(　)+/, "\s").split("\s") : []
+  end
 end

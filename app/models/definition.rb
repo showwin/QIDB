@@ -20,6 +20,16 @@ class Definition
     where(soft_delete: false)
   }
 
+  scope :find_by_project, lambda { |project|
+    return if project.blank?
+    ne("numbers.#{project}" => nil)
+  }
+
+  scope :find_by_year, lambda { |year|
+    return if year.blank?
+    where(years: year)
+  }
+
   def find_duplicates
     PROJECT_NAMES.each_with_object([]) do |prjt, dups|
       next if numbers[prjt].blank?

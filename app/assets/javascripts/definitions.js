@@ -196,3 +196,15 @@ function addReferenceForm(init){
 	$('<textarea class="form-control" id="reference'+id+'" name="reference'+id+'" type="text" placeholder="American Heart Association. Heart disease and stroke statistics - 2008 update. Dallas (TX): American Heart Association; 2008. 43 p." /></textarea><br>').appendTo('#references')
 	referenceCounter++;
 }
+
+$(document).ready(function() {
+	// 見出しのチェックボックスをクリックすると、下のチェックボックスが全部checkedになる
+	$('#all_check').change(function() {
+	  $('.defList__checkbox').prop('checked', $(this).prop('checked'));
+	});
+	$('.defList__checkbox').change(function() {
+	  if (!$(this).prop('checked')) {
+	    $('#all_check').prop('checked', false);
+	  }
+	});
+});

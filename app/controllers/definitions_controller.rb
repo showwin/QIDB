@@ -80,6 +80,33 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  def select
+    @project = params[:project]
+    @year = params[:year]
+    @keywords = format_query_keywords(params[:keywords])
+    @definitions = Definition.active
+                   .find_by_project(@project)
+                   .find_by_year(@year)
+                   .search(@keywords).to_a
+  end
+
+  def pdfs
+    ids = []
+    params.keys.each do |key|
+      ids << key if key.length == 24
+    end
+    @definitions = Definition.active.in('_id': ids).to_a
+    respond_to do |format|
+      format.pdf do
+        render pdf: 'sheet',
+               encoding: 'UTF-8',
+               template: '/definitions/selected.pdf.erb',
+               layout: 'pdf.html.erb',
+               no_background: false
+      end
+    end
+  end
+
   private
 
   def set_definition

@@ -287,6 +287,19 @@ RSpec.describe DefinitionsController, type: :feature do
     # あまり使われていないようなのでとりあえずスキップ
   end
 
+  scenario 'download multi-definition PDF' do
+    # 管理者になるためにログイン
+    visit '/login'
+
+    visit '/'
+    click_link('PDFでダウンロード')
+
+    # 出力定義書選択画面へ遷移
+    check('all_check')
+    click_button('PDFをダウンロード')
+    expect(page.response_headers['Content-Type']).to eq('application/pdf')
+  end
+
   describe '#search' do
     it 'should redirect definition page', js: true do
       visit '/definitions/qip/64'
@@ -305,7 +318,6 @@ RSpec.describe DefinitionsController, type: :feature do
       visit '/definitions/qip/64'
       expect(page).to have_content('指標のPDFをダウンロード')
       click_link('指標のPDFをダウンロード')
-      # bug exists here
       expect(page.response_headers['Content-Type']).to eq('application/pdf')
     end
   end

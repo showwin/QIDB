@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   get 'definitions/:id/edit' => 'definitions#edit', as: :def_edit
   get 'definitions/:id/duplicate' => 'definitions#duplicate', as: :def_duplicate
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
+  get 'definitions/select' => 'definitions#select', as: :def_select
+  get 'definitions/pdfs' => 'definitions#pdfs', as: :def_pdfs
   get 'definitions/:prjt/:qid' => 'definitions#search', as: :def_search
 
   resources :definitions

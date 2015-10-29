@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 
   def search
     session[:user_id] = 3
-    keywords = format_search_query
+    keywords = format_query_keywords(params[:query])
     @results = Definition.search(keywords)
     render :index
   end
@@ -43,13 +43,5 @@ class HomeController < ApplicationController
         send_data render_to_string, type: :csv
       end
     end
-  end
-
-  private
-
-  def format_search_query
-    search_keyword = params['query']
-    keyword = search_keyword.gsub(/(　)+/, "\s")
-    keyword.split("\s")
   end
 end

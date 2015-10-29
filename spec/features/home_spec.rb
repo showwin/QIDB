@@ -27,8 +27,9 @@ RSpec.describe HomeController, type: :feature do
 
   scenario 'download definition csv file' do
     visit '/'
-    expect(page).to have_content('Download CSV')
-    click_link('Download CSV')
+    expect(page).to have_content('CSVでダウンロード')
+    expect(page).to have_content('PDFでダウンロード')
+    click_link('CSVでダウンロード')
     expect(page.response_headers['Content-Type']).to eq('text/csv')
   end
 end

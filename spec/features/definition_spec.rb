@@ -288,9 +288,6 @@ RSpec.describe DefinitionsController, type: :feature do
   end
 
   scenario 'download multi-definition PDF' do
-    # 管理者になるためにログイン
-    visit '/login'
-
     visit '/'
     click_link('PDFでダウンロード')
 

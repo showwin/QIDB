@@ -318,4 +318,11 @@ RSpec.describe DefinitionsController, type: :feature do
       expect(page.response_headers['Content-Type']).to eq('application/pdf')
     end
   end
+
+  describe '#search_pdf' do
+    it 'should download pdf file' do
+      visit '/definitions/qip/64/sheet.pdf'
+      expect(page.response_headers['Content-Type']).to eq('application/pdf')
+    end
+  end
 end

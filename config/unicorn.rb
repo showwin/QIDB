@@ -20,7 +20,7 @@ stdout_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 
 pid "#{app_shared_path}/tmp/pids/unicorn.pid"
 
-before_exec do
+before_exec do |_|
   ENV['BUNDLE_GEMFILE'] = "#{app_path}/current/Gemfile"
 end
 
@@ -32,13 +32,13 @@ before_fork do |server, _|
   defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
 
   old_pid = "#{server.config[:pid]}.oldbin"
-  unless old_pid == server.pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
       Process.kill('QUIT', File.read(old_pid).to_i)
     end
   end
 end
 
-after_fork do
+after_fork do |_, _|
   defined?(ActiveRecord::Base) && ActiveRecord::Base.establish_connection
 end

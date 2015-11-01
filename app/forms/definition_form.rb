@@ -62,8 +62,8 @@ class DefinitionForm
     def_denom = {}
     while @params["denom_exp#{id}"].present?
       def_denom.store("#{id}", 'explanation' => @params["denom_exp#{id}"],
-                               'data' => def_data(id, 'denom'),
-                               'filename' => def_data_fileaname(id, 'denom'))
+                               'data' => def_data(id, 'denom', 'denom'),
+                               'filename' => def_data_fileaname(id, 'denom', 'denom'))
       id += 1
     end
     def_denom
@@ -74,8 +74,8 @@ class DefinitionForm
     def_numer = {}
     while @params["numer_exp#{id}"].present?
       def_numer.store("#{id}", 'explanation' => @params["numer_exp#{id}"],
-                               'data' => def_data(id, 'numer'),
-                               'filename' => def_data_fileaname(id, 'numer'))
+                               'data' => def_data(id, 'numer', 'numer'),
+                               'filename' => def_data_fileaname(id, 'numer', 'numer'))
       id += 1
     end
     def_numer
@@ -86,8 +86,8 @@ class DefinitionForm
     def_risks = {}
     while @params["risk_exp#{id}"].present?
       def_risks.store("#{id}", 'explanation' => @params["risk_exp#{id}"],
-                               'data' => def_data(id, 'def_risks'),
-                               'filename' => def_data_fileaname(id, 'risk'))
+                               'data' => def_data(id, 'def_risks', 'risk'),
+                               'filename' => def_data_fileaname(id, 'def_risks', 'risk'))
       id += 1
     end
     def_risks
@@ -98,8 +98,8 @@ class DefinitionForm
     annotation = {}
     while @params["anno_exp#{id}"].present?
       annotation.store("#{id}", 'explanation' => @params["anno_exp#{id}"],
-                                'data' => def_data(id, 'annotation'),
-                                'filename' => def_data_fileaname(id, 'annotation'))
+                                'data' => def_data(id, 'annotation', 'anno'),
+                                'filename' => def_data_fileaname(id, 'annotation', 'anno'))
       id += 1
     end
     annotation
@@ -110,8 +110,8 @@ class DefinitionForm
     standard_value = {}
     while @params["ref_val_exp#{id}"].present?
       standard_value.store("#{id}", 'explanation' => @params["ref_val_exp#{id}"],
-                                    'data' => def_data(id, 'standard_value'),
-                                    'filename' => def_data_fileaname(id, 'standard_value'))
+                                    'data' => def_data(id, 'standard_value', 'ref_val'),
+                                    'filename' => def_data_fileaname(id, 'standard_value', 'ref_val'))
       id += 1
     end
     standard_value
@@ -122,32 +122,32 @@ class DefinitionForm
     references = {}
     while @params["ref_info_exp#{id}"].present?
       references.store("#{id}", 'explanation' => @params["ref_info_exp#{id}"],
-                                'data' => def_data(id, 'ref_info'),
-                                'filename' => def_data_fileaname(id, 'references'))
+                                'data' => def_data(id, 'references', 'ref_info'),
+                                'filename' => def_data_fileaname(id, 'references', 'ref_info'))
       id += 1
     end
     references
   end
 
-  def def_data(id, column)
-    if @params["#{column}_csv_form#{id}"].present? &&
-       @params["#{column}_csv_form#{id}"][0] == 'yes'
+  def def_data(id, column, form)
+    if @params["#{form}_csv_form#{id}"].present? &&
+       @params["#{form}_csv_form#{id}"][0] == 'yes'
       # すでにDBに入ってるものを持ってくる
       fetch_saved_data(id, column, 'data')
     else
       # アップロードされたCSVからデータを取得
-      read_csv_data(@params["#{column}_file#{id}"])
+      read_csv_data(@params["#{form}_file#{id}"])
     end
   end
 
-  def def_data_fileaname(id, column)
-    if @params["#{column}_csv_form#{id}"].present? &&
-       @params["#{column}_csv_form#{id}"][0] == 'yes'
+  def def_data_fileaname(id, column, form)
+    if @params["#{form}_csv_form#{id}"].present? &&
+       @params["#{form}_csv_form#{id}"][0] == 'yes'
       # すでにDBに入ってるものを持ってくる
       fetch_saved_data(id, column, 'filename')
     else
       # アップロードされたCSVからデータを取得
-      read_csv_filename(@params["#{column}_file#{id}"])
+      read_csv_filename(@params["#{form}_file#{id}"])
     end
   end
 
@@ -156,7 +156,7 @@ class DefinitionForm
     if column == 'denom' || column == 'numer'
       return d.definitions["def_#{column}"]["#{id}"]["#{type}"]
     else
-      return eval("d.#{column}[#{id}][#{type}]")
+      return eval("d.#{column}['#{id}']['#{type}']")
     end
   end
 

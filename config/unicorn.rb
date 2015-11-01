@@ -32,7 +32,7 @@ before_fork do |server, _|
   defined?(ActiveRecord::Base) && ActiveRecord::Base.connection.disconnect!
 
   old_pid = "#{server.config[:pid]}.oldbin"
-  unless old_pid == server.pid
+  if File.exist?(old_pid) && server.pid != old_pid
     begin
       Process.kill('QUIT', File.read(old_pid).to_i)
     end

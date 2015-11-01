@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'definitions/select' => 'definitions#select', as: :def_select
   get 'definitions/pdfs' => 'definitions#pdfs', as: :def_pdfs
   get 'definitions/:prjt/:qid' => 'definitions#search', as: :def_search
+  get 'definitions/:prjt/:qid/sheet' => 'definitions#search_pdf', as: :def_search_pdf
 
   resources :definitions
 

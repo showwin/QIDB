@@ -1,7 +1,7 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show, :edit, :duplicate, :update, :pdf]
   before_action :set_log, only: [:show, :edit, :duplicate, :pdf]
-  before_action :authenticate, except: [:show, :search, :pdf, :select, :pdfs]
+  before_action :authenticate, except: [:show, :search, :pdf, :select, :pdfs, :search_pdf]
 
   def show
   end
@@ -65,6 +65,11 @@ class DefinitionsController < ApplicationController
   def search
     @definition = Definition.active.find_by("numbers.#{params[:prjt]}" => params[:qid])
     redirect_to action: 'show', id: @definition._id
+  end
+
+  def search_pdf
+    @definition = Definition.active.find_by("numbers.#{params[:prjt]}" => params[:qid])
+    redirect_to action: 'pdf', id: @definition._id, format: :pdf
   end
 
   def pdf

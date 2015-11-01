@@ -119,7 +119,10 @@ class DefinitionsController < ApplicationController
   end
 
   def set_log
-    @logs = ChangeLog.where(soft_delete: false).where(log_id: @definition.log_id).to_a
+    @logs = ChangeLog
+            .where(soft_delete: false)
+            .where(log_id: @definition.log_id)
+            .order('_id desc').to_a
   end
 
   def check_necessary_params

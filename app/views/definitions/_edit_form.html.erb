@@ -219,7 +219,25 @@
           <%= text_area_tag "risk_exp#{key}", d_risk['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_risk['data'].present? %>
-
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_risk['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_risk['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                  <tr>
+                    <% d_risk['data'].each do |column| %>
+                      <td><%= column.values[0][ith_row] %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           <% end %>
           <% if d_risk['data'].present? %>
           <label class="radio-inline">
@@ -287,7 +305,25 @@
           <%= text_area_tag "anno_exp#{key}", d_anno['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_anno['data'].present? %>
-
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_anno['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_anno['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                  <tr>
+                    <% d_anno['data'].each do |column| %>
+                      <td><%= column.values[0][ith_row] %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           <% end %>
           <% if d_anno['data'].present? %>
           <label class="radio-inline">
@@ -296,7 +332,7 @@
           <label class="radio-inline">
             <%= radio_button "anno_csv_form#{key}", '', 'no', :onChange => "showAnnoCSVForm(#{key})" %>データを変更する
           </label>
-          <input id="anno_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <input id="anno_file<%= key %>" style="display: none" name="anno_file<%= key %>" type="file">
           <p id="anno_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
           <% else %>
           <input id="anno_file<%= key %>" name="anno_file<%= key %>" type="file">
@@ -339,7 +375,25 @@
           <%= text_area_tag "ref_val_exp#{key}", d_ref_val['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_ref_val['data'].present? %>
-
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_ref_val['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_ref_val['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                  <tr>
+                    <% d_ref_val['data'].each do |column| %>
+                      <td><%= column.values[0][ith_row] %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           <% end %>
           <% if d_ref_val['data'].present? %>
           <label class="radio-inline">
@@ -348,7 +402,7 @@
           <label class="radio-inline">
             <%= radio_button "ref_val_csv_form#{key}", '', 'no', :onChange => "showref_valCSVForm(#{key})" %>データを変更する
           </label>
-          <input id="ref_val_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <input id="ref_val_file<%= key %>" style="display: none" name="ref_val_file<%= key %>" type="file">
           <p id="ref_val_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
           <% else %>
           <input id="ref_val_file<%= key %>" name="ref_val_file<%= key %>" type="file">
@@ -390,7 +444,25 @@
           <%= text_area_tag "ref_info_exp#{key}", d_ref_info['explanation'], :class => 'form-control' %>
           <h5>CSVデータ(option) (エンコーディング: SJIS, 区切り: コンマ, 改行コード: CR/LF)</h5>
           <% if d_ref_info['data'].present? %>
-
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <% d_ref_info['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% max_row_num = [5, d_ref_info['data'][0].values[0].length].min %>
+                <% max_row_num.times do |ith_row| %>
+                  <tr>
+                    <% d_ref_info['data'].each do |column| %>
+                      <td><%= column.values[0][ith_row] %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           <% end %>
           <% if d_ref_info['data'].present? %>
           <label class="radio-inline">
@@ -399,7 +471,7 @@
           <label class="radio-inline">
             <%= radio_button "ref_info_csv_form#{key}", '', 'no', :onChange => "showref_infoCSVForm(#{key})" %>データを変更する
           </label>
-          <input id="ref_info_file<%= key %>" style="display: none" name="risk_file<%= key %>" type="file">
+          <input id="ref_info_file<%= key %>" style="display: none" name="ref_info_file<%= key %>" type="file">
           <p id="ref_info_file<%= key %>_exp" style="display: none">ファイルを選択しない場合、CSVデータは削除されます</p>
           <% else %>
           <input id="ref_info_file<%= key %>" name="ref_info_file<%= key %>" type="file">

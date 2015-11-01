@@ -27,7 +27,7 @@ class HomeController < ApplicationController
     all.each do |record|
       content = []
       content << record.numbers['qip']
-      content << record.years
+      content << record.years.join('/')
       content << record.group
       content << record.name
       content << record.meaning

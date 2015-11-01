@@ -1,0 +1,19 @@
+qidb:
+  build: ./
+  command: '/app/docker/rails/start-server.sh'
+  volumes:
+    - ./:/app
+  ports:
+    - "3000:3000"
+  links:
+    - mongo:db
+  environment:
+    - MONGODB_HOST=db
+  volumes_from:
+    - bundle
+mongo:
+  build: ./docker/mongo
+bundle:
+  image: busybox
+  volumes:
+    - /bundle

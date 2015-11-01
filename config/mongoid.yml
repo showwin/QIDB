@@ -11,7 +11,7 @@ development:
     default:
       database: qidb_development
       hosts:
-        - localhost:27017
+        - <%= ENV["MONGODB_HOST"] + ':27017' %>
 test:
   sessions:
     default:

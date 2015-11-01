@@ -1,12 +1,12 @@
 qidb:
   build: ./
-  command: 'docker/rails/start-server.sh'
+  command: '/app/docker/rails/start-server.sh'
   volumes:
-    - ./app
+    - ./:/app
   ports:
     - "3000:3000"
   links:
-    - mysql:db
+    - mongo:db
   environment:
     - MONGODB_HOST=db
   volumes_from:

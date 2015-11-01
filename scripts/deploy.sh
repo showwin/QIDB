@@ -6,6 +6,8 @@ BRANCH=$2
 echo "STAGE=${STAGE}"
 echo "BRANCH=${BRANCH}"
 
+cp config/deploy/${STAGE}_circleci.rb config/deploy/${STAGE}.rb
+
 if [ -f "${FILENAME}" ]; then
   echo "----- bundle exec cap ${STAGE} deploy:stop ----- "
   bundle exec cap ${STAGE} deploy:stop

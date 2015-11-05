@@ -12,7 +12,14 @@
   </div>
 </div>
 
-<%= link_to 'Download CSV', download_csv_path(format: :csv) %>
+<div class="row">
+  <div class="col-xs-12">
+    <ul>
+      <li><%= link_to 'CSVでダウンロード', download_csv_path(format: :csv) %></li>
+      <li><%= link_to 'PDFでダウンロード', def_select_path %></li>
+    </ul>
+  </div>
+</div>
 
 <div class="panel-body">
   <dl>

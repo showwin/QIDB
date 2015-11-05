@@ -1,0 +1,5 @@
+Host qidb
+  User rails
+  HostName 160.16.76.138
+  IdentitiesOnly yes
+  IdentityFile /home/ubuntu/.ssh/id_qidb

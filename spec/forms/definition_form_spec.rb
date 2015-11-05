@@ -93,14 +93,14 @@ RSpec.describe DefinitionForm, type: :controller do
       d_org = create_definition
       params = { 'denom_csv_form1' => ['yes'], 'log_id' => d_org.log_id }
       d = DefinitionForm.new(definition_form_params.update(params))
-      expect(d.def_data(1, 'denom')).to \
+      expect(d.def_data(1, 'denom', 'denom')).to \
         eq(d_org.definitions['def_denom']['1']['data'])
     end
 
     it 'should return data' do
       params = { 'denom_csv_form1' => ['no'] }
       d = DefinitionForm.new(definition_form_params.update(params))
-      expect(d.def_data(1, 'denom')).to \
+      expect(d.def_data(1, 'denom', 'denom')).to \
         eq([])
     end
   end
@@ -110,14 +110,14 @@ RSpec.describe DefinitionForm, type: :controller do
       d_org = create_definition
       params = { 'denom_csv_form1' => ['yes'], 'log_id' => d_org.log_id }
       d = DefinitionForm.new(definition_form_params.update(params))
-      expect(d.def_data_fileaname(1, 'denom')).to \
+      expect(d.def_data_fileaname(1, 'denom', 'denom')).to \
         eq(d_org.definitions['def_denom']['1']['filename'])
     end
 
     it 'should return filename' do
       params = { 'denom_csv_form1' => ['no'] }
       d = DefinitionForm.new(definition_form_params.update(params))
-      expect(d.def_data_fileaname(1, 'denom')).to \
+      expect(d.def_data_fileaname(1, 'denom', 'denom')).to \
         be_nil
     end
   end

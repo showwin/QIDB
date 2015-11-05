@@ -1,7 +1,7 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show, :edit, :duplicate, :update, :pdf]
   before_action :set_log, only: [:show, :edit, :duplicate, :pdf]
-  before_action :authenticate, except: [:show, :search, :pdf]
+  before_action :authenticate, except: [:show, :search, :pdf, :select, :pdfs, :search_pdf]
 
   def show
   end
@@ -67,6 +67,11 @@ class DefinitionsController < ApplicationController
     redirect_to action: 'show', id: @definition._id
   end
 
+  def search_pdf
+    @definition = Definition.active.find_by("numbers.#{params[:prjt]}" => params[:qid])
+    redirect_to action: 'pdf', id: @definition._id, format: :pdf
+  end
+
   def pdf
     respond_to do |format|
       format.html { redirect_to def_pdf_path(id: params[:id], format: :pdf) }
@@ -80,6 +85,33 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  def select
+    @project = params[:project]
+    @year = params[:year]
+    @keywords = format_query_keywords(params[:keywords])
+    @definitions = Definition.active
+                   .find_by_project(@project)
+                   .find_by_year(@year)
+                   .search(@keywords).to_a
+  end
+
+  def pdfs
+    ids = []
+    params.keys.each do |key|
+      ids << key if key.length == 24
+    end
+    @definitions = Definition.active.in('_id': ids).to_a
+    respond_to do |format|
+      format.pdf do
+        render pdf: 'sheet',
+               encoding: 'UTF-8',
+               template: '/definitions/selected.pdf.erb',
+               layout: 'pdf.html.erb',
+               no_background: false
+      end
+    end
+  end
+
   private
 
   def set_definition
@@ -87,7 +119,10 @@ class DefinitionsController < ApplicationController
   end
 
   def set_log
-    @logs = ChangeLog.where(soft_delete: false).where(log_id: @definition.log_id).to_a
+    @logs = ChangeLog
+            .where(soft_delete: false)
+            .where(log_id: @definition.log_id)
+            .order('_id desc').to_a
   end
 
   def check_necessary_params

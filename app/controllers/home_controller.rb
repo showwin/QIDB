@@ -3,27 +3,38 @@ class HomeController < ApplicationController
   def index
   end
 
+  def login
+    session[:admin] = true
+    redirect_to root_path
+  end
+
+  def logout
+    session[:admin] = nil
+    redirect_to root_path
+  end
+
   def search
-    @results = StringData.search(params['query']).to_a
+    session[:user_id] = 3
+    keywords = format_search_query
+    @results = Definition.search(keywords)
     render :index
   end
 
   def output_csv
-    @column_names = ['指標番号', '指標群', '名称', '分母', '分子', 'リスク調整',
-       '薬剤一覧出力', 'グラフの並び順', '指標タイプ']
-    all = Definition.all
+    all = Definition.active
     @contents = []
+
     all.each do |record|
       content = []
-      content << record['指標番号']
-      content << record['指標群']
-      content << record['名称']
-      content << (record['定義の要約'] ? record['定義の要約']['分母'] : '')
-      content << (record['定義の要約'] ? record['定義の要約']['分子'] : '')
-      content << record['リスクの調整因子の定義']
-      content << record['薬剤一覧の出力']
-      content << record['結果提示時の並び順']
-      content << record['指標タイプ']
+      content << record.numbers['qip']
+      content << record.years
+      content << record.group
+      content << record.name
+      content << record.meaning
+      content << (record.def_summary ? record.def_summary['denom'] : '')
+      content << (record.def_summary ? record.def_summary['numer'] : '')
+      content << record.drug_output
+      content << record.order
       @contents << content
     end
 
@@ -34,4 +45,11 @@ class HomeController < ApplicationController
     end
   end
 
+  private
+
+  def format_search_query
+    search_keyword = params['query']
+    keyword = search_keyword.gsub(/(　)+/, "\s")
+    keyword.split("\s")
+  end
 end

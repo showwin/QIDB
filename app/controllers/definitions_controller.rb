@@ -1,51 +1,54 @@
 class DefinitionsController < ApplicationController
-  before_action :set_definition, only: [:show, :edit, :update]
-  before_action :set_form_params, only: [:new, :edit]
+  before_action :set_definition, only: [:show, :edit, :duplicate, :update, :pdf]
+  before_action :set_log, only: [:show, :edit, :duplicate, :pdf]
+  before_action :authenticate, except: [:show, :search, :pdf]
 
   def show
-    @logs = ChangeLog.where(指標番号: params[:id]).to_a
   end
 
   def new
   end
 
   def create
-    @definition = Definition.new
-    @definition.set_params(params)
+    @definition = Definition.init_params(DefinitionForm.new(params))
 
-    @log = ChangeLog.new
-    @log.set_params(params)
+    # 指標番号や変更者などの必須要素の確認とエラーメッセージ作成
+    @error = check_necessary_params
 
-    # すでにその指標番号が存在するなら削除する
-    @definition.remove_duplicate
+    # すでに使われている指標番号を見つける
+    @dups = @definition.find_duplicates
 
-    # 検索用のレコード作成 と 定義の作成
-    if @definition.create_search_index(params) && @definition.save && !@log['変更者'].blank? && !@log['変更メッセージ'].blank? && @log.save
-      render :success
+    return if @error.present?
+    if @dups.blank?
+      @definition.save_with_log!(params[:editor], params[:message])
     else
-      set_form_params
-      render :new
+      @definition.save_draft_with_log!(params[:editor], params[:message])
     end
+  end
+
+  def confirm
+    definition = Definition.find(params[:id])
+    definition.make_public
+    redirect_to :def_success
+  end
+
+  def success
   end
 
   def edit
-    @edit_logs = ChangeLog.where(指標番号: params[:id]).to_a
   end
 
-  def update
-    @definition = Definition.new
-    @definition.set_params(params)
+  def duplicate
+    @definition.numbers = {}
+    @logs = []
+    @duplicate_flg = true
+    render :edit
+  end
 
-    # すでにその指標番号が存在するなら削除する
+  def destroy
+    @definition = Definition.find(params[:id])
     @definition.remove_duplicate
-
-    # 検索用のレコード作成 と 定義の作成
-    if @definition.create_search_index(params) && @definition.save && @log.save
-      render :success
-    else
-      set_form_params
-      render :edit
-    end
+    redirect_to root_path
   end
 
   def upload
@@ -55,18 +58,43 @@ class DefinitionsController < ApplicationController
     if Definition.read_csv(params[:csv_file])
       render :success
     else
-      render :new
+      render :upload
+    end
+  end
+
+  def search
+    @definition = Definition.active.find_by("numbers.#{params[:prjt]}" => params[:qid])
+    redirect_to action: 'show', id: @definition._id
+  end
+
+  def pdf
+    respond_to do |format|
+      format.html { redirect_to def_pdf_path(id: params[:id], format: :pdf) }
+      format.pdf do
+        render pdf: 'sheet',
+               encoding: 'UTF-8',
+               template: '/definitions/show.pdf.erb',
+               layout: 'pdf.html.erb',
+               no_background: false
+      end
     end
   end
 
   private
-    def set_definition
-      @definition = Definition.where(指標番号: params[:id]).first
-    end
 
-    def set_form_params
-      @years = ['2008', '2010', '2012', '2014']
-      @dataset = ['DPC様式1', 'Fファイル', 'EFファイル', 'Dファイル']
-    end
+  def set_definition
+    @definition = Definition.find(params[:id])
+  end
 
+  def set_log
+    @logs = ChangeLog.where(soft_delete: false).where(log_id: @definition.log_id).to_a
+  end
+
+  def check_necessary_params
+    error = []
+    error << '指標番号を記入して下さい' if @definition.numbers.blank?
+    error << '変更者を記入して下さい' if params[:editor].blank?
+    error << '変更メッセージを記入して下さい' if params[:message].blank?
+    error
+  end
 end

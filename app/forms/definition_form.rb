@@ -1,7 +1,7 @@
 # DefinitionForm Class
 class DefinitionForm
-  attr_reader :log_id, :numbers, :years, :group, :group_en, :name, :name_en,
-              :index, :meaning, :dataset, :def_summary, :def_summary_en,
+  attr_reader :log_id, :numbers, :years, :group, :group_en, :index, :name,
+              :name_en, :meaning, :dataset, :def_summary, :def_summary_en,
               :definitions, :drug_output, :def_risks, :method, :order, :annotation,
               :standard_value, :references, :review_span, :indicator, :created_at,
               :search_index, :soft_delete, :duplicate_flg
@@ -13,9 +13,9 @@ class DefinitionForm
     @years = years
     @group = @params['group']
     @group_en = @params['group_en']
+    @index = @params['index']
     @name = @params['name']
     @name_en = @params['name_en']
-    @index = @params['index']
     @meaning = @params['meaning']
     @dataset = datasets
     @def_summary = { 'numer' => @params['numer'], 'denom' => @params['denom'] }

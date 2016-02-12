@@ -83,7 +83,7 @@ class Definition
   class << self
     def init_params(params)
       d = Definition.new
-      param_list = %w(log_id numbers years group group_en name name_en index
+      param_list = %w(log_id numbers years group group_en index name name_en 
                       meaning dataset def_summary def_summary_en definitions
                       drug_output def_risks method order annotation
                       standard_value references review_span indicator created_at

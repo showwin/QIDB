@@ -42,6 +42,12 @@
       <br>
     </div>
 
+    <div class="form-group">
+      <h4><b>指標の表示順</b></h4>
+      <%= text_field_tag 'index', params['index'], :class => 'form-control', :placeholder => '(e.g.) 01_07' %>
+      <br>
+    </div>
+
   </div>
   <div class="col-xs-11">
 
@@ -54,12 +60,6 @@
     <div class="form-group">
       <h4><b>名称 (英語)</b></h4>
       <%= text_field_tag 'name_en', params['name_en'], :class => 'form-control', :placeholder => '(e.g.) Pneumonia mortality rate' %>
-      <br>
-    </div>
-
-    <div class="form-group">
-      <h4><b>指標の表示順</b></h4>
-      <%= text_field_tag 'index', params['index'], :class => 'form-control', :placeholder => '(e.g.) 01_07' %>
       <br>
     </div>
 

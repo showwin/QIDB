@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   get 'definitions/:id/edit' => 'definitions#edit', as: :def_edit
   get 'definitions/:id/duplicate' => 'definitions#duplicate', as: :def_duplicate
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
+  get 'definitions/:id/en' => 'definitions#show_en', as: :def_en
   get 'definitions/select' => 'definitions#select', as: :def_select
   get 'definitions/pdfs' => 'definitions#pdfs', as: :def_pdfs
   get 'definitions/:prjt/:qid' => 'definitions#search', as: :def_search
   get 'definitions/:prjt/:qid/sheet' => 'definitions#search_pdf', as: :def_search_pdf
+  get 'definitions/:prjt/:qid/en' => 'definitions#search_en', as: :def_search_en
 
   resources :definitions
 

@@ -1,0 +1,385 @@
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_tag search_path, {method: "get"} do %>
+      <h3><b>検索キーワード</b></h3>
+      <div class="input-group">
+        <%= text_field_tag 'query', params['query'], :class => 'form-control input', :id => "btn-input", :placeholder => '大動脈バルーンパンピング法　人工心肺' %>
+        <span class="input-group-btn">
+          <%= submit_tag "　検　索　", :class => "btn btn-info btn", :id => "btn-chat" %>
+        </span>
+      </div>
+    <% end %>
+  </div>
+</div><br>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <label>Subject</label>:
+        <%= @definition.name_en %>
+      </div>
+      <div class="panel-body">
+        <label>指標番号</label>:
+        <% PROJECT_NAME_KEYS.each do |prjt| %>
+          <% next if @definition.numbers[prjt[1]].blank? %>
+          <br><%= prjt[0] %>: <%= @definition.numbers[prjt[1]] %>
+        <% end %></p>
+        <label>年度</label>:
+        <% ys = @definition.years.inject{ |ys, year| ys += ', '+year} %>
+          <%= ys %></p>
+        <label>更新日</label>: <%= @definition.created_at %></p>
+        <label>指標群</label>: <%= @definition.group %></p>
+        <label>Category</label>: <%= @definition.group_en %></p>
+        <label>名称</label>: <%= @definition.name %></p>
+        <label>Subject</label>: <%= @definition.name_en %></p>
+        <label>意義</label>: <%= @definition.meaning %></p>
+        <label>必要データセット</label>:
+        <% if @definition.dataset.present? %>
+          <% @definition.dataset.each do |var| %>
+            <%= var %>&nbsp;
+          <% end %></p>
+        <% end %>
+        <label>定義の要約</label>:</p>
+        <label>分母</label>: <%= @definition.def_summary['denom'] %></p>
+        <label>Denominator</label>: <%= @definition.def_summary_en['denom_en'] %></p>
+        <label>分子</label>: <%= @definition.def_summary['numer'] %></p>
+        <label>Numerator</label>: <%= @definition.def_summary_en['numer_en'] %></p>
+        <label>指標の定義算出方法</label>:</p>
+        <label>分母の定義</label>:</p>
+        <% @definition.definitions['def_denom'].each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default" id="def_denom_<%= key %>_data">
+                <div class="panel-heading">分母のデータ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#denom<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="denom<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="denom<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                              <th><%= i.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                            <tr>
+                              <% value['data'].each do |i| %>
+                                <td><%= i.values[0][id] %></td>
+                              <% end %>
+                            </tr>
+                            <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+
+        <label>分子の定義</label>:</p>
+        <% @definition.definitions['def_numer'].each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default" id="def_numer_<%= key %>_data">
+                <div class="panel-heading">分子のデータ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#numer<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="numer<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="numer<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |column| %>
+                              <th><%= column.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                            <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+        <label>薬剤一覧の出力</label>: <%= @definition.drug_output %></p>
+        <label>リスク調整因子の条件</label>:</p>
+        <% @definition.def_risks.each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">リスク調整因子のデータ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#risk<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="risk<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="risk<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |column| %>
+                              <th><%= column.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                            <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+        <label>指標の算出方法(説明)</label>: <%= @definition['method']['explanation'] %></p>
+        <label>指標の算出方法(単位)</label>: <%= @definition['method']['unit'] %></p>
+
+        <label>測定上の限界・解釈上の注意</label>:</p>
+        <% @definition.annotation.each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">データ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#anno<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="anno<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="anno<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |column| %>
+                              <th><%= column.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                            <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+
+        <label>参考値</label>:</p>
+        <% @definition.standard_value.each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">データ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#ref_val<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="ref_val<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="ref_val<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |column| %>
+                              <th><%= column.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                            <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+
+        <br>
+
+
+        <label>参考資料</label>:</p>
+        <% @definition.references.each do |key,value| %>
+          <%= key %>：<%= value['explanation'] %></p>
+          <% if value['data'].present? %>
+            <div class="col-lg-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">データ<%= key %>　
+                  <a data-toggle="collapse" data-parent="#accordion" href="#ref_info<%= key %>_panel" aria-expanded="false" class="collapsed">
+                    内容を見る
+                  </a>
+                </div>
+                <div id="ref_info<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table class="table table-striped table-bordered table-hover" id="ref_info<%= key %>_table">
+                        <thead>
+                          <tr>
+                            <% value['data'].each do |column| %>
+                              <th><%= column.keys[0] %></th>
+                            <% end %>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% value['data'][0].values[0].length.times do |id| %>
+                          <tr>
+                            <% value['data'].each do |i| %>
+                            <td><%= i.values[0][id] %></td>
+                            <% end %>
+                          </tr>
+                          <% id+=1 %>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                  </div>
+                  <!-- /.panel-body -->
+                </div>
+              </div>
+              <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+          <% end %>
+        <% end %>
+
+
+        <label>定義見直しのタイミング</label>: <%= @definition.review_span %></p>
+
+        <label>指標タイプ</label>: <%= @definition.indicator %></p>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <label id="show_change_log" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" class="collapsed">
+                変更履歴
+              </label>
+            </h4>
+          </div>
+
+          <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+            <div class="panel-body">
+              <% @logs.each do |log| %>
+                <label>変更者</label>: <%= log['editor'] %>　
+                <label>変更メッセージ</label>: <%= log['message'] %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+<% ['denom', 'numer'].each do |type| %>
+  <% @definition['definitions']['def_denom'].size.times do |i| %>
+    $('#<%= type %><%= i+1 %>_table').dataTable({
+      "bSort": false,
+      "bFilter": false
+    });
+  <% end %>
+<% end %>
+<% @definition['def_risks'].size.times do |j| %>
+  $('#risk<%= j+1 %>_table').dataTable({
+    "bSort": false,
+    "bFilter": false
+  });
+<% end %>
+<% @definition['annotation'].size.times do |k| %>
+  $('#anno<%= k+1 %>_table').dataTable({
+    "bSort": false,
+    "bFilter": false
+  });
+<% end %>
+<% @definition['standard_value'].size.times do |k| %>
+  $('#ref_val<%= k+1 %>_table').dataTable({
+    "bSort": false,
+    "bFilter": false
+  });
+<% end %>
+<% @definition['references'].size.times do |k| %>
+  $('#ref_info<%= k+1 %>_table').dataTable({
+    "bSort": false,
+    "bFilter": false
+  });
+<% end %>
+</script>

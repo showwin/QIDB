@@ -6,11 +6,17 @@ module CreateDefinition
     @definition['numbers'] = { 'qip' => '64', 'jha' => '2' }
     @definition['years'] = %w(2008 2010)
     @definition['group'] = '呼吸器系'
+    @definition['group_en'] = 'Stroke'
     @definition['name'] = '縦隔生検を実施した症例において、手技後に治療を要する気胸や血胸が生じた症例の割合'
+    @definition['name_en'] = 'Pneumonia mortality rate'
+    @definition['index'] = '01_09'
     @definition['meaning'] = '縦隔生検の後に気胸や血胸の治療を行うのは、手技に伴う合併症の可能性が高い。'
     @definition['dataset'] = %w(DPC様式1 EFファイル データ1)
     @definition['def_summary'] = { 'numer' => '分母のうち、胸腔ドレナージを受けた症例', \
                                    'denom' => '18歳以上で、経胸壁的肺/縦隔生検を受けた症例' }
+    @definition['def_summary_en'] = {
+      'numer' => 'Patients with a central catheter who had developed iatrogenic pneumothorax', \
+      'denom' => 'Patients with a central catheter' }
     def_denom1 = { 'explanation' => '分母の定義1', \
                    'data' => [
                      { '薬価基準コード7桁' => %w(3399007 3399100 3999411 2190408 2190409 2190410 2190411 2190412 2190413 2190414 2190415 2190416 2190417) },

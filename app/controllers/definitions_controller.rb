@@ -1,7 +1,8 @@
 class DefinitionsController < ApplicationController
   before_action :set_definition, only: [:show, :show_en, :edit, :duplicate, :update, :pdf]
   before_action :set_log, only: [:show, :show_en, :edit, :duplicate, :pdf]
-  before_action :authenticate, except: [:show, :show_en, :search, :pdf, :select, :pdfs, :search_pdf]
+  before_action :authenticate,
+                except: [:show, :show_en, :search, :pdf, :select, :pdfs, :search_pdf, :search_en]
 
   def show
   end

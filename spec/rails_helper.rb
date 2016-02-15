@@ -12,8 +12,9 @@ require 'capybara/poltergeist'
 
 require 'simplecov'
 require 'coveralls'
-SimpleCov.start 'rails'
+
 Coveralls.wear!
+SimpleCov.start 'rails'
 
 Capybara.javascript_driver = :poltergeist
 

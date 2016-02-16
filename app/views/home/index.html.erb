@@ -28,7 +28,8 @@
       <dt><a href= <%= "/definitions/#{r._id.to_s}" %>>指標番号: <%= r.numbers['qip'].to_s %></a></dt>
       <dd>指標群: <%= r.group %></dd>
       <dd>名称: <%= r.name %></dd>
-      <dd>意義: <%= r.meaning %></dd>
+      <dd>分母: <%= r.def_summary['denom'] %></dd>
+      <dd>分子: <%= r.def_summary['numer'] %></dd>
       <hr>
     <% end %>
   <% end %>

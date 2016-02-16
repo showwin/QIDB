@@ -39,12 +39,30 @@
       <br>
     </div>
 
+    <div class="form-group">
+      <h4><b>指標群 (英語)</b></h4>
+      <%= text_field_tag 'group_en', @definition.group_en, :class => 'form-control', :placeholder => '(e.g.) Stroke' %>
+      <br>
+    </div>
+
+    <div class="form-group">
+      <h4><b>指標の表示順</b></h4>
+      <%= text_field_tag 'index', @definition.index, :class => 'form-control', :placeholder => '(e.g.) 01_07' %>
+      <br>
+    </div>
+
   </div>
   <div class="col-xs-11">
 
     <div class="form-group">
       <h4><b>名称</b></h4>
       <%= text_field_tag 'name', @definition.name, :class => 'form-control', :placeholder => '(e.g.) 脳梗塞の診断で入院し、リハビリ治療を受けた症例の割合' %>
+      <br>
+    </div>
+
+    <div class="form-group">
+      <h4><b>名称 (英語)</b></h4>
+      <%= text_field_tag 'name_en', @definition.name_en, :class => 'form-control', :placeholder => '(e.g.) Pneumonia mortality rate' %>
       <br>
     </div>
 
@@ -82,8 +100,12 @@
     <div class="form-group">
       <h5>分子</h5>
       <%= text_area_tag 'numer', @definition.def_summary['numer'], :class => 'form-control', :placeholder => '(e.g.) 分母のうち、脳血管リハビリテーション治療を受けた症例' %>
+      <h5>分子 (英語)</h5>
+      <%= text_area_tag 'numer_en', @definition.def_summary_en['numer_en'], :class => 'form-control', :placeholder => '(e.g.) Patients with a central catheter who had developed iatrogenic pneumothorax' %>
       <h5>分母</h5>
       <%= text_area_tag 'denom', @definition.def_summary['denom'], :class => 'form-control', :placeholder => '(e.g.) 18歳以上の脳梗塞の診断で入院した症例' %>
+      <h5>分母 (英語)</h5>
+      <%= text_area_tag 'denom_en', @definition.def_summary_en['denom_en'], :class => 'form-control', :placeholder => '(e.g.) Patients with a central catheter' %>
       <br>
     </div>
 

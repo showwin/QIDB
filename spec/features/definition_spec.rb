@@ -8,13 +8,13 @@ RSpec.describe DefinitionsController, type: :feature do
   scenario 'normal user cannot access some page', js: true do
     # トップページにリダイレクト
     visit '/definitions/new'
-    expect(page).to have_content('検索キーワード')
+    expect(page).to have_content('すべてをCSVでダウンロード')
 
     visit "/definitions/#{@d1._id}/edit"
-    expect(page).to have_content('検索キーワード')
+    expect(page).to have_content('すべてをCSVでダウンロード')
 
     visit "/definitions/#{@d1._id}/duplicate"
-    expect(page).to have_content('検索キーワード')
+    expect(page).to have_content('すべてをCSVでダウンロード')
 
     visit "/definitions/#{@d1._id}"
     expect(page).not_to have_content('編集')

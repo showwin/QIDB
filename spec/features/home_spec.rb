@@ -7,7 +7,7 @@ RSpec.describe HomeController, type: :feature do
 
   scenario 'search on top page', js: true do
     visit '/'
-    expect(page).to have_content('検索キーワード')
+    expect(page).to have_content('すべてをCSVでダウンロード')
 
     # 検索
     find('#btn-input').set('呼吸器系')

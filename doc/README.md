@@ -1,41 +1,42 @@
 # QI定義書の仕様書
 # 目次
-### 0. はじめに
-### 1. 要件定義
-#### 1.1 QI定義書のDB化
-#### 1.2 QI定義書DBのWevAPI提供
-#### 1.3 QI定義書の閲覧機能
-#### 1.4 QI定義書の検索システム
-### 2. 外部設計
-#### 2.1 QI定義書のDB化
-#### 2.2 QI定義書DBのWebAPI提供
-#### 2.3 QI定義書の閲覧機能
-#### 2.4 QI定義書の検索システム
-### 3.内部設計/プログラム設計書
-#### 3.1 Model
-#### 3.1.1 Definition Model
-#### 3.1.2 ChangeLog Model
-#### 3.2 Controler
-#### 3.2.1 ApplicationController
-#### 3.2.2 DefinitionController
-#### 3.2.3 HomeController
-#### 3.2.4 ApiController
-#### 3.2.5 DefinitionApiController
-#### 3.3 Form
-#### 3.3.1 DefinitionForm
-### 4.使用マニュアル(利用者向け)
-#### 4.1 QI定義書のDB登録
-#### 4.2 QI定義書DBのAPI利用
-#### 4.3 QI定義書の閲覧
-#### 4.4 QI定義書の検索
-#### 4.5 QI定義書の編集
-#### 4.6 QI定義書のpdf出力
-#### 4.7 QI定義書のCSV出力
-#### 4.8 QI定義書登録時のCSV入力(デプロイ時のみ使用)
-### 5.保守マニュアル(開発者向け)
-#### 5.1 開発環境
-#### 5.2 バージョン管理
-#### 5.3 アップデート
+### 0. [はじめに](https://github.com/showwin/QIDB/blob/master/doc/README.md#0-はじめに-1)
+### 1. [要件定義](https://github.com/showwin/QIDB/blob/master/doc/README.md#1-要件定義-1)
+#### 1.1 [QI定義書のDB化](https://github.com/showwin/QIDB/blob/master/doc/README.md#11-qi定義書のdb化-1)
+#### 1.2 [QI定義書DBのWevAPI提供](https://github.com/showwin/QIDB/blob/master/doc/README.md#12-qi定義書dbのapi提供)
+#### 1.3 [QI定義書の閲覧機能](https://github.com/showwin/QIDB/blob/master/doc/README.md#13-qi定義書の閲覧機能-1)
+#### 1.4 [QI定義書の検索システム](https://github.com/showwin/QIDB/blob/master/doc/README.md#14-qi定義書の検索システム-1)
+### 2. [外部設計](https://github.com/showwin/QIDB/blob/master/doc/README.md#2外部設計)
+#### 2.1 [QI定義書のDB化](https://github.com/showwin/QIDB/blob/master/doc/README.md#21-qi定義書のdb化-1)
+#### 2.2 [QI定義書DBのWebAPI提供](https://github.com/showwin/QIDB/blob/master/doc/README.md#22-qi定義書dbのwebapi提供-1)
+#### 2.3 [QI定義書の閲覧機能](https://github.com/showwin/QIDB/blob/master/doc/README.md#23-qi定義書の閲覧機能-1)
+#### 2.4 [QI定義書の検索システム](https://github.com/showwin/QIDB/blob/master/doc/README.md#24-qi定義書の検索システム-1)
+### 3.[内部設計/プログラム設計書](https://github.com/showwin/QIDB/blob/master/doc/README.md#3内部設計プログラム設計書-1)
+#### 3.1 [Model](https://github.com/showwin/QIDB/blob/master/doc/README.md#31-model-1)
+#### 3.1.1 [Definition Model](https://github.com/showwin/QIDB/blob/master/doc/README.md#311-definition-model-1)
+#### 3.1.2 [ChangeLog Model](https://github.com/showwin/QIDB/blob/master/doc/README.md#312-changelog)
+#### 3.2 [Controler](https://github.com/showwin/QIDB/blob/master/doc/README.md#32-controler-1)
+#### 3.2.1 [ApplicationController](https://github.com/showwin/QIDB/blob/master/doc/README.md#321-applicationcontroller-1)
+#### 3.2.2 [DefinitionController](https://github.com/showwin/QIDB/blob/master/doc/README.md#322-definitioncontroller-1)
+#### 3.2.3 [HomeController](https://github.com/showwin/QIDB/blob/master/doc/README.md#323-homecontroller-1))
+#### 3.2.4 [ApiController](https://github.com/showwin/QIDB/blob/master/doc/README.md#324-apicontroller-1)
+#### 3.2.5 [DefinitionApiController](https://github.com/showwin/QIDB/blob/master/doc/README.md#325-definitionapicontroller-1)
+#### 3.3 [Form](https://github.com/showwin/QIDB/blob/master/doc/README.md#33-form-1)
+#### 3.3.1 [DefinitionForm](https://github.com/showwin/QIDB/blob/master/doc/README.md#331-definitionform-1)
+### 4.[使用マニュアル(利用者向け)](https://github.com/showwin/QIDB/blob/master/doc/README.md#4使用マニュアル説明書)
+#### 4.1 [QI定義書のDB登録](https://github.com/showwin/QIDB/blob/master/doc/README.md#41-qi定義書のdb登録-1)
+#### 4.2 [QI定義書DBのWebAPI利用](https://github.com/showwin/QIDB/blob/master/doc/README.md#42-qi定義書dbのapi利用-1)
+#### 4.3 [QI定義書の閲覧](https://github.com/showwin/QIDB/blob/master/doc/README.md#43-qi定義書の閲覧-1)
+#### 4.4 [QI定義書の検索](https://github.com/showwin/QIDB/blob/master/doc/README.md#44-qi定義書の検索-1)
+#### 4.5 [QI定義書の編集](https://github.com/showwin/QIDB/blob/master/doc/README.md#45-qi定義書の編集-1)
+#### 4.6 [QI定義書のpdf出力](https://github.com/showwin/QIDB/blob/master/doc/README.md#46-qi定義書のpdf出力-1)
+#### 4.7 [QI定義書のCSV出力](https://github.com/showwin/QIDB/blob/master/doc/README.md#47-qi定義書のcsv出力-1)
+#### 4.8 [QI定義書登録時のCSV入力](https://github.com/showwin/QIDB/blob/master/doc/README.md#48-qi定義書登録時のcsv入力デプロイ時のみ使用-1)
+### 5.[保守マニュアル(開発者向け)](https://github.com/showwin/QIDB/blob/master/doc/README.md#5保守マニュアル開発者向け-1)
+#### 5.1 [開発環境](https://github.com/showwin/QIDB/blob/master/doc/README.md#51-開発環境-1)
+#### 5.2 [開発手順](https://github.com/showwin/QIDB/blob/master/doc/README.md#52-バージョン管理-1)
+#### 5.3 [アップデート](https://github.com/showwin/QIDB/blob/master/doc/README.md#53-アップデート-1)
+#### 5.4 [Docker 開発環境](https://github.com/showwin/QIDB/blob/master/doc/README.md#54-docker-開発環境)
 
 # 0. はじめに
 本システムは以下、"QIDB"と呼ぶ。
@@ -46,10 +47,10 @@ QIDBの保守に関しては、5章の保守マニュアルを見れば、保守
 # 1. 要件定義
 QIDBでは以下の4点を開発要件とする。
 
-## 1.1 QI定義書のDB化
-* [http://quality-indicator.net/?action=common_download_main&upload_id=54](http://quality-indicator.net/?action=common_download_main&upload_id=54)にあるような定義書をKVSのDBに保存できるシステムを構築する。
-* 容易にDBに保存できるように、DBのWebインターフェイスも作成する。
-* WebインターフェイスからはQI定義書の作成/編集/削除を行うことができる。
+## 1.1 QI定義書のデータベース化
+* [http://quality-indicator.net/?action=common_download_main&upload_id=54](http://quality-indicator.net/?action=common_download_main&upload_id=54)にあるような定義書をデータベースに保存できるシステムを構築する。
+* 容易にデータベースに保存できるように、Webインターフェイスを作成する。
+* WebインターフェイスからはQI定義書の作成/編集/複製/削除を行うことができる。
   * ただし、上記の操作を行うには権限が必要であり、事前にBasic認証を行う必要がある。
 
 ## 1.2 QI定義書DBのAPI提供
@@ -65,13 +66,13 @@ QIDBでは以下の4点を開発要件とする。
 
 ## 1.4 QI定義書の検索システム
 * DBに保存された定義書を、フリーワードで検索できるシステムを構築する。
-* 検索は特定のカラムに対して行うのではなく、定義書のすべての文字列に対して検索がかかるようにする。
+* 検索は特定のカラムに対して行うのではなく、定義書のすべての文字列に対して検索する。
 
 
 # 2.外部設計
 
 ## 2.1 QI定義書のDB化
-* DBに定義書を保存するWebインターフェイスには以下のフィールドを作成する。Inputはフォームのタイプ(コンボボックスの場合にはその選択肢)を示し、Typeは期待するデータ型を示す。
+* DBに定義書を保存するWebインターフェイスには以下のフィールドを作成する。Inputはフォームのタイプ(セレクトボックスの場合にはその選択肢)を示し、Typeは期待するデータ型を示す。
 	* プロジェクト名
 		* Input: [QIP, 済生会, 日本医師会, 全国自治体病院]
 		* Type: String
@@ -87,7 +88,16 @@ QIDBでは以下の4点を開発要件とする。
 	* 指標群
 		* Input: text_field
 		* Type: String
+	* 指標群(英語)
+		* Input: text_field
+		* Type: String
+	* 指標の表示順
+		* Input: text_field
+		* Type: String
 	* 名称
+		* Input: text_field
+		* Type: String
+	* 名称(英語)
 		* Input: text_field
 		* Type: String
 	* 意義
@@ -99,7 +109,13 @@ QIDBでは以下の4点を開発要件とする。
 	* 定義の要約(分子)
 		* Input: text_area
 		* Type: String
+	* 定義の要約(分子)(英語)
+		* Input: text_area
+		* Type: String
 	* 定義の要約(分母)
+		* Input: text_area
+		* Type: String
+	* 定義の要約(分母)(英語)
 		* Input: text_area
 		* Type: String
 	* 分母の定義(説明)
@@ -169,7 +185,7 @@ QIDBでは以下の4点を開発要件とする。
 のように、`Key: Value`の形でJSON形式のデータを作成する。
 
 * WebAPIのエンドポイントは`/api/v1/definitions`であり、パラメータとして`id`と`project`を受け取る。
-	* 例えば、`/api/v1/definitions?project=qip&id=5`の場合には、QIPの定義書の使用番号が5の定義書のJSONデータを返却する。
+	* 例えば、`/api/v1/definitions?project=qip&id=5`の場合には、QIPの定義書の指標番号が5の定義書のJSONデータを返却する。
 	* パラメータが与えられない場合には、すべての定義書のデータをJSON型で返却する。
 
 ## 2.3 QI定義書の閲覧機能
@@ -283,6 +299,11 @@ QIDBでは以下の4点を開発要件とする。
 * このメソッドが呼び出される前に、プライベートメソッドの`set_definition`を呼び出し、どの指標番号の定義書が呼び出されたのかクエリを参照して確認している。
 * `views/definitions/show.html.erb`をレンダリングする。
 
+### show_en
+* 定義書閲覧の日本語英語混合ページを表示するメソッド
+* show メソッドと同様の処理で、`views/definitions/show_en.html.erb`をレンダリングする。
+
+
 ### new
 * 定義書登録Webインターフェイスを表示するメソッド。
 * `views/definitions/new.html.erb`をレンダリングする。
@@ -324,6 +345,9 @@ QIDBでは以下の4点を開発要件とする。
 
 ### search_pdf
 * `/:project/:id/sheet.pdf`のURLが呼ばれた時に、それに該当する定義書を検索して、pdfメソッドにリダイレクトすることで、その定義書のPDFを出力する。
+
+### search_en
+* `/:project/:id/en`のURLが呼ばれた時に、それに該当する定義書を検索して日本語英語混在のページを表示する
 
 ### pdf
 * 定義書のPDFファイルを出力する。
@@ -414,7 +438,7 @@ QIDBでは以下の4点を開発要件とする。
 ## 4.1 QI定義書のDB登録
 [/login](http://160.16.76.138/login)からBasic認証を行い、管理者権限を得る。
 [/definitions/new](http://160.16.76.138/definitions/new)で提供されるWebインターフェイスを使って、QI定義書の登録ができる。  
-定義書の内容をフォームに入力して、画面下部の緑色の「作成」ボタンを押すだけで、DBに登録することができる。  
+定義書の内容をフォームに入力して、画面下部の緑色の「作成」ボタンを押すと、DBに定義書を登録することができる。  
 入力に際して注意事項を以下に記す。
 
 * 「必要なデータセット」の項目で、複数のデータセットが必要な場合には、セレクトボックス下にある緑色の`+`ボタンを押すことで、セレクトボックスを増やすことができる。
@@ -431,26 +455,78 @@ QIDBでは以下の4点を開発要件とする。
 2190408, アルガトロバン水和物, true, true, false
 ```
 
-* 「リスク調整因子の定義」の部分では、「あり」を選択することで、その定義の詳細を入力するフォームが現れるので、そちらに入力すれば良い。
-* 「測定上の限界/解釈上の注意」や「参考値」などのtext_areaのフィールド(フォーム右下で枠の大きさを変更できるもの)では改行が"改行"として扱われるので、定義書内で改行されている部分はそのままの形で入力すれば良い。
+* 「リスク調整因子の定義」の部分では、「あり」を選択することで、その定義の詳細を入力するフォームが現れるので、詳細情報を入力する必要があれば、そちらに入力する。
+* 「測定上の限界/解釈上の注意」や「参考値」などのtext_areaのフィールド(フォーム右下で枠の大きさを変更できるもの)では改行が"改行"として扱われるので、定義書内で改行されている部分はそのままの形で入力する。
+* 「指標の表示順」は `xx_xx` (`x` は 0~9 の数値)の形式で入力する。
 
 
-## 4.2 QI定義書DBのAPI利用
-* QIDBのWebAPIは[/api/v1/definitions?project=qip&id=2021](http://160.16.76.138/api/v1/definitions?project=qip&id=2021)のようなURLで提供される。
+## 4.2 QI定義書DBのWebAPI利用
+* QIDBのWebAPIは[/api/v1/definitions?project=qip&id=2021](http://160.16.76.138/api/v1/definitions?project=qip&id=2021)のようなエンドポイントで提供される。
 * 返されるデータはJSON形式のデータである。
 * 上のリクエストでは、QIPの指標番号2021の指標情報が取得できる。
-* QIPの指標をすべて得たい場合には `/api/v1/definitions?project=qip`
+* QIPのすべての指標は `id` パラメータを使用せず、 `/api/v1/definitions?project=qip` のエンドポイントで取得可能
+
 | リクエストパラメータ | 型 | 備考 |
 |:--:|:--:|:--:|
-| project | 文字列 | プロジェクト名 ('qip', 'jha', 'jmha', 'sai', 'min', 'jma', 'ajha', 'nho', 'rofuku', 'jamcf' のいずれか) |
-| id | 数値 | 指標番号 (idを指定する場合には、projectの指定が必須)|
+| project | 文字列 | 選択肢は下部に記載 |
+| id | 数値 | 指標番号 (`id`を指定する場合には、`project`パラメータが必須)|
+
+* `project` の選択肢
+	* qip: QIP
+	* jha: 日病
+	* jmha: 全自病協
+	* sai: 済生会
+	* min: 全日本民医連
+	* jma: 日本医師会
+	* ajha: 全日病
+	* nho: 国病
+	* rofuku: 労災
+	* jamcf: 慢医協
+	
+	
+#### レスポンスパラメータの説明
+|変数名|意味|型|詳細|
+|:--|:--|:--|:--|
+|projects|プロジェクト名と指標番号一覧|JSON|下のnameとnumberを複数持つ|
+|name|プロジェクト名|文字列|[QIP, 日病, 全自病協, 済生会, 全日本民医連, 日本医師会, 全日病, 国病, 労災, 慢医協] のいずれか|
+|number|指標番号|文字列||
+|years|年度|文字列|2008から2014の偶数年が複数個|
+|group|指標群|文字列|例: 脳卒中|
+|name|名称|文字列||
+|meaning|意義|文字列||
+|dataset|必要なデータセット|文字列の配列|[DPC様式1, Fファイル, EFファイル, Dファイル, その他(自由記述)]から複数個|
+|def_summary|定義の要約|JSON|{def_numer, def_denom}を子にもつ| 
+|def_summary_denom|分母の定義の要約|文字列|| 
+|def_summary_numer|分子の定義の要約|文字列||
+|definitions|指標の定義/算出方法|JSON||
+|def_numer|分子の定義|JSON|例:{explanation=>"レセ電コードになんとか", data=>[{"薬価基準コード7桁"=>["3399007", "3399100", "3999411", "2190408"]} を子に複数持つ|
+|def_demon|分母の定義||JSON同上|
+|drag_output|薬剤一覧の出力|真偽値|true または false|
+|factor_definition|リスクの調整因子の定義|真偽値|true または false| 
+|factor_definition_detail|定義の詳細|文字列|
+|method|指標の算出方法|JSON|{method_explanation, method_unit} を子に持つ
+|method_explanation|算出方法の説明|文字列||
+|method_unit|単位|文字列||
+|order|結果提示時の並び順|文字列|'asc' または 'desc'
+|notice|測定上の限界/解釈上の注意|文字列||
+|standard_value|参考値|文字列||
+|references|参考資料|文字列の配列|| 
+|review_span|定義見直しのタイミング|文字列||
+|indicator|指標タイプ|文字列|[割合, リスク調整, 平均値, 中央値]のいずれか|
+|created_at|作成日|文字列||
+|change_logs|変更履歴|JSON|{editor, message}を複数子に持つ|
+|editor|変更者|文字列||
+|message|変更時のメッセージ|文字列||
+
 
 ## 4.3 QI定義書の閲覧
 * 定義書は[/definitions/qip/2021](http://160.16.76.138/definitions/qip/2021)のようなURLでその内容を閲覧することができる。
 * `/definitions/xxxx/yyyy`の`xxxx`の部分で、閲覧したいプロジェクト名を指定し、yyyyの部分で定義書の指標番号を指定する。
+* 英語情報も含まれた定義書を見る場合には最後に `/en` をつけたURL、例えば [/definitions/qip/2021/en](http://160.16.76.138/definitions/qip/2021/en) にアクセスする。
+* [/definitions/table](http://160.16.76.138/definitions/table) では定義書の概要一覧をテーブル形式で見ることができ、これの英語版は [/definitions/table_en](http://160.16.76.138/definitions/table_en) で見れる。
 
 ## 4.4 QI定義書の検索
-* 定義書の検索機能は[/](http://160.16.76.138/)または、4.3の閲覧のページの上部にて行うことができる。
+* 定義書の検索機能は [/](http://160.16.76.138/) で行うことができる。
 * この検索システムで検索出来る範囲は、定義書に含まれる文字列すべてである。
 * キーワードを「大動脈バルーンパンピング法　人工心肺」と入力した場合には「大動脈バルーンパンピング法」と「人工心肺」の文字列が共に含まれるAND検索で行われる。
 * 検索結果の太字部分、例えば`指標群: 脳卒中　整理番号: 0548`の部分をクリックすることで、その定義書の閲覧ページへ移動することができる。
@@ -467,9 +543,9 @@ QIDBでは以下の4点を開発要件とする。
 ## 4.7 QI定義書のCSV出力
 * [/download_csv](http://160.16.76.138/download_csv)からすべての定義書のCSVデータをダウンロードすることができる。
 
-## 4.8 QI定義書登録時のCSV入力(デプロイ時のみ使用)
-* デプロイ時に、定義書の骨子となるデータ(プロジェクト/指標群/定義書表題/分母/分子/意義)を一括で取り込む機能である。
-* 取り込みの様式は、csv ファイルで、文字コードは utf-8 である。
+## 4.8 QI定義書登録時のCSV入力
+* 初回デプロイ時に、定義書の骨子となるデータ(プロジェクト/指標群/定義書表題/分母/分子/意義)を一括で取り込む機能である。
+* 取り込みの様式は、CSV ファイルで、文字コードは UTF-8 である。
 * ファイルの中身は以下のように、列名とカラムが並んでいるべきである。
 
 ```
@@ -503,11 +579,13 @@ QIDBに使用している、ソフトウェアとそのバージョン等を記�
 * `/etc/nginx/nginx.conf` にNginx全体の設定、`/etc/nginx/conf.d/default.conf`にQIDBのアプリケーションの設定。
 * MongoDBとNginxはサーバー再起動後も自動的に立ち上げるように設定済み
 
-## 5.2 バージョン管理
+## 5.2 開発手順
 * バージョン管理はGitで行っている
 * ソースコードは[伊藤のGitHub](https://github.com/showwin/QIDB)においてあり、開発の流れとしては以下が望ましい。
-	1. GitHubからローカルにcloneして開発をする
-	2. バグが無いことを確認して、`git@github.com:showwin/QIDB.git`にpush
+	1. GitHubからローカルにcloneする
+	2. 対応する Issue がある場合には ID に `t` をつけたブランチ名、例えば `t123` を作成する。
+	3. 機能開発の場合には、その機能のテストコードも追加する。
+	2. 開発ブランチを`git@github.com:showwin/QIDB.git`にpushする
 	3. プルリクエストを作成してコードに問題がないかどうか、他の人にコードレビューをしてもらう
 	4. 問題がなければ、プルリクエストをmasterブランチにマージ
 	5. サーバーにデプロイしたい場合には、`release`ブランチにmasterブランチをマージして、GitHubにpushすることでCircleCIから自動でサーバーにデプロイされる。
@@ -519,3 +597,7 @@ QIDBに使用している、ソフトウェアとそのバージョン等を記�
 
 使用しているgemに関しても、できるだけ最新のバージョンを使用することが望ましいが、`1.2.3`から`2.0.0`などのメジャーアップデートの場合には、アプリケーションが動かなくなることがあるので、
 Rails自身を含めたgemのアップデートの際にはgitで別branchを切ってから作業をするのがよい。
+
+## 5.4 Docker 開発環境
+開発者がそれぞれ同じ環境で開発できるように Docker を使用する。
+環境構築の方法については GitHub の [ここ](https://github.com/showwin/QIDB/pull/103#issuecomment-152819128) にまとめてあるので、参考にすると良い。Windows 環境の場合には [こちら](https://github.com/showwin/QIDB/issues/118) も役立つ。

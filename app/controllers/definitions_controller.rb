@@ -12,11 +12,11 @@ class DefinitionsController < ApplicationController
   end
 
   def show_table
-    @definitions = Definition.active
+    @definitions = Definition.active.sort_by { |e| e['index'] }
   end
 
   def show_table_en
-    @definitions = Definition.active
+    @definitions = Definition.active.sort_by { |e| e['index'] }
   end
 
   def new

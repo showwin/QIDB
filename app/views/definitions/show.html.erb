@@ -1,29 +1,18 @@
 <div class="row">
   <div class="col-xs-12">
-    <%= form_tag search_path, {method: "get"} do %>
-      <h3><b>検索キーワード</b></h3>
-      <div class="input-group">
-        <%= text_field_tag 'query', params['query'], :class => 'form-control input', :id => "btn-input", :placeholder => '大動脈バルーンパンピング法　人工心肺' %>
-        <span class="input-group-btn">
-          <%= submit_tag "　検　索　", :class => "btn btn-info btn", :id => "btn-chat" %>
-        </span>
-      </div>
-    <% end %>
-  </div>
-</div><br>
-
-<div class="row">
-  <div class="col-xs-12">
-    <%= link_to '指標のPDFをダウンロード', def_pdf_path(format: :pdf) %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-xs-12">
     <div class="panel panel-info">
       <div class="panel-heading">
-        <label>名称</label>:
-        <%= @definition.name %>
+        <div class="row">
+          <div class="col-xs-9">
+            <label>名称</label>:
+            <%= @definition.name %>
+          </div>
+          <div class="col-xs-3">
+            <div align='right'>
+              <%= link_to '指標のPDFをダウンロード', def_pdf_path(format: :pdf), class: "btn btn-default" %>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="panel-body">
         <label>指標番号</label>:

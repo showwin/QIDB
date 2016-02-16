@@ -12,7 +12,7 @@
     <% if admin? %>
       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-          <a href="/"><b class="navbar-brand">QIDB管理ツール</b></a>
+          <a href="/"><b class="navbar-brand">管理ツール</b></a>
           <%= link_to '新規作成', new_definition_path, class: 'navbar-brand' %>
           <% if @definition %>
             <%= link_to '編集', edit_definition_path, class: 'navbar-brand' %>
@@ -25,6 +25,12 @@
     <% end %>
 
     <div id="page-wrapper">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2><%= link_to '医療の質指標の定義データベース', root_path, id: 'title' %></h2>
+        </div>
+      </div>
+
       <%= yield %>
     </div>
   </div>

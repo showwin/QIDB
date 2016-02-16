@@ -1,0 +1,30 @@
+<div class="panel-body">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover" id="dataTables-search">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Index</th>
+          <th>Category</th>
+          <th>Subject</th>
+          <th>Denominator</th>
+          <th>Numerator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @definitions.present? %>
+          <% @definitions.each do |d| %>
+            <tr>
+              <td><%= d.numbers.values.join(', ') %></td>
+              <td><%= d.index %></td>
+              <td><%= d.group_en %></td>
+              <td><%= link_to d.name_en, def_en_path(d) %></td>
+              <td><%= d.def_summary_en['denom_en'] %></td>
+              <td><%= d.def_summary_en['numer_en'] %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -15,8 +15,8 @@ module CreateDefinition
     @definition['def_summary'] = { 'numer' => '分母のうち、胸腔ドレナージを受けた症例', \
                                    'denom' => '18歳以上で、経胸壁的肺/縦隔生検を受けた症例' }
     @definition['def_summary_en'] = {
-      'numer' => 'Patients with a central catheter who had developed iatrogenic pneumothorax', \
-      'denom' => 'Patients with a central catheter' }
+      'numer_en' => 'Patients with a central catheter who had developed iatrogenic pneumothorax', \
+      'denom_en' => 'Patients with a central catheter' }
     def_denom1 = { 'explanation' => '分母の定義1', \
                    'data' => [
                      { '薬価基準コード7桁' => %w(3399007 3399100 3999411 2190408 2190409 2190410 2190411 2190412 2190413 2190414 2190415 2190416 2190417) },

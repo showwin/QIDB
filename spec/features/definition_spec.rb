@@ -407,4 +407,43 @@ RSpec.describe DefinitionsController, type: :feature do
       expect(page.response_headers['Content-Type']).to eq('application/pdf')
     end
   end
+
+  describe '#show_table' do
+    it 'should display all definitions' do
+      visit '/'
+      click_link('すべてをテーブルで表示')
+
+      expect(page).to have_content('64, 2')
+      expect(page).to have_content('01_09')
+      expect(page).to have_content('呼吸器系')
+      expect(page).to have_content('縦隔生検を実施した症例において、手技後に治療を要する気胸や血胸が生じた症例の割合')
+      expect(page).to have_content('分母のうち、胸腔ドレナージを受けた症例')
+      expect(page).to have_content('18歳以上で、経胸壁的肺/縦隔生検を受けた症例')
+
+      click_link('縦隔生検を実施した症例において、手技後に治療を要する気胸や血胸が生じた症例の割合')
+      expect(page).to \
+        have_content('名称: 縦隔生検を実施した症例において、手技後に治療を要する気胸や血胸が生じた症例の割合')
+      expect(page).to have_content('指標のPDFをダウンロード')
+    end
+  end
+
+  describe '#show_table_en' do
+    it 'should display all definitions' do
+      visit '/'
+      click_link('Show Table (EN)')
+
+      expect(page).to have_content('64, 2')
+      expect(page).to have_content('01_09')
+      expect(page).to have_content('Stroke')
+      expect(page).to have_content('Pneumonia mortality rate')
+      expect(page).to \
+        have_content('Patients with a central catheter who had developed iatrogenic pneumothorax')
+      expect(page).to have_content('Patients with a central catheter')
+
+      click_link('Pneumonia mortality rate')
+      expect(page).to \
+        have_content('Subject: Pneumonia mortality rate')
+      expect(page).not_to have_content('指標のPDFをダウンロード')
+    end
+  end
 end

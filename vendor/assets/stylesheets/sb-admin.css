@@ -6,6 +6,18 @@
     background-color: #f8f8f8;
 }
 
+a#title:hover {
+  color: #666;
+  background-color: #ffffff;
+}
+a#title:visited {
+  color: #666;
+  background-color: #ffffff;
+}
+a#title:link {
+  text-decoration: none;
+}
+
 /* Wrappers */
 
 /* ------------------------------- */

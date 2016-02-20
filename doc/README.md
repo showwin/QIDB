@@ -25,7 +25,7 @@
 #### 3.3.1 [DefinitionForm](https://github.com/showwin/QIDB/blob/master/doc/README.md#331-definitionform-1)
 ### 4.[使用マニュアル(利用者向け)](https://github.com/showwin/QIDB/blob/master/doc/README.md#4使用マニュアル説明書)
 #### 4.1 [QI定義書のDB登録](https://github.com/showwin/QIDB/blob/master/doc/README.md#41-qi定義書のdb登録-1)
-#### 4.2 [QI定義書DBのAPI利用](https://github.com/showwin/QIDB/blob/master/doc/README.md#42-qi定義書dbのapi利用-1)
+#### 4.2 [QI定義書DBのWebAPI利用](https://github.com/showwin/QIDB/blob/master/doc/README.md#42-qi定義書dbのapi利用-1)
 #### 4.3 [QI定義書の閲覧](https://github.com/showwin/QIDB/blob/master/doc/README.md#43-qi定義書の閲覧-1)
 #### 4.4 [QI定義書の検索](https://github.com/showwin/QIDB/blob/master/doc/README.md#44-qi定義書の検索-1)
 #### 4.5 [QI定義書の編集](https://github.com/showwin/QIDB/blob/master/doc/README.md#45-qi定義書の編集-1)
@@ -460,16 +460,64 @@ QIDBでは以下の4点を開発要件とする。
 * 「指標の表示順」は `xx_xx` (`x` は 0~9 の数値)の形式で入力する。
 
 
-## 4.2 QI定義書DBのAPI利用
+## 4.2 QI定義書DBのWebAPI利用
 * QIDBのWebAPIは[/api/v1/definitions?project=qip&id=2021](http://160.16.76.138/api/v1/definitions?project=qip&id=2021)のようなエンドポイントで提供される。
 * 返されるデータはJSON形式のデータである。
 * 上のリクエストでは、QIPの指標番号2021の指標情報が取得できる。
-* QIPの指標をすべて得たい場合には `/api/v1/definitions?project=qip`
+* QIPのすべての指標は `id` パラメータを使用せず、 `/api/v1/definitions?project=qip` のエンドポイントで取得可能
 
 | リクエストパラメータ | 型 | 備考 |
 |:--:|:--:|:--:|
-| project | 文字列 | プロジェクト名 (`qip`, `jha`, `jmha`, `sai`, `min`, `jma`, `ajha`, `nho`, `rofuku`, '`jamcf` のいずれか) |
-| id | 数値 | 指標番号 (idを指定する場合には、projectの指定が必須)|
+| project | 文字列 | 選択肢は下部に記載 |
+| id | 数値 | 指標番号 (`id`を指定する場合には、`project`パラメータが必須)|
+
+* `project` の選択肢
+	* qip: QIP
+	* jha: 日病
+	* jmha: 全自病協
+	* sai: 済生会
+	* min: 全日本民医連
+	* jma: 日本医師会
+	* ajha: 全日病
+	* nho: 国病
+	* rofuku: 労災
+	* jamcf: 慢医協
+	
+	
+#### レスポンスパラメータの説明
+|変数名|意味|型|詳細|
+|:--|:--|:--|:--|
+|projects|プロジェクト名と指標番号一覧|JSON|下のnameとnumberを複数持つ|
+|name|プロジェクト名|文字列|[QIP, 日病, 全自病協, 済生会, 全日本民医連, 日本医師会, 全日病, 国病, 労災, 慢医協] のいずれか|
+|number|指標番号|文字列||
+|years|年度|文字列|2008から2014の偶数年が複数個|
+|group|指標群|文字列|例: 脳卒中|
+|name|名称|文字列||
+|meaning|意義|文字列||
+|dataset|必要なデータセット|文字列の配列|[DPC様式1, Fファイル, EFファイル, Dファイル, その他(自由記述)]から複数個|
+|def_summary|定義の要約|JSON|{def_numer, def_denom}を子にもつ| 
+|def_summary_denom|分母の定義の要約|文字列|| 
+|def_summary_numer|分子の定義の要約|文字列||
+|definitions|指標の定義/算出方法|JSON||
+|def_numer|分子の定義|JSON|例:{explanation=>"レセ電コードになんとか", data=>[{"薬価基準コード7桁"=>["3399007", "3399100", "3999411", "2190408"]} を子に複数持つ|
+|def_demon|分母の定義||JSON同上|
+|drag_output|薬剤一覧の出力|真偽値|true または false|
+|factor_definition|リスクの調整因子の定義|真偽値|true または false| 
+|factor_definition_detail|定義の詳細|文字列|
+|method|指標の算出方法|JSON|{method_explanation, method_unit} を子に持つ
+|method_explanation|算出方法の説明|文字列||
+|method_unit|単位|文字列||
+|order|結果提示時の並び順|文字列|'asc' または 'desc'
+|notice|測定上の限界/解釈上の注意|文字列||
+|standard_value|参考値|文字列||
+|references|参考資料|文字列の配列|| 
+|review_span|定義見直しのタイミング|文字列||
+|indicator|指標タイプ|文字列|[割合, リスク調整, 平均値, 中央値]のいずれか|
+|created_at|作成日|文字列||
+|change_logs|変更履歴|JSON|{editor, message}を複数子に持つ|
+|editor|変更者|文字列||
+|message|変更時のメッセージ|文字列||
+
 
 ## 4.3 QI定義書の閲覧
 * 定義書は[/definitions/qip/2021](http://160.16.76.138/definitions/qip/2021)のようなURLでその内容を閲覧することができる。

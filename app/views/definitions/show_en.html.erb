@@ -48,7 +48,7 @@
         <label>指標の定義算出方法</label>:</p>
         <label>分母の定義</label>:</p>
         <% @definition.definitions['def_denom'].each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default" id="def_denom_<%= key %>_data">
@@ -93,7 +93,7 @@
 
         <label>分子の定義</label>:</p>
         <% @definition.definitions['def_numer'].each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default" id="def_numer_<%= key %>_data">
@@ -138,7 +138,7 @@
         <label>薬剤一覧の出力</label>: <%= @definition.drug_output %></p>
         <label>リスク調整因子の条件</label>:</p>
         <% @definition.def_risks.each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
@@ -185,7 +185,7 @@
 
         <label>測定上の限界・解釈上の注意</label>:</p>
         <% @definition.annotation.each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
@@ -230,7 +230,7 @@
 
         <label>参考値</label>:</p>
         <% @definition.standard_value.each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
@@ -278,7 +278,7 @@
 
         <label>参考資料</label>:</p>
         <% @definition.references.each do |key,value| %>
-          <%= key %>：<%= value['explanation'] %></p>
+          <%= key %>：<%= simple_format(value['explanation']) %></p>
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">

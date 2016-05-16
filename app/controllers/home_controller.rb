@@ -15,7 +15,7 @@ class HomeController < ApplicationController
 
   def search
     session[:user_id] = 3
-    keywords = format_query_keywords(params[:query])
+    keywords = format_query_keywords(params[:query1]+' '+params[:query2])
     @results = Definition.search(keywords)
     render :index
   end

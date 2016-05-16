@@ -8,8 +8,18 @@ RUN yum update -y && \
     rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
 # install tools
-RUN yum install -y --enablerepo=epel git tar bzip2 gcc-c++ make ruby-devel readline-devel
-RUN yum install -y --enablerepo=epel openssl-devel patch mysql-devel qt-devel
+RUN yum install -y --enablerepo=epel git tar bzip2 gcc-c++ make ruby-devel readline-devel unzip
+RUN yum install -y --enablerepo=epel openssl-devel patch mysql-devel qt-devel wget xorg-x11-fonts-75dpi xorg-x11-fonts-Type1 libXext libXrender libpng libjpeg-turbo
+
+# install wkhtmltopdf
+RUN cd /usr/local/src/ && \
+    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    rpm -ivh wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
+# add font
+RUN wget http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip && \
+    unzip IPAexfont00301.zip && \
+    cp -rf IPAexfont00301/ /usr/share/fonts/
 
 # install ruby-build & phantomjs
 RUN git clone https://github.com/sstephenson/ruby-build.git /tmp/ruby-build && \

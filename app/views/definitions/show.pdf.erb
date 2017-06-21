@@ -1,4 +1,4 @@
-<div class="panel panel-info">
+<div class="panel panel-default">
   <div class="panel-heading">
     <label>名称</label>:
     <%= @definition.name %>
@@ -238,16 +238,6 @@
       <% end %>
     <% end %>
     <label>定義見直しのタイミング</label>: <%= @definition.review_span %></p>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">変更履歴</h4>
-      </div>
-      <div class="panel-body">
-        <% @logs.each do |log| %>
-          <label>変更者</label>: <%= log['editor'] %>　
-          <label>変更メッセージ</label>: <%= log['message'] %></p>
-        <% end %>
-      </div>
-    </div>
+    <label>最終更新日</label>: <%= @logs[0]['created_at'] %></p>
   </div>
 </div>

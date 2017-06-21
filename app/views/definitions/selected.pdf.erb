@@ -1,5 +1,5 @@
 <% @definitions.each do |d| %>
-  <div class="panel panel-info">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <label>名称</label>:
       <%= d.name %>
@@ -239,18 +239,9 @@
         <% end %>
       <% end %>
       <label>定義見直しのタイミング</label>: <%= d.review_span %></p>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h4 class="panel-title">変更履歴</h4>
-        </div>
-        <div class="panel-body">
-          <% logs = ChangeLog.where(soft_delete: false).where(log_id: d.log_id).order('_id desc').to_a %>
-          <% logs.each do |log| %>
-            <label>変更者</label>: <%= log['editor'] %>　
-            <label>変更メッセージ</label>: <%= log['message'] %></p>
-          <% end %>
-        </div>
-      </div>
+      <% logs = ChangeLog.where(soft_delete: false).where(log_id: d.log_id).order('_id desc').to_a %>
+      <label>最終更新日</label>: <%= logs[0]['created_at'] %></p>
     </div>
   </div>
+  <p class='pagebreak'/>
 <% end %>

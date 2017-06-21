@@ -329,8 +329,11 @@
           <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
             <div class="panel-body">
               <% @logs.each do |log| %>
-                <label>変更者</label>: <%= log['editor'] %>　
-                <label>変更メッセージ</label>: <%= log['message'] %></p>
+                <% if admin? %>
+                  <label>変更者</label>: <%= log['editor'] %>　
+                  <label>変更メッセージ</label>: <%= log['message'] %>　
+                <% end %>
+                <label>変更日時</label>: <%= log['created_at'] %></p>
               <% end %>
             </div>
           </div>

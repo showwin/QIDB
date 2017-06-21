@@ -30,6 +30,7 @@
 						<th><input id='all_check' type='checkbox'></th>
 						<th>プロジェクト名</th>
 						<th>指標番号</th>
+						<th>Index</th>
 						<th>指標群</th>
 						<th>名称</th>
 						<th>意義</th>
@@ -37,11 +38,13 @@
 				</thead>
 				<tbody>
 					<% if @definitions.present? %>
+						<% definitions = Definition.active.sort_by { |e| e['index'] }%>
 				    <% @definitions.each do |d| %>
 							<tr>
 								<td><%= check_box_tag(d._id, true, checked = false, class: 'defList__checkbox') %></td>
 								<td><%= d.numbers.keys.join(', ') %></td>
 								<td><%= d.numbers.values.join(', ') %></td>
+								<td><%= d.index %></td>
 								<td><%= d.group %></td>
 								<td><%= d.name %></td>
 								<td><%= d.meaning %></td>

@@ -110,7 +110,8 @@ class DefinitionsController < ApplicationController
     @definitions = Definition.active
                    .find_by_project(@project)
                    .find_by_year(@year)
-                   .search(@keywords).to_a
+                   .search(@keywords)
+                   .sort_by { |e| e['index'] }.to_a
   end
 
   def pdfs
@@ -118,7 +119,7 @@ class DefinitionsController < ApplicationController
     params.keys.each do |key|
       ids << key if key.length == 24
     end
-    @definitions = Definition.active.in('_id': ids).to_a
+    @definitions = Definition.active.in('_id': ids).sort_by { |e| e['index'] }.to_a
     respond_to do |format|
       format.pdf do
         render pdf: 'sheet',

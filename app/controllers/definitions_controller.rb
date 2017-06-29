@@ -130,6 +130,16 @@ class DefinitionsController < ApplicationController
     end
   end
 
+  def output_csv
+    @contents = [["name","sex","add"],["tanaka","men","Osaka"]]
+
+    respond_to do |format|
+      format.csv do
+        send_data render_to_string, type: :csv
+      end
+    end
+  end
+
   private
 
   def set_definition

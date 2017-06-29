@@ -4,5 +4,5 @@
 
 
 WickedPdf.config = {
-  :exe_path => ENV['WKHTMLTOPDF_PATH'] || '/usr/bin/wkhtmltopdf'
+  :exe_path => ENV['WKHTMLTOPDF_PATH'] #|| '/usr/bin/wkhtmltopdf'
 }

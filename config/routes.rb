@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'login' => 'home#login', as: :login
   get 'logout' => 'home#logout', as: :logout
   get 'download_csv' => 'home#output_csv', as: :download_csv
+  get 'definitions/:id/download_csv_data' => 'definitions#output_csv', as: :download_csv_data
   post 'definitions/import' => 'definitions#import', as: :import
   get 'definitions/upload' => 'definitions#upload', as: :upload
   get 'definitions/confirm/:id' => 'definitions#confirm', as: :confirm_dup

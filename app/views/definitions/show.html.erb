@@ -47,6 +47,7 @@
                   <a data-toggle="collapse" data-parent="#accordion" href="#denom<%= key %>_panel" aria-expanded="false" class="collapsed">
                     内容を見る
                   </a>
+                  <%= link_to 'CSV', download_csv_data_path(format: :csv), class: "btn btn-outline btn-success" %>
                 </div>
                 <div id="denom<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">

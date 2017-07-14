@@ -38,7 +38,6 @@
 				</thead>
 				<tbody>
 					<% if @definitions.present? %>
-						<% definitions = Definition.active.sort_by { |e| e['index'] }%>
 				    <% @definitions.each do |d| %>
 							<tr>
 								<td><%= check_box_tag(d._id, true, checked = false, class: 'defList__checkbox') %></td>

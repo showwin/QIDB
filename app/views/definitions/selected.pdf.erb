@@ -32,32 +32,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">分母のデータ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered" id="denom<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                        <th><%= i.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                      <tr>
-                        <% value['data'].each do |i| %>
-                          <td><%= i.values[0][id] %></td>
-                        <% end %>
-                      </tr>
-                      <% id+=1 %>
+            <div><u>分母のデータ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered" id="denom<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |i| %>
+                    <th><%= i.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                  <tr>
+                    <% value['data'].each do |i| %>
+                      <td><%= i.values[0][id] %></td>
                     <% end %>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+                  </tr>
+                  <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>
@@ -68,32 +62,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">分子のデータ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered table-hover" id="numer<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |column| %>
-                        <th><%= column.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                      <td><%= i.values[0][id] %></td>
-                      <% end %>
-                    </tr>
-                    <% id+=1 %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+            <div><u>分子のデータ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered table-hover" id="numer<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                <tr>
+                  <% value['data'].each do |i| %>
+                  <td><%= i.values[0][id] %></td>
+                  <% end %>
+                </tr>
+                <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>
@@ -104,31 +92,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">リスク調整因子のデータ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered table-hover" id="risk<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |column| %>
-                        <th><%= column.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                      <td><%= i.values[0][id] %></td>
-                      <% end %>
-                    </tr>
-                    <% id+=1 %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.panel -->
+            <div><u>データ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered table-hover" id="risk<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                <tr>
+                  <% value['data'].each do |i| %>
+                  <td><%= i.values[0][id] %></td>
+                  <% end %>
+                </tr>
+                <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>
@@ -140,32 +123,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">データ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered table-hover" id="anno<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |column| %>
-                        <th><%= column.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                      <td><%= i.values[0][id] %></td>
-                      <% end %>
-                    </tr>
-                    <% id+=1 %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-                <!-- /.panel-body -->
-            </div>
-            <!-- /.panel -->
+            <div><u>データ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered table-hover" id="anno<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                <tr>
+                  <% value['data'].each do |i| %>
+                  <td><%= i.values[0][id] %></td>
+                  <% end %>
+                </tr>
+                <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>
@@ -175,31 +152,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">データ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered table-hover" id="ref_val<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |column| %>
-                        <th><%= column.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                      <td><%= i.values[0][id] %></td>
-                      <% end %>
-                    </tr>
-                    <% id+=1 %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.panel -->
+            <div><u>データ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered table-hover" id="ref_val<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                <tr>
+                  <% value['data'].each do |i| %>
+                  <td><%= i.values[0][id] %></td>
+                  <% end %>
+                </tr>
+                <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>
@@ -209,31 +181,26 @@
         <%= key %>：<%= value['explanation'] %></p>
         <% if value['data'].present? %>
           <div class="col-lg-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">データ<%= key %></div>
-              <div class="panel-body">
-                <table class="table table-condensed table-striped table-bordered table-hover" id="ref_info<%= key %>_table">
-                  <thead>
-                    <tr>
-                      <% value['data'].each do |column| %>
-                        <th><%= column.keys[0] %></th>
-                      <% end %>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <% value['data'][0].values[0].length.times do |id| %>
-                    <tr>
-                      <% value['data'].each do |i| %>
-                      <td><%= i.values[0][id] %></td>
-                      <% end %>
-                    </tr>
-                    <% id+=1 %>
-                    <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- /.panel -->
+            <div><u>データ<%= key %></u></div>
+            <table class="table table-condensed table-striped table-bordered table-hover" id="ref_info<%= key %>_table">
+              <thead>
+                <tr>
+                  <% value['data'].each do |column| %>
+                    <th><%= column.keys[0] %></th>
+                  <% end %>
+                </tr>
+              </thead>
+              <tbody>
+                <% value['data'][0].values[0].length.times do |id| %>
+                <tr>
+                  <% value['data'].each do |i| %>
+                  <td><%= i.values[0][id] %></td>
+                  <% end %>
+                </tr>
+                <% id+=1 %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
           <!-- /.col-lg-12 -->
         <% end %>

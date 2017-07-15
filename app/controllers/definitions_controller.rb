@@ -107,11 +107,8 @@ class DefinitionsController < ApplicationController
     @project = params[:project]
     @year = params[:year]
     @keywords = format_query_keywords(params[:keywords])
-    @definitions = Definition.active
-                   .find_by_project(@project)
-                   .find_by_year(@year)
-                   .search(@keywords)
-                   .sort_by { |e| e['index'] }.to_a
+    unindexed, indexed = Definition.active.order("index ASC").partition{|e| e['index'] == "" }
+    @definitions = indexed + unindexed
   end
 
   def pdfs

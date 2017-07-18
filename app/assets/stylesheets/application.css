@@ -17,3 +17,4 @@
  *= require sb-admin
  *= require plugins/dataTables/dataTables.bootstrap
  */
+p.pagebreak {page-break-before: always; }

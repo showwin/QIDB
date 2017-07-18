@@ -10,11 +10,14 @@ RSpec.describe HomeController, type: :feature do
     expect(page).to have_content('すべてをCSVでダウンロード')
 
     # 検索
-    find('#btn-input').set('呼吸器系')
+    find('#query-project').set('jha')
+    find('#query-keyword').set('呼吸器系')
     click_button('　検　索　')
 
     # 検索結果
-    expect(page).to have_content('指標番号: 64')
+    expect(page).to have_content('検索結果: 1 件') 
+    expect(page).to have_content('指標番号: 64 (qip)')
+    expect(page).to have_content('2 (jha)')
     expect(page).to have_content('指標群: 呼吸器系')
     expect(page).to have_content('名称: 縦隔生検を実施した症例において、手技後に治療を要する気胸や血胸が生じた症例の割合')
     expect(page).to have_content('分母: 18歳以上で、経胸壁的肺/縦隔生検を受けた症例')

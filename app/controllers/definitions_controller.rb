@@ -107,10 +107,13 @@ class DefinitionsController < ApplicationController
     @project = params[:project]
     @year = params[:year]
     @keywords = format_query_keywords(params[:keywords])
-    @definitions = Definition.active
-                   .find_by_project(@project)
-                   .find_by_year(@year)
-                   .search(@keywords).to_a
+    unindexed, indexed = Definition.active
+              .find_by_project(@project)
+              .find_by_year(@year)
+              .search(@keywords)
+              .sort_by { |e| e['index'] }
+              .partition{|e| e['index'] == "" }
+    @definitions = indexed + unindexed
   end
 
   def pdfs
@@ -118,7 +121,9 @@ class DefinitionsController < ApplicationController
     params.keys.each do |key|
       ids << key if key.length == 24
     end
-    @definitions = Definition.active.in('_id': ids).to_a
+    unindexed, indexed = Definition.active.in('_id': ids).sort_by { |e| e['index'] }.partition{|e| e['index'] == "" }
+    #@definitions = Definition.active.in('_id': ids).sort_by { |e| e['index'] }.to_a
+    @definitions = indexed + unindexed
     respond_to do |format|
       format.pdf do
         render pdf: 'sheet',

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'definitions/:id/duplicate' => 'definitions#duplicate', as: :def_duplicate
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
   get 'definitions/:id/en' => 'definitions#show_en', as: :def_en
+  get 'definitions/:id/output_csv_data' => 'definitions#output_csv_data', as: :def_csv_data
   get 'definitions/select' => 'definitions#select', as: :def_select
   get 'definitions/pdfs' => 'definitions#pdfs', as: :def_pdfs
   get 'definitions/table' => 'definitions#show_table', as: :def_show_table

@@ -43,10 +43,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default" id="def_denom_<%= key %>_data">
-                <div class="panel-heading">分母のデータ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#denom<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      分母のデータ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#denom<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'def_denom', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="denom<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">
@@ -88,10 +98,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default" id="def_numer_<%= key %>_data">
-                <div class="panel-heading">分子のデータ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#numer<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      分子のデータ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#numer<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'def_numer', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="numer<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">
@@ -133,10 +153,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
-                <div class="panel-heading">リスク調整因子のデータ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#risk<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      リスク調整因子のデータ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#risk<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'def_risks', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="risk<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">
@@ -180,10 +210,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
-                <div class="panel-heading">データ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#anno<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      データ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#anno<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'annotation', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="anno<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">
@@ -225,10 +265,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
-                <div class="panel-heading">データ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#ref_val<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      データ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#ref_val<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'standard_value', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="ref_val<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">
@@ -273,10 +323,20 @@
           <% if value['data'].present? %>
             <div class="col-lg-12">
               <div class="panel panel-default">
-                <div class="panel-heading">データ<%= key %>　
-                  <a data-toggle="collapse" data-parent="#accordion" href="#ref_info<%= key %>_panel" aria-expanded="false" class="collapsed">
-                    内容を見る
-                  </a>
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-xs-4">
+                      データ<%= key %> &nbsp;
+                      <a data-toggle="collapse" data-parent="#accordion" href="#ref_info<%= key %>_panel" aria-expanded="false" class="collapsed">
+                        内容を見る
+                      </a>
+                    </div>
+                    <div class="col-xs-8">
+                      <div align="right">
+                        <%= link_to 'CSVでダウンロード', def_csv_data_path(format: :csv, type: 'references', key: key), class: "btn btn-outline btn-success" %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div id="ref_info<%= key %>_panel" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                   <div class="panel-body">

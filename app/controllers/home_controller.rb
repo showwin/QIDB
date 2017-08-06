@@ -23,7 +23,7 @@ class HomeController < ApplicationController
   def output_csv
     all = Definition.active
     @contents = []
-
+    @contents << CSV_COLUMNS
     all.each do |record|
       content = []
       content << record.numbers['qip']

@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get 'login' => 'home#login', as: :login
   get 'logout' => 'home#logout', as: :logout
   get 'download_csv' => 'home#output_csv', as: :download_csv
-  get 'definitions/:id/download_csv_data' => 'definitions#output_csv', as: :download_csv_data
   post 'definitions/import' => 'definitions#import', as: :import
   get 'definitions/upload' => 'definitions#upload', as: :upload
   get 'definitions/confirm/:id' => 'definitions#confirm', as: :confirm_dup
@@ -14,6 +13,7 @@ Rails.application.routes.draw do
   get 'definitions/:id/duplicate' => 'definitions#duplicate', as: :def_duplicate
   get 'definitions/:id/sheet' => 'definitions#pdf', as: :def_pdf
   get 'definitions/:id/en' => 'definitions#show_en', as: :def_en
+  get 'definitions/:id/output_csv_data' => 'definitions#output_csv_data', as: :def_csv_data
   get 'definitions/select' => 'definitions#select', as: :def_select
   get 'definitions/pdfs' => 'definitions#pdfs', as: :def_pdfs
   get 'definitions/table' => 'definitions#show_table', as: :def_show_table

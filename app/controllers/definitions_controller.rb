@@ -3,7 +3,7 @@ class DefinitionsController < ApplicationController
   before_action :set_log, only: [:show, :show_en, :edit, :duplicate, :pdf]
   before_action :authenticate,
                 except: [:show, :show_en, :show_table, :show_table_en, :search,
-                         :pdf, :select, :pdfs, :search_pdf, :search_en]
+                         :pdf, :select, :pdfs, :search_pdf, :search_en, :output_csv_data]
 
   def show
   end
@@ -90,6 +90,28 @@ class DefinitionsController < ApplicationController
     redirect_to action: 'show_en', id: @definition._id
   end
 
+  def output_csv_data
+    @contents = []
+    definition = Definition.active.find(params[:id])
+    data = case params[:type]
+    when 'def_numer', 'def_denom' then definition.definitions[params[:type]][params[:key]]['data']
+    when 'def_risks', 'annotation', 'standard_value', 'references' then definition[params[:type]][params[:key]]['data'] end
+    if data.present?
+      header, content = [], []
+      data.each do |col|
+        col.each do |key,value|
+          header << key
+          content << value
+        end
+      end
+    end
+    @contents << header
+    content.transpose.each do |i|
+      @contents << i
+    end
+    render 'home/output_csv.csv'
+  end
+
   def pdf
     respond_to do |format|
       format.html { redirect_to def_pdf_path(id: params[:id], format: :pdf) }
@@ -131,16 +153,6 @@ class DefinitionsController < ApplicationController
                template: '/definitions/selected.pdf.erb',
                layout: 'pdf.html.erb',
                no_background: false
-      end
-    end
-  end
-
-  def output_csv
-    @contents = [["name","sex","add"],["tanaka","men","Osaka"]]
-
-    respond_to do |format|
-      format.csv do
-        send_data render_to_string, type: :csv
       end
     end
   end

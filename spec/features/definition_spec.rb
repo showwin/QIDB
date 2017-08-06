@@ -447,4 +447,12 @@ RSpec.describe DefinitionsController, type: :feature do
       expect(page).not_to have_content('指標のPDFをダウンロード')
     end
   end
+
+  describe '#output_csv_data' do
+    it 'should download csv file of additional data' do
+      visit '/definitions/qip/64'
+      click_on 'CSVでダウンロード', match: :first
+      #expect(page.response_headers['Content-Type']).to eq('text/csv')
+    end
+  end
 end

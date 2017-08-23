@@ -452,7 +452,7 @@ RSpec.describe DefinitionsController, type: :feature do
     it 'should download csv file of additional data' do
       visit '/definitions/qip/64'
       click_on 'CSVでダウンロード', match: :first
-      #expect(page.response_headers['Content-Type']).to eq('text/csv')
+      expect(page.response_headers['Content-Type']).to eq('text/csv; charset=utf-8')
     end
   end
 end

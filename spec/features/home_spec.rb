@@ -37,6 +37,6 @@ RSpec.describe HomeController, type: :feature do
     expect(page).to have_content('CSVでダウンロード')
     expect(page).to have_content('PDFでダウンロード')
     click_link('CSVでダウンロード')
-    #expect(page.response_headers['Content-Type']).to eq('text/csv')
+    expect(page.response_headers['Content-Type']).to eq('text/csv')
   end
 end

@@ -117,6 +117,7 @@
     <% end %>
     <label>指標の算出方法(説明)</label>: <%= @definition['method']['explanation'] %></p>
     <label>指標の算出方法(単位)</label>: <%= @definition['method']['unit'] %></p>
+    <label>結果提示時の並び順</label>: <%= @definition['order'].blank? ? '' : (@definition['order'] == "asc" ? '昇順' : '降順') %></p>
     <label>測定上の限界・解釈上の注意</label>:</p>
     <% @definition.annotation.each do |key,value| %>
       <%= key %>：<%= simple_format(value['explanation']) %></p>

@@ -97,6 +97,7 @@ RSpec.describe DefinitionsController, type: :feature do
     expect(page).to have_content('リスクの調整因子の定義2')
     expect(page).to have_content('算出方法')
     expect(page).to have_content('単位')
+    expect(page).to have_content('結果提示時の並び順')
     expect(page).to have_content('注意事項1')
     expect(page).to have_content('参考値1')
     expect(page).to have_content('参考値2')

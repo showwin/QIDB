@@ -4,8 +4,14 @@ MAINTAINER showwin <showwin.czy@gmail.com>
 # set timezone JST
 RUN /bin/cp -p  /usr/share/zoneinfo/Japan /etc/localtime
 
+# yum settings
+RUN yum history sync
+
 RUN yum update -y && \
     rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+RUN yum install -y yum-plugin-ovl
+RUN echo plugins=1 >> /etc/yum.conf
 
 # install tools
 RUN yum install -y --enablerepo=epel git tar bzip2 gcc-c++ make ruby-devel readline-devel unzip
@@ -13,8 +19,11 @@ RUN yum install -y --enablerepo=epel openssl-devel patch mysql-devel qt-devel wg
 
 # install wkhtmltopdf
 RUN cd /usr/local/src/ && \
-    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
-    rpm -ivh wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    #wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \
+    #tar -xvf  wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+    #rpm -ivh wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    rpm -ivh wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \ 
     ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
 # add font
 RUN wget http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip && \

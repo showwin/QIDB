@@ -1,4 +1,4 @@
-FROM centos:6.6
+FROM centos:6.10
 MAINTAINER showwin <showwin.czy@gmail.com>
 
 # set timezone JST
@@ -13,21 +13,16 @@ RUN yum install -y --enablerepo=epel openssl-devel patch mysql-devel qt-devel wg
 
 # install wkhtmltopdf
 RUN cd /usr/local/src/ && \
-    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
-    rpm -ivh wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \
+    rpm -ivh wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \
     ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
 # add font
-RUN wget http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip && \
-    unzip IPAexfont00301.zip && \
-    cp -rf IPAexfont00301/ /usr/share/fonts/
+RUN wget https://oscdl.ipa.go.jp/IPAfont/IPAMTTC00303.zip && \
+    unzip IPAMTTC00303.zip && \
+    cp -rf IPAMTTC00303/ /usr/share/fonts/
 
-# install ruby-build & phantomjs
-RUN git clone https://github.com/sstephenson/ruby-build.git /tmp/ruby-build && \
-    cd /tmp/ruby-build && \
-    ./install.sh && \
-    cd / && \
-    rm -rf /tmp/ruby-build && \
-    curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
+# install phantomjs
+RUN curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
     tar jxfv phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
     cp phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 

@@ -2,4 +2,4 @@ Host qidb
   User rails
   HostName 160.16.76.138
   IdentitiesOnly yes
-  IdentityFile /home/ubuntu/.ssh/id_qidb
+  IdentityFile /home/circleci/.ssh/id_rsa_ee035fd2cccff96d285af541fc7a3575

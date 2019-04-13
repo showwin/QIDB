@@ -3,11 +3,14 @@ jobs:
   deploy:
     working_directory: ~/qidb
     docker:
-      - image: circleci/ruby:2.2.3
+      - image: circleci/ruby:2.4.6
         environment:
           RAILS_ENV: test
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "ee:03:5f:d2:cc:cf:f9:6d:28:5a:f5:41:fc:7a:35:75"
       - run:
           name: setup ssh
           command: |
@@ -15,14 +18,16 @@ jobs:
             chmod 600 ~/.ssh/config
       - run:
           name: Install System Dependencies
-          command: sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
+          command: |
+            sudo apt-get update --fix-missing
+            sudo apt-get install qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x
       - run:
           name: bundle install
           command: |
            bundle install
       - run:
           name: deploy
-          command: bash ./scripts/deploy.sh
+          command: bash ./scripts/deploy.sh production release
 workflows:
   version: 2
   build_and_deploy:

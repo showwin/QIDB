@@ -1,4 +1,6 @@
 #!/bin/bash
+
+source ~/.bashrc
 cd /app
 bundle install
 

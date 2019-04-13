@@ -1,4 +1,4 @@
-FROM centos:6.6
+FROM centos:6.10
 MAINTAINER showwin <showwin.czy@gmail.com>
 
 # set timezone JST
@@ -13,21 +13,16 @@ RUN yum install -y --enablerepo=epel openssl-devel patch mysql-devel qt-devel wg
 
 # install wkhtmltopdf
 RUN cd /usr/local/src/ && \
-    wget http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
-    rpm -ivh wkhtmltox-0.12.2.1_linux-centos6-amd64.rpm && \
+    wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \
+    rpm -ivh wkhtmltox-0.12.5-1.centos6.x86_64.rpm && \
     ln -s /usr/local/bin/wkhtmltopdf /usr/bin/wkhtmltopdf
 # add font
-RUN wget http://dl.ipafont.ipa.go.jp/IPAexfont/IPAexfont00301.zip && \
-    unzip IPAexfont00301.zip && \
-    cp -rf IPAexfont00301/ /usr/share/fonts/
+RUN wget https://oscdl.ipa.go.jp/IPAfont/IPAMTTC00303.zip && \
+    unzip IPAMTTC00303.zip && \
+    cp -rf IPAMTTC00303/ /usr/share/fonts/
 
-# install ruby-build & phantomjs
-RUN git clone https://github.com/sstephenson/ruby-build.git /tmp/ruby-build && \
-    cd /tmp/ruby-build && \
-    ./install.sh && \
-    cd / && \
-    rm -rf /tmp/ruby-build && \
-    curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
+# install phantomjs
+RUN curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
     tar jxfv phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
     cp phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 
@@ -52,20 +47,24 @@ RUN echo "[epel-qt48]" >> /etc/yum.repos.d/qt.repo && \
 WORKDIR /app
 
 # Install ruby & base gems
-RUN ruby-build -v 2.2.3 /usr/local && \
-    gem install bundler rubygems-bundler --no-rdoc --no-ri && \
-    gem regenerate_binstubs && \
-    rm -rf /tmp/ruby-build*
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv && \
+    cd ~/.rbenv && src/configure && make -C src && \
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc && \
+    echo 'eval "$(rbenv init -)"' >> ~/.bashrc && \
+    source ~/.bashrc && \
+    mkdir -p "$(rbenv root)"/plugins && \
+    git clone https://github.com/rbenv/ruby-build.git "$(rbenv root)"/plugins/ruby-build && \
+    rbenv install 2.4.6 && \
+    rbenv global 2.4.6 && \
+    gem install bundler -v '< 2.0'
 
 # use bundle container & set RAILS_ENV
-ENV BUNDLE_GEMFILE=/app/Gemfile \
-    BUNDLE_JOBS=2 \
-    BUNDLE_PATH=/bundle \
+ENV BUNDLE_JOBS=2 \
     RAILS_ENV=development
 
 # bundle
 ADD Gemfile* /app/
-RUN bundle install --jobs 20 --retry 5
+RUN source ~/.bashrc && bundle install --jobs 20 --retry 5
 
 # Rails app
 ADD . /app

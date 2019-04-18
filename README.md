@@ -3,9 +3,11 @@
 [![Coverage Status](https://coveralls.io/repos/github/showwin/QIDB/badge.svg?branch=master)](https://coveralls.io/github/showwin/QIDB?branch=master)
 
 
-# 開発環境
+# 開発環境構築
 
 ```
+$ git clone git@github.com:showwin/QIDB.git
+$ cd QIDB
 $ docker-compose Build
 $ docker-compose up
 ```

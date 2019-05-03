@@ -22,9 +22,9 @@ RUN wget https://oscdl.ipa.go.jp/IPAfont/IPAMTTC00303.zip && \
     cp -rf IPAMTTC00303/ /usr/share/fonts/
 
 # install phantomjs
-RUN curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
-    tar jxfv phantomjs-1.9.7-linux-x86_64.tar.bz2 && \
-    cp phantomjs-1.9.7-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
+RUN curl -L -O https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    tar jxfv phantomjs-2.1.1-linux-x86_64.tar.bz2 && \
+    cp phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 
 # for capybara-webkit
 RUN echo "[epel-qt48]" >> /etc/yum.repos.d/qt.repo && \

@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.8'
+gem 'rails', '5.2.3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -14,10 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 ### for MongoDB
 gem 'io-console'
-gem 'mongoid', '~> 4.0.0'
-
-### for api
-gem 'rails-api'
+gem 'mongoid'
 
 # Use unicorn as the app server
 gem 'unicorn'
@@ -37,15 +34,15 @@ gem 'rb-readline'
 
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'did_you_mean', '>= 1.0'
+  gem 'did_you_mean', '1.1.3'
   gem 'timecop'
   gem 'simplecov', require: false
   gem 'coveralls', require: false
@@ -53,13 +50,13 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.7'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
   # Use Capistrano for deployment
-  gem 'capistrano', '3.4.0'
+  gem 'capistrano', '3.11.0'
   gem 'capistrano-rails', '< 3.0'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
@@ -69,6 +66,3 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]

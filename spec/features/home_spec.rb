@@ -28,7 +28,7 @@ RSpec.describe HomeController, type: :feature do
     expect(page).to have_content('指標群: 呼吸器系')
     expect(page).to have_content('指標のPDFをダウンロード')
     expect(page).not_to have_content('アルガトロバン水和物')
-    first('.panel-default').click_link('内容を見る').first
+    first('.panel-default').click_link('内容を見る')
     expect(page).to have_content('アルガトロバン水和物')
   end
 

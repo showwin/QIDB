@@ -1,4 +1,4 @@
-# use CreateDefinition Module to create mock instead of FactoryGirl
+# use CreateDefinition Module to create mock instead of FactoryBot
 module DefinitionFormParams
   def definition_form_params
     {

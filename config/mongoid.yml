@@ -1,5 +1,5 @@
 production:
-  sessions:
+  clients:
     default:
       hosts:
         - localhost:27017
@@ -7,13 +7,13 @@ production:
       username: <%= ENV["MONGODB_USERNAME"] || 'qidb_user' %>
       password: <%= ENV["MONGODB_PASSWORD"] || 'qidb_pass'%>
 development:
-  sessions:
+  clients:
     default:
       database: qidb_development
       hosts:
         - <%= (ENV["MONGODB_HOST"] || 'localhost') + ':27017' %>
 test:
-  sessions:
+  clients:
     default:
       database: qidb_test
       hosts:

@@ -41,7 +41,7 @@ group :development, :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'binding_of_caller'

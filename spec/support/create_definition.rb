@@ -1,4 +1,4 @@
-# use CreateDefinition Module to create mock instead of FactoryGirl
+# use CreateDefinition Module to create mock instead of FactoryBot
 module CreateDefinition
   def create_definition
     @definition = Definition.new

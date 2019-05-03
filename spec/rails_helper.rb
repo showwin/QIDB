@@ -1,7 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] = 'test'
 require 'spec_helper'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'database_cleaner'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
@@ -57,7 +57,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Capybara::DSL
   config.before :each do
     DatabaseCleaner.strategy = :truncation
@@ -67,7 +67,7 @@ RSpec.configure do |config|
   config.after :each do
     Capybara.reset_sessions!
     DatabaseCleaner.clean
-    FactoryGirl.reload
+    FactoryBot.reload
   end
 end
 

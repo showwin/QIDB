@@ -1,4 +1,4 @@
-# use CreateDefinition Module to create mock instead of FactoryGirl
+# use CreateDefinition Module to create mock instead of FactoryBot
 module CreateChangeLog
   def create_change_log(params)
     params[:log_id] ||= '1'

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.11.1'
+gem 'rails', '5.0.7.2'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -14,10 +14,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 ### for MongoDB
 gem 'io-console'
-gem 'mongoid', '~> 4.0.0'
-
-### for api
-gem 'rails-api'
+gem 'mongoid'
 
 # Use unicorn as the app server
 gem 'unicorn'
@@ -37,7 +34,7 @@ gem 'rb-readline'
 
 group :development, :test do
   gem 'byebug'
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
@@ -45,7 +42,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'did_you_mean', '>= 1.0'
+  gem 'did_you_mean', '1.1.3'
   gem 'timecop'
   gem 'simplecov', require: false
   gem 'coveralls', require: false
@@ -69,6 +66,3 @@ end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]

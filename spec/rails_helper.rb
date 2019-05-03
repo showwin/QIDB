@@ -23,6 +23,7 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, js_errors: false, timeout: 240)
 end
 
+Capybara.server = :webrick
 Capybara.default_driver   = :rack_test
 Capybara.default_selector = :css
 Capybara.default_max_wait_time = 5

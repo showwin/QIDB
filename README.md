@@ -14,6 +14,14 @@ $ docker-compose up
 
 localhost:3000 にアクセスするとWebアプリケーションを見ることができる。
 
+# テスト実行
+
+```
+# Docker 起動後
+$ docker exec -it qidb_qidb_1 /bin/bash
+$ bundle exec rspec --color --require spec_helper
+```
+
 
 # デプロイ方法
 CircleCI から capistrano を使ってサーバーにデプロイしている。  

@@ -4,15 +4,14 @@ services:
     build: ./
     command: '/app/docker/rails/start-server.sh'
     volumes:
-      - ./:/app
+      - .:/app:cached
+      - bundle:/app/vendor/bundle
     ports:
       - "3000:3000"
     links:
       - mongo:db
     environment:
       - MONGODB_HOST=db
-    volumes:
-      - bundle:/app/vendor/bundle
   mongo:
     build: ./docker/mongo
 

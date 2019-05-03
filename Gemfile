@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.8'
+gem 'rails', '4.2.11.1'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -41,7 +41,7 @@ group :development, :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'poltergeist'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -59,7 +59,7 @@ group :development do
   gem 'spring'
 
   # Use Capistrano for deployment
-  gem 'capistrano', '3.4.0'
+  gem 'capistrano', '3.11.0'
   gem 'capistrano-rails', '< 3.0'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'

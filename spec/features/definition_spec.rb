@@ -308,10 +308,11 @@ RSpec.describe DefinitionsController, type: :feature do
     expect(page).to have_content('2010')
     expect(page).not_to have_content('2014')
     expect(page).to have_content('呼吸器系')
-    find('#show_change_log').click
     expect(page).not_to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
+    find('#show_change_log').click
+    expect(page).to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
     expect(page).not_to have_content('アルガトロバン水和物')
-    first('.panel-default').click_link('内容を見る').first
+    first('.panel-default').click_link('内容を見る')
     expect(page).to have_content('アルガトロバン水和物')
 
     # 複製した定義書の確認
@@ -326,7 +327,7 @@ RSpec.describe DefinitionsController, type: :feature do
     find('#show_change_log').click
     expect(page).to have_content('変更者: 変更者1　 変更メッセージ: テストのために変更しました')
     expect(page).not_to have_content('アルガトロバン水和物')
-    first('.panel-default').click_link('内容を見る').first
+    first('.panel-default').click_link('内容を見る')
     expect(page).to have_content('アルガトロバン水和物')
   end
 
@@ -389,7 +390,7 @@ RSpec.describe DefinitionsController, type: :feature do
       expect(page).to have_content('指標群: 呼吸器系')
       expect(page).to have_content('指標のPDFをダウンロード')
       expect(page).not_to have_content('アルガトロバン水和物')
-      first('.panel-default').click_link('内容を見る').first
+      first('.panel-default').click_link('内容を見る')
       expect(page).to have_content('アルガトロバン水和物')
     end
   end

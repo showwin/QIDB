@@ -436,8 +436,8 @@ QIDBでは以下の4点を開発要件とする。
 利用者はこの4章の使用マニュアルを読むだけで、QIDBのシステムが提供する機能をすべて理解できる。都合上スクリーンショットを載せることができないので、文字だけの説明にとどめる。  
 
 ## 4.1 QI定義書のDB登録
-[/login](http://160.16.76.138/login)からBasic認証を行い、管理者権限を得る。
-[/definitions/new](http://160.16.76.138/definitions/new)で提供されるWebインターフェイスを使って、QI定義書の登録ができる。  
+[/login](http:///qi.med.kyoto-u.ac.jp/login)からBasic認証を行い、管理者権限を得る。
+[/definitions/new](http://qi.med.kyoto-u.ac.jp/definitions/new)で提供されるWebインターフェイスを使って、QI定義書の登録ができる。  
 定義書の内容をフォームに入力して、画面下部の緑色の「作成」ボタンを押すと、DBに定義書を登録することができる。  
 入力に際して注意事項を以下に記す。
 
@@ -461,7 +461,7 @@ QIDBでは以下の4点を開発要件とする。
 
 
 ## 4.2 QI定義書DBのWebAPI利用
-* QIDBのWebAPIは[/api/v1/definitions?project=qip&id=2021](http://160.16.76.138/api/v1/definitions?project=qip&id=2021)のようなエンドポイントで提供される。
+* QIDBのWebAPIは[/api/v1/definitions?project=qip&id=2021](http://qi.med.kyoto-u.ac.jp/api/v1/definitions?project=qip&id=2021)のようなエンドポイントで提供される。
 * 返されるデータはJSON形式のデータである。
 * 上のリクエストでは、QIPの指標番号2021の指標情報が取得できる。
 * QIPのすべての指標は `id` パラメータを使用せず、 `/api/v1/definitions?project=qip` のエンドポイントで取得可能
@@ -520,13 +520,13 @@ QIDBでは以下の4点を開発要件とする。
 
 
 ## 4.3 QI定義書の閲覧
-* 定義書は[/definitions/qip/2021](http://160.16.76.138/definitions/qip/2021)のようなURLでその内容を閲覧することができる。
+* 定義書は[/definitions/qip/2021](http://qi.med.kyoto-u.ac.jp/definitions/qip/2021)のようなURLでその内容を閲覧することができる。
 * `/definitions/xxxx/yyyy`の`xxxx`の部分で、閲覧したいプロジェクト名を指定し、yyyyの部分で定義書の指標番号を指定する。
-* 英語情報も含まれた定義書を見る場合には最後に `/en` をつけたURL、例えば [/definitions/qip/2021/en](http://160.16.76.138/definitions/qip/2021/en) にアクセスする。
-* [/definitions/table](http://160.16.76.138/definitions/table) では定義書の概要一覧をテーブル形式で見ることができ、これの英語版は [/definitions/table_en](http://160.16.76.138/definitions/table_en) で見れる。
+* 英語情報も含まれた定義書を見る場合には最後に `/en` をつけたURL、例えば [/definitions/qip/2021/en](http://qi.med.kyoto-u.ac.jp/definitions/qip/2021/en) にアクセスする。
+* [/definitions/table](http://qi.med.kyoto-u.ac.jp/definitions/table) では定義書の概要一覧をテーブル形式で見ることができ、これの英語版は [/definitions/table_en](http://qi.med.kyoto-u.ac.jp/definitions/table_en) で見れる。
 
 ## 4.4 QI定義書の検索
-* 定義書の検索機能は [/](http://160.16.76.138/) で行うことができる。
+* 定義書の検索機能は [/](http://qi.med.kyoto-u.ac.jp/) で行うことができる。
 * この検索システムで検索出来る範囲は、定義書に含まれる文字列すべてである。
 * キーワードを「大動脈バルーンパンピング法　人工心肺」と入力した場合には「大動脈バルーンパンピング法」と「人工心肺」の文字列が共に含まれるAND検索で行われる。
 * 検索結果の太字部分、例えば`指標群: 脳卒中　整理番号: 0548`の部分をクリックすることで、その定義書の閲覧ページへ移動することができる。
@@ -536,12 +536,12 @@ QIDBでは以下の4点を開発要件とする。
 * プロジェクト名とその指標番号、変更者と変更メッセージは必須入力項目で、それが抜けていると更新ができない。
 
 ## 4.6 QI定義書のpdf出力
-* [/definitions/qip/2021/sheet.pef](http://160.16.76.138/definitions/qip/2021/sheet.pdf)からダウンロードできる。
+* [/definitions/qip/2021/sheet.pef](http://qi.med.kyoto-u.ac.jp/definitions/qip/2021/sheet.pdf)からダウンロードできる。
   * 4.3と同じように、プロジェクト名と指標番号を指定する。
-* 複数の定義書をダウンロードしたい場合には、[/definitions/select](http://160.16.76.138/definitions/select)からダウンロードしたい定義書を選択することで、複数の定義書を1つのPDFとしてダウンロードすることができる。
+* 複数の定義書をダウンロードしたい場合には、[/definitions/select](http://qi.med.kyoto-u.ac.jp/definitions/select)からダウンロードしたい定義書を選択することで、複数の定義書を1つのPDFとしてダウンロードすることができる。
 
 ## 4.7 QI定義書のCSV出力
-* [/download_csv](http://160.16.76.138/download_csv)からすべての定義書のCSVデータをダウンロードすることができる。
+* [/download_csv](http://qi.med.kyoto-u.ac.jp/download_csv)からすべての定義書のCSVデータをダウンロードすることができる。
 
 ## 4.8 QI定義書登録時のCSV入力
 * 初回デプロイ時に、定義書の骨子となるデータ(プロジェクト/指標群/定義書表題/分母/分子/意義)を一括で取り込む機能である。
@@ -559,7 +559,7 @@ qip,指標群,定義書表題,分母,分子,意義
 QIDBに使用している、ソフトウェアとそのバージョン等を記載する。
 
 ### IPアドレス
-* 160.16.76.138
+* qi.med.kyoto-u.ac.jp
 
 ### Webサーバー
 * Nginx
@@ -568,16 +568,16 @@ QIDBに使用している、ソフトウェアとそのバージョン等を記�
 * Unicorn
 
 ### アプリケーション関連
-* ruby 2.2.3 (rbenvにてインストール)
+* ruby 2.4.6 (rbenvにてインストール)
 * MongoDB shell version: 2.6.6
-* Rails 4.2.3
-	* Railsで使用しているgemのバージョンは`/var/www/QIDB/`で`$ bundle list`により確認可能。
+* Rails 5.2.3
+	* Railsで使用しているgemのバージョンは`/opt/rails/QIDB/current`で`$ bundle list`により確認可能。
 
 ### サーバー環境
 * `/etc/sysconfig/iptables`にて通信を許すポートを制限
 * `/etc/nginx/.htpasswd` にBasic認証の設定ファイル
 * `/etc/nginx/nginx.conf` にNginx全体の設定、`/etc/nginx/conf.d/default.conf`にQIDBのアプリケーションの設定。
-* MongoDBとNginxはサーバー再起動後も自動的に立ち上げるように設定済み
+* MongoDBとNginxとunicornはサーバー再起動後も自動的に立ち上げるように設定済み
 
 ## 5.2 開発手順
 * バージョン管理はGitで行っている
@@ -593,7 +593,7 @@ QIDBに使用している、ソフトウェアとそのバージョン等を記�
 
 ## 5.3 アップデート
 脆弱性がないアプリケーションを保つために、5.1で示したソフトウェアは常に最新のバージョンを使用することが望ましい。  
-しかし、Railsの(メジャーアップデートの)バージョンを上げるとアプリケーションが動かなくなることがあるので、マイナーアップデートのみの適用が望ましい。現状は4.2.3を使用しているので、4.2.x系のアップデートは常に取り入れ、5.0.xにはアップデートしない方がよい。  
+しかし、Railsの(メジャーアップデートの)バージョンを上げるとアプリケーションが動かなくなることがあるので、マイナーアップデートのみの適用が望ましい。現状は5.2.3を使用しているので、5.2.x系のアップデートは常に取り入れ、6.0.xにはアップデートしない方がよい。  
 
 使用しているgemに関しても、できるだけ最新のバージョンを使用することが望ましいが、`1.2.3`から`2.0.0`などのメジャーアップデートの場合には、アプリケーションが動かなくなることがあるので、
 Rails自身を含めたgemのアップデートの際にはgitで別branchを切ってから作業をするのがよい。

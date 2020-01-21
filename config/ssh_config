@@ -2,4 +2,4 @@ Host qidb
   User rails
   HostName qi.med.kyoto-u.ac.jp
   IdentitiesOnly yes
-  IdentityFile /home/circleci/.ssh/id_rsa_ee035fd2cccff96d285af541fc7a3575
+  IdentityFile /home/circleci/.ssh/id_rsa_f76ca73a38763ee5ea5536638f1174d2
